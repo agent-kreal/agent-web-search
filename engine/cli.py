@@ -259,7 +259,7 @@ def main(argv=None) -> int:
     s.add_argument("-n", type=int, default=8, help="max results (default 8)")
     s.add_argument("--freshness", choices=["day", "week", "month"], default=None)
     s.add_argument("--provider", action="append", help="force provider(s), e.g. --provider brave")
-    s.add_argument("--intent", choices=["docs", "research", "fact", "news", "ru", "debug"],
+    s.add_argument("--intent", choices=["docs", "research", "fact", "news", "ru", "debug", "github"],
                    help="routing intent (default: autodetect from the query)")
     s.add_argument("--json", action="store_true")
     s.set_defaults(fn=cmd_search)
@@ -286,7 +286,9 @@ def main(argv=None) -> int:
     m.add_argument("--queries", required=True, help="queries separated by |")
     m.add_argument("-n", type=int, default=8)
     m.add_argument("--freshness", choices=["day", "week", "month"], default=None)
-    m.add_argument("--intent", choices=["docs", "research", "fact", "news", "ru", "debug"],
+    m.add_argument("--provider", action="append",
+                   help="pin provider(s) for all queries (repeatable)")
+    m.add_argument("--intent", choices=["docs", "research", "fact", "news", "ru", "debug", "github"],
                    help="routing intent for ALL queries (default: autodetect per query)")
     m.add_argument("--json", action="store_true")
     m.set_defaults(fn=cmd_multi)

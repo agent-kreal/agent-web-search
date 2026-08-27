@@ -34,6 +34,7 @@ from .brave import BraveProvider
 from .ddg import DdgProvider
 from .exa import ExaProvider
 from .firecrawl import FirecrawlProvider
+from .gh import GhProvider
 from .jina import JinaProvider
 from .linkup import LinkupProvider
 from .local import LocalProvider
@@ -45,8 +46,8 @@ from .zai import ZaiProvider
 __all__ = [
     "FetchResult", "Provider", "ProviderError", "QuotaSpec", "SearchResult",
     "BraveProvider", "DdgProvider", "ExaProvider", "FirecrawlProvider",
-    "JinaProvider", "LinkupProvider", "LocalProvider", "ParallelProvider",
-    "TavilyProvider", "YoucomProvider", "ZaiProvider",
+    "GhProvider", "JinaProvider", "LinkupProvider", "LocalProvider",
+    "ParallelProvider", "TavilyProvider", "YoucomProvider", "ZaiProvider",
 ]
 
 SEARCH_CHAIN: List[Provider] = [
@@ -55,6 +56,7 @@ SEARCH_CHAIN: List[Provider] = [
     ZaiProvider(),                  # 1000/mo GLM plan (exhausted till 2026-09-18)
     ExaProvider(),                  # $10/mo ~1400, best quality (docs/semantic)
     BraveProvider(),                # legacy 2000/mo, RU-friendly
+    GhProvider(),                   # free via gh CLI (repo search; intent=github)
     ParallelProvider(keyed=False),  # anonymous keyless floor
     LinkupProvider(),               # big tank, weak relevance — bulk fan-out
     DdgProvider(),                  # anti-bot under bursts — VERY last before $
@@ -64,6 +66,7 @@ SEARCH_CHAIN: List[Provider] = [
 # Fetch chain (URL -> markdown): free local cascade first (~80-90% of pages),
 # then renewable credits, keyless bottom, $ grant last.
 FETCH_CHAIN: List[Provider] = [
+    GhProvider(),                   # free: github.com нативно (README/file/PR/issue/releases)
     LocalProvider(),                # free: httpx+trafilatura -> curl_cffi -> playwright
     FirecrawlProvider(),            # ~2000 credits/mo (renewable), JS/PDF
     TavilyProvider(),               # extract (keyed -> keyless)

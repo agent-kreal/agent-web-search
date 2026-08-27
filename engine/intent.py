@@ -39,6 +39,11 @@ _DOCS = (
     "pip install", "reference", "manual", "library", "библиотек", "example",
     "пример", "sap note", "readthedocs",
 )
+# явное намерение искать проект/репозиторий — идём в нативный gh (free).
+# «library/библиотек» намеренно НЕ тут: «python library api docs» — это docs.
+_GITHUB = (
+    "github", "репозитор", "repo", "opensource", "open source",
+)
 _RESEARCH = (
     "vs", "versus", "best practices", "comparison", "сравнени", "обзор",
     "alternatives", "альтернатив", "how to choose", "как выбрать",
@@ -59,7 +64,8 @@ def _matches(query_lower: str, words: tuple) -> bool:
 
 
 def detect(query: str, freshness: str | None = None) -> tuple[str | None, str]:
-    """Classify by keyword priority: debug -> fact -> news -> ru -> docs -> research."""
+    """Classify by keyword priority: debug -> fact -> news -> github -> ru ->
+    docs -> research (github before ru: «найди github репозиторий…» — github)."""
     q = query.lower()
     if _matches(q, _DEBUG):
         return "debug", "error-ish keyword"
@@ -67,6 +73,8 @@ def detect(query: str, freshness: str | None = None) -> tuple[str | None, str]:
         return "fact", "pricing/limit keyword"
     if freshness or _matches(q, _NEWS):
         return "news", "freshness flag / release keyword"
+    if _matches(q, _GITHUB):
+        return "github", "repo-search keyword"
     if is_ru(query):
         return "ru", "cyrillic query"
     if _matches(q, _DOCS):

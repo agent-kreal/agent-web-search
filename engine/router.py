@@ -19,6 +19,7 @@ INTENT_ORDER: dict = {
     "news-en":  ["exa", "tavily", "youcom"],
     "ru":       ["youcom", "brave", "tavily"],     # tavily pulls EN lists on RU-specific queries
     "debug":    ["tavily", "youcom", "brave"],     # exa risky: sometimes empty on error strings
+    "github":   ["gh", "exa", "youcom", "tavily", "brave"],  # gh: native repo search (free)
 }
 
 
@@ -121,6 +122,11 @@ def fetch(url: str, *, max_chars: int = 6000,
     last = None
     for p in chain:
         if not p.can_fetch:
+            continue
+        # домен-специфичные тиры (gh) срабатывают только на своих URL —
+        # чужие скипаем тихо, без записи в tried
+        matcher = getattr(p, "matches_url", None)
+        if matcher and not matcher(url):
             continue
         skip = _skip_reason(p)
         if skip:
