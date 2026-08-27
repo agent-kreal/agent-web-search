@@ -1,0 +1,300 @@
+{
+  "article-en-1": {
+    "with": [
+      "the signal for key tokens to be amplified",
+      "Google started using BERT to process search queries",
+      "a chatbot based on a fine-tuned variant of GPT-3.5"
+    ],
+    "without": [
+      "Privacy Policy",
+      "Privacy policy",
+      "Terms of Use",
+      "Log in",
+      "Contact us",
+      "Related Articles"
+    ]
+  },
+  "article-en-2": {
+    "with": [
+      "generate, summarize, translate, and analyze text in many contexts",
+      "Substantial infrastructure is necessary for training the largest models",
+      "might need more linguistic data than naturally available"
+    ],
+    "without": [
+      "Privacy Policy",
+      "Privacy policy",
+      "Terms of Use",
+      "Log in",
+      "Follow us",
+      "Contact us"
+    ]
+  },
+  "article-en-3": {
+    "with": [
+      "The following recipe assumes you're very ambitious",
+      "you do when walking or taking a shower or lying in bed",
+      "has to be interleaved with deliberate work that feeds it questions"
+    ],
+    "without": [
+      "Learn More"
+    ]
+  },
+  "article-en-4": {
+    "with": [
+      "carved a deep bed shaded by trees and lined with blackberry bushes",
+      "with an actual person tends to involve all the senses",
+      "one measure of your own wealth, generosity and power"
+    ],
+    "without": [
+      "All rights reserved",
+      "Privacy Policy",
+      "Privacy policy",
+      "Sign in",
+      "Sign up",
+      "Contact us"
+    ]
+  },
+  "article-en-5": {
+    "with": [
+      "Victor Pelevin made his name in 90s",
+      "Deeply unpopular in France, President Macron relishes the international stage",
+      "set about dismantling USAID, many around the world were shocked"
+    ],
+    "without": [
+      "All rights reserved",
+      "Privacy Policy",
+      "Privacy policy",
+      "Sign in",
+      "Sign up",
+      "Contact us"
+    ]
+  },
+  "article-ru-1": {
+    "with": [
+      "Провайдера заблокировали без включения в реестр запрещённых сайтов",
+      "блокировали с помощью ТСПУ — технических средств противодействия угрозам",
+      "положительный исход дела поможет владельцам других ресурсов"
+    ],
+    "without": [
+      "Войти",
+      "Регистрация"
+    ]
+  },
+  "article-ru-2": {
+    "with": [
+      "трансформеры не требуют обработки последовательностей по порядку",
+      "добавляет информацию о позиции каждого токена в последовательности",
+      "позволяют модели легко интерполировать на более длинные последовательности"
+    ],
+    "without": [
+      "Политика конфиденциальности",
+      "Войти"
+    ]
+  },
+  "article-ru-3": {
+    "with": [
+      "Собрал все нейросети 2026 года в одну таблицу",
+      "Пишет живее ChatGPT, держит контекст в длинных диалогах",
+      "Бесплатный видеоредактор с AI. Автосубтитры, удаление фона, нарезка"
+    ],
+    "without": []
+  },
+  "article-ru-4": {
+    "with": [
+      "В Госдуме предложили формулировку определения искусственного интеллекта",
+      "Разрабатываемый федеральный законопроект, как отмечает адвокат, не будет запрещающим",
+      "Ключевое, на чем будут настаивать его авторы, — безопасность персональных данных"
+    ],
+    "without": [
+      "Пользовательское соглашение"
+    ]
+  },
+  "docs-js-1": {
+    "with": [
+      "How to respond to events and update the screen",
+      "count the number of times a button is clicked",
+      "and the function that lets you update it"
+    ],
+    "without": [
+      "Get started"
+    ]
+  },
+  "docs-js-2": {
+    "with": [
+      "scanning all of your HTML files, JavaScript components",
+      "start using Tailwind’s utility classes to style your content"
+    ],
+    "without": [
+      "Get started"
+    ]
+  },
+  "docs-js-3": {
+    "with": [
+      "have a content-addressable identifier called a digest",
+      "We have four ways to set user memory usage",
+      "as much memory and swap memory as they need"
+    ],
+    "without": [
+      "All rights reserved",
+      "Terms of Use",
+      "Sign in",
+      "Get started"
+    ]
+  },
+  "docs-js-4": {
+    "with": [
+      "Create a new Next.js app and run it locally",
+      "code editors can use for advanced type-checking and auto-completion",
+      "save it to see the updated result in your browser"
+    ],
+    "without": [
+      "Skip to content",
+      "Privacy Policy",
+      "Privacy policy",
+      "Subscribe to",
+      "Learn More"
+    ]
+  },
+  "docs-js-5": {
+    "with": [
+      "You are reading the documentation for Vue 3",
+      "can grow with you and adapt to your needs",
+      "is the recommended way to author Vue components"
+    ],
+    "without": [
+      "Skip to content",
+      "Privacy Policy",
+      "Privacy policy",
+      "Learn More"
+    ]
+  },
+  "forum-1": {
+    "with": [
+      "My YC app: Dropbox - Throw away your USB drive",
+      "on April 4, 2007",
+      "71 comments"
+    ],
+    "without": [
+      "Privacy Policy",
+      "Privacy policy",
+      "Sign up"
+    ]
+  },
+  "forum-3": {
+    "with": [
+      "what is the best practice for spawning goroutine",
+      "should pass the context in it and handle it there",
+      "how a goroutine will stop, before you start it"
+    ],
+    "without": []
+  },
+  "forum-4": {
+    "with": [
+      "В голосовании приняли участие 347 разработчиков",
+      "И всё-таки, почему она Шрути, а не Срути?"
+    ],
+    "without": [
+      "Регистрация"
+    ]
+  },
+  "spa-app-1": {
+    "with": [
+      "Your drawings are saved in your browser's storage",
+      "Save your work to a file regularly to avoid losing it"
+    ],
+    "without": []
+  },
+  "spa-app-2": {
+    "with": [
+      "No Priority Low Priority Medium Priority High Priority Difficulty Adjustment",
+      "Minimum fee Unconfirmed Memory Usage Incoming Transactions Recent Replacements"
+    ],
+    "without": []
+  },
+  "spa-app-3": {
+    "with": [
+      "в Петербурге взорвался автомобиль с военным",
+      "Флорист рассказала, какие букеты не стоит дарить учителю",
+      "болезнь Альцгеймера не одинакова для разных наций"
+    ],
+    "without": []
+  },
+  "spa-app-4": {
+    "with": [
+      "Photopea runs on your device, using your CPU and your GPU",
+      "Our free online photo editor is a great tool for educational projects"
+    ],
+    "without": [
+      "Privacy Policy",
+      "Privacy policy"
+    ]
+  },
+  "static-docs-1": {
+    "with": [
+      "This domain is for use in documentation examples without needing permission",
+      "Avoid use in operations"
+    ],
+    "without": [
+      "Learn More"
+    ]
+  },
+  "static-docs-2": {
+    "with": [
+      "provides a portable way of using operating system dependent functionality",
+      "for objects representing a file system path",
+      "Return the value of the environment variable"
+    ],
+    "without": []
+  },
+  "static-docs-3": {
+    "with": [
+      "a stream of octets sent after the header section",
+      "switch the connection to tunnel mode instead of having content",
+      "when a complete or partial representation is transferred as message content"
+    ],
+    "without": [
+      "Accept all",
+      "All rights reserved",
+      "Sign in",
+      "Log in"
+    ]
+  },
+  "static-docs-4": {
+    "with": [
+      "provides a high-level summary of changes to SQLite",
+      "Enforce STRICT typing on computed columns",
+      "Improved resistance to database corruption caused by an application"
+    ],
+    "without": []
+  },
+  "tables-1": {
+    "with": [
+      "introduction to pandas, geared mainly for new users",
+      "For getting fast access to a scalar",
+      "where a boolean condition is met"
+    ],
+    "without": [
+      "Back to top"
+    ]
+  },
+  "tables-2": {
+    "with": [
+      "SELECT, TABLE, WITH — retrieve rows from a table or view",
+      "The seed value can be any non-null floating-point value",
+      "as a result of clustering effects"
+    ],
+    "without": []
+  },
+  "tables-3": {
+    "with": [
+      "The NumPy library contains multidimensional array data structures",
+      "to preserve the indexing convention or not reorder the data",
+      "insert an axis along the second dimension"
+    ],
+    "without": [
+      "Back to top",
+      "Learn More",
+      "Read More"
+    ]
+  }
+}

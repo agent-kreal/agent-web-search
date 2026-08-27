@@ -1,0 +1,103 @@
+### docs-js-5  len=9811  fm_end=159
+### HEAD window [0:2000] (первая треть <= 3270)
+
+# Introduction [](https://vuejs.org#introduction)
+
+You are reading the documentation for Vue 3!
+
+- Vue 2 support has ended on **Dec 31, 2023** . Learn more about[Vue 2 EOL](https://v2.vuejs.org/eol/) .
+- Upgrading from Vue 2? Check out the [Migration Guide](https://v3-migration.vuejs.org/) .
+
+
+Learn Vue with video tutorials on VueMastery.com
+
+![Vue Mastery banner](https://storage.googleapis.com/vue-mastery.appspot.com/flamelink/media/vuemastery-graphical-link-96x56.png)
+
+![Vue Mastery Logo](https://storage.googleapis.com/vue-mastery.appspot.com/flamelink/media/vue-mastery-logo.png)
+
+## What is Vue? [](https://vuejs.org#what-is-vue)
+
+Vue (pronounced /vjuː/, like **view**) is a JavaScript framework for building user interfaces. It builds on top of standard HTML, CSS, and JavaScript and provides a declarative, component-based programming model that helps you efficiently develop user interfaces of any complexity.
+
+Here is a minimal example:
+
+js
+
+```
+import { createApp, ref } from 'vue'
+createApp({
+  setup() {
+    return {
+      count: ref(0)
+    }
+  }
+}).mount('#app')
+```
+template
+
+```
+<div id="app">
+  <button @click="count++">
+    Count is: {{ count }}
+  </button>
+</div>
+```
+**Result**
+
+The above example demonstrates the two core features of Vue:
+
+- **Declarative Rendering** : Vue extends standard HTML with a template syntax that allows us to declaratively describe HTML output based on JavaScript state.
+- **Reactivity** : Vue automatically tracks JavaScript state changes and efficiently updates the DOM when changes happen.
+
+You may already have questions - don't worry. We will cover every little detail in the rest of the documentation. For now, please read along so you can have a high-level understanding of what Vue offers.
+
+Prerequisites
+
+The rest of the documentation assumes basic familiarity with HTML, CSS, a
+
+### MID window [3905:5905] (средняя треть)
+l stay useful as you grow to tackle more ambitious goals in the future. If you are a veteran, you can pick the optimal way to leverage Vue based on the problems you are trying to solve, while retaining the same productivity. This is why we call Vue "The Progressive Framework": it's a framework that can grow with you and adapt to your needs.
+
+## Single-File Components [](https://vuejs.org#single-file-components)
+
+In most build-tool-enabled Vue projects, we author Vue components using an HTML-like file format called **Single-File Component** (also known as `*.vue` files, abbreviated as **SFC**). A Vue SFC, as the name suggests, encapsulates the component's logic (JavaScript), template (HTML), and styles (CSS) in a single file. Here's the previous example, written in SFC format:
+
+vue
+
+```
+<script setup>
+import { ref } from 'vue'
+const count = ref(0)
+</script>
+<template>
+  <button @click="count++">Count is: {{ count }}</button>
+</template>
+<style scoped>
+button {
+  font-weight: bold;
+}
+</style>
+```
+SFC is a defining feature of Vue and is the recommended way to author Vue components **if** your use case warrants a build setup. You can learn more about the [how and why of SFC](https://vuejs.org/guide/scaling-up/sfc) in its dedicated section - but for now, just know that Vue will handle all the build tools setup for you.
+
+## API Styles [](https://vuejs.org#api-styles)
+
+Vue components can be authored in two different API styles: **Options API** and **Composition API**.
+
+### Options API [](https://vuejs.org#options-api)
+
+With Options API, we define a component's logic using an object of options such as `data`, `methods`, and `mounted`. Properties defined by options are exposed on `this` inside functions, which points to the component instance:
+
+vue
+
+```
+<script>
+export default {
+  // Properties returned from data() become reactive state
+  // and will be exposed on `this`.
+  data() {
+    return {
+      count: 0
+    }
+  },
+  // Methods are functions that mutate state and trigg

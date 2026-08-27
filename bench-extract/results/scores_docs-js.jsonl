@@ -1,0 +1,36 @@
+{"scenario": "docs-js", "q": 1, "extractor": "local-auto", "structure": 1, "clean": 2, "content": 2, "note": "ограды целы, но песочница-код без ```"}
+{"scenario": "docs-js", "q": 1, "extractor": "local-http", "structure": 1, "clean": 2, "content": 2, "note": "то же"}
+{"scenario": "docs-js", "q": 1, "extractor": "local-curl", "structure": 1, "clean": 2, "content": 2, "note": "то же"}
+{"scenario": "docs-js", "q": 1, "extractor": "local-browser", "structure": 1, "clean": 2, "content": 2, "note": "то же"}
+{"scenario": "docs-js", "q": 1, "extractor": "firecrawl", "structure": 1, "clean": 1, "content": 2, "note": "sandpack-каша построчно, UI-обвес редактора"}
+{"scenario": "docs-js", "q": 1, "extractor": "tavily", "structure": 1, "clean": 2, "content": 2, "note": "угловые скобки съедены, код задвоен"}
+{"scenario": "docs-js", "q": 1, "extractor": "jina", "structure": 1, "clean": 1, "content": 2, "note": "код схлопнут в inline-бэктики; шапка jina"}
+{"scenario": "docs-js", "q": 2, "extractor": "local-auto", "structure": 1, "clean": 2, "content": 1, "note": "команды слиплись, заголовков нет, обрыв"}
+{"scenario": "docs-js", "q": 2, "extractor": "local-http", "structure": 1, "clean": 2, "content": 1, "note": "то же"}
+{"scenario": "docs-js", "q": 2, "extractor": "local-curl", "structure": 1, "clean": 2, "content": 1, "note": "то же"}
+{"scenario": "docs-js", "q": 2, "extractor": "local-browser", "structure": 1, "clean": 2, "content": 1, "note": "то же"}
+{"scenario": "docs-js", "q": 2, "extractor": "firecrawl", "structure": 2, "clean": 1, "content": 1, "note": "шаги и ограды целы; шапка сайта сверху"}
+{"scenario": "docs-js", "q": 2, "extractor": "tavily", "structure": 1, "clean": 1, "content": 1, "note": "каждая команда продублирована; обрыв шаге 03"}
+{"scenario": "docs-js", "q": 2, "extractor": "jina", "structure": 1, "clean": 1, "content": 1, "note": "без оград, команды слиплись; шапка jina"}
+{"scenario": "docs-js", "q": 3, "extractor": "local-auto", "structure": 2, "clean": 2, "content": 2, "note": "глубоко: таблицы флагов и ограды целы"}
+{"scenario": "docs-js", "q": 3, "extractor": "local-http", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
+{"scenario": "docs-js", "q": 3, "extractor": "local-curl", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
+{"scenario": "docs-js", "q": 3, "extractor": "local-browser", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
+{"scenario": "docs-js", "q": 3, "extractor": "firecrawl", "structure": 2, "clean": 0, "content": 2, "note": "чат Gordon дважды и меню перед статьёй"}
+{"scenario": "docs-js", "q": 3, "extractor": "tavily", "structure": 1, "clean": 1, "content": 2, "note": "примеры терминала утроены в оградах"}
+{"scenario": "docs-js", "q": 3, "extractor": "jina", "structure": 1, "clean": 1, "content": 2, "note": "все примеры команд выпали; шапка jina"}
+{"scenario": "docs-js", "q": 4, "extractor": "local-auto", "structure": 2, "clean": 2, "content": 2, "note": "ограды и списки целы, мелкие артефакты"}
+{"scenario": "docs-js", "q": 4, "extractor": "local-http", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
+{"scenario": "docs-js", "q": 4, "extractor": "local-curl", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
+{"scenario": "docs-js", "q": 4, "extractor": "local-browser", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
+{"scenario": "docs-js", "q": 4, "extractor": "firecrawl", "structure": 2, "clean": 1, "content": 2, "note": "метки файлов и ограды целы; шапка Menu"}
+{"scenario": "docs-js", "q": 4, "extractor": "tavily", "structure": 1, "clean": 2, "content": 2, "note": "код в оградах задвоен и разъехался"}
+{"scenario": "docs-js", "q": 4, "extractor": "jina", "structure": 0, "clean": 0, "content": 0, "note": "баннеры и сайдбар вместо статьи"}
+{"scenario": "docs-js", "q": 4, "extractor": "parallel", "structure": 2, "clean": 2, "content": 1, "note": "ограды по пакетам отлично; «...» пропуски"}
+{"scenario": "docs-js", "q": 5, "extractor": "local-auto", "structure": 2, "clean": 2, "content": 2, "note": "ограды и оба варианта API, чисто"}
+{"scenario": "docs-js", "q": 5, "extractor": "local-http", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
+{"scenario": "docs-js", "q": 5, "extractor": "local-curl", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
+{"scenario": "docs-js", "q": 5, "extractor": "local-browser", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
+{"scenario": "docs-js", "q": 5, "extractor": "firecrawl", "structure": 2, "clean": 2, "content": 2, "note": "полный intro, якорный шум в заголовках"}
+{"scenario": "docs-js", "q": 5, "extractor": "tavily", "structure": 1, "clean": 1, "content": 2, "note": "код позадваивался посимвольно; шапка-спонсоры"}
+{"scenario": "docs-js", "q": 5, "extractor": "jina", "structure": 2, "clean": 1, "content": 2, "note": "огромные ограды целы; шапка jina"}

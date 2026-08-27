@@ -1,0 +1,29 @@
+{"scenario": "static-docs", "q": 1, "extractor": "local-auto", "structure": 2, "clean": 2, "content": 2, "note": "крошечная страница целиком; frontmatter-обвес"}
+{"scenario": "static-docs", "q": 1, "extractor": "local-http", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
+{"scenario": "static-docs", "q": 1, "extractor": "local-curl", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
+{"scenario": "static-docs", "q": 1, "extractor": "local-browser", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
+{"scenario": "static-docs", "q": 1, "extractor": "firecrawl", "structure": 1, "clean": 2, "content": 2, "note": "голый plain-текст без markdown-обвеса"}
+{"scenario": "static-docs", "q": 1, "extractor": "tavily", "structure": 1, "clean": 2, "content": 2, "note": "plain-текст, без markdown"}
+{"scenario": "static-docs", "q": 1, "extractor": "jina", "structure": 2, "clean": 1, "content": 2, "note": "полный, но шапка jina + cache-warning в тексте"}
+{"scenario": "static-docs", "q": 2, "extractor": "local-auto", "structure": 1, "clean": 2, "content": 2, "note": "разорванные списки (пустые '- '), слипшийся текст определений"}
+{"scenario": "static-docs", "q": 2, "extractor": "local-http", "structure": 1, "clean": 2, "content": 2, "note": "то же"}
+{"scenario": "static-docs", "q": 2, "extractor": "local-curl", "structure": 1, "clean": 2, "content": 2, "note": "то же"}
+{"scenario": "static-docs", "q": 2, "extractor": "local-browser", "structure": 1, "clean": 2, "content": 2, "note": "то же"}
+{"scenario": "static-docs", "q": 2, "extractor": "firecrawl", "structure": 2, "clean": 1, "content": 1, "note": "навигация+языки+версии в начале, контент смещён"}
+{"scenario": "static-docs", "q": 2, "extractor": "tavily", "structure": 2, "clean": 1, "content": 1, "note": "навигация в начале"}
+{"scenario": "static-docs", "q": 2, "extractor": "jina", "structure": 2, "clean": 1, "content": 2, "note": "чисто от навигации; jina-шапка"}
+{"scenario": "static-docs", "q": 2, "extractor": "parallel", "structure": 2, "clean": 2, "content": 1, "note": "эллипсисы-пропуски, сокращённый пересказ"}
+{"scenario": "static-docs", "q": 3, "extractor": "local-auto", "structure": 2, "clean": 2, "content": 1, "note": "только секция 6.4 из всего RFC"}
+{"scenario": "static-docs", "q": 3, "extractor": "local-http", "structure": 2, "clean": 2, "content": 1, "note": "то же"}
+{"scenario": "static-docs", "q": 3, "extractor": "local-curl", "structure": 2, "clean": 2, "content": 1, "note": "то же"}
+{"scenario": "static-docs", "q": 3, "extractor": "local-browser", "structure": 2, "clean": 2, "content": 1, "note": "то же"}
+{"scenario": "static-docs", "q": 3, "extractor": "firecrawl", "structure": 2, "clean": 1, "content": 2, "note": "полный документ с начала; шапка-таблица RFC в тексте"}
+{"scenario": "static-docs", "q": 3, "extractor": "tavily", "structure": 0, "clean": 0, "content": 0, "note": "пустой вывод"}
+{"scenario": "static-docs", "q": 3, "extractor": "jina", "structure": 2, "clean": 1, "content": 2, "note": "полный, но ToC-блок занимает середину"}
+{"scenario": "static-docs", "q": 4, "extractor": "local-auto", "structure": 2, "clean": 1, "content": 2, "note": "баннер+слоган в начале, дальше полный changelog"}
+{"scenario": "static-docs", "q": 4, "extractor": "local-http", "structure": 2, "clean": 1, "content": 2, "note": "то же"}
+{"scenario": "static-docs", "q": 4, "extractor": "local-curl", "structure": 2, "clean": 1, "content": 2, "note": "то же"}
+{"scenario": "static-docs", "q": 4, "extractor": "local-browser", "structure": 2, "clean": 1, "content": 2, "note": "то же"}
+{"scenario": "static-docs", "q": 4, "extractor": "firecrawl", "structure": 2, "clean": 1, "content": 2, "note": "поиск-строка и баннер в начале"}
+{"scenario": "static-docs", "q": 4, "extractor": "tavily", "structure": 2, "clean": 0, "content": 2, "note": "всё нав-меню (Home/About/Download...) в тексте"}
+{"scenario": "static-docs", "q": 4, "extractor": "parallel", "structure": 2, "clean": 2, "content": 1, "note": "пересказ с '...' пропусками"}

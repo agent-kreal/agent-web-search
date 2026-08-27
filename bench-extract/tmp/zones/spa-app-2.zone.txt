@@ -1,0 +1,50 @@
+### spa-app-2  len=719  ALL in head, fm_end=272
+--- BODY ---
+
+Mainnet
+Signet
+Testnet3
+Testnet4
+Sign In
+Transaction Fees
+No Priority
+Low Priority
+Medium Priority
+High Priority
+Difficulty Adjustment
+difficulty
+|
+halving
+Mempool Goggles®
+: All
+All
+Consolidation
+Coinjoin
+Data
+Transaction
+Amount
+0.00000000
+BTC
+Fee
+0
+sats
+Fee rate
+0.00
+sat/vB
+Virtual size
+1
+vB
+Minimum fee
+Unconfirmed
+Memory Usage
+Incoming Transactions
+Recent Replacements
+TXID
+Previous fee
+New fee
+Status
+Recent Transactions
+TXID
+USD
+Amount
+Fee

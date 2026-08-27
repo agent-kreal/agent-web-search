@@ -1,0 +1,43 @@
+### article-en-2  len=32000  fm_end=183
+### HEAD window [0:2000] (первая треть <= 10666)
+
+# Large language model
+
+
+| Part of [a series](https://en.wikipedia.org/wiki/Category:Machine_learning) on | 
+| [Machine learning](https://en.wikipedia.org/wiki/Machine_learning)and [data mining](https://en.wikipedia.org/wiki/Data_mining) | 
+|---|
+
+A **large language model** (**LLM**) is an [AI model](https://en.wikipedia.org/wiki/Machine_learning#Models) (typically a [neural network](<https://en.wikipedia.org/wiki/Neural_network_(machine_learning)>)) trained on a vast amount of text for [natural language processing](https://en.wikipedia.org/wiki/Natural_language_processing) tasks, especially [language generation](https://en.wikipedia.org/wiki/Language_generation). LLMs can typically generate, summarize, translate, and analyze text in many contexts.<sup>[\[1\]](https://en.wikipedia.org#cite_note-few-shot-learners2-1)</sup> They are the basis for many modern [chatbots](https://en.wikipedia.org/wiki/Chatbot), such as [ChatGPT](https://en.wikipedia.org/wiki/ChatGPT), [Claude](<https://en.wikipedia.org/wiki/Claude_(AI)>), [Gemini](https://en.wikipedia.org/wiki/Google_Gemini), [Grok](<https://en.wikipedia.org/wiki/Grok_(chatbot)>), and [DeepSeek](<https://en.wikipedia.org/wiki/DeepSeek_(chatbot)>).
+
+LLMs are typically based on [transformer](<https://en.wikipedia.org/wiki/Transformer_(deep_learning)>) architecture.[\[2\]](https://en.wikipedia.org#cite_note-2)[Generative pre-trained transformers](https://en.wikipedia.org/wiki/Generative_pre-trained_transformer) (GPTs) are a type of LLM that is pre-trained to predict the next word.<sup>[\[3\]](https://en.wikipedia.org#cite_note-:0-3)</sup> GPTs are then often [fine-tuned](<https://en.wikipedia.org/wiki/Fine-tuning_(deep_learning)>) to follow instructions and to behave as assistants.[\[4\]](https://en.wikipedia.org#cite_note-4)
+
+Biased or inaccu
+
+### MID window [15000:17000] (средняя треть)
+[\[27\]](https://en.wikipedia.org#cite_note-27)
+
+With the increasing proportion of LLM-generated content on the web, data cleaning in the future may include filtering out such content. LLM-generated content can pose a problem if the content is similar to human text (making filtering difficult) but of lower quality (degrading performance of models trained on it).[\[1\]](https://en.wikipedia.org#cite_note-few-shot-learners2-1)
+
+### Synthetic data
+
+[
+[edit](https://en.wikipedia.org/w/index.php?title=Large_language_model&action=edit§ion=6)]
+
+Training of largest language models might need more linguistic data than naturally available, or that the naturally occurring data is of insufficient quality. In these cases, synthetic data might be used.
+
+## Training
+
+[
+[edit](https://en.wikipedia.org/w/index.php?title=Large_language_model&action=edit§ion=7)]
+
+An LLM is a type of [foundation model](https://en.wikipedia.org/wiki/Foundation_model) (large X model) trained on language. LLMs can be trained in different ways. In particular, GPT models are first pretrained to predict the next word on a large amount of data, before being fine-tuned.[\[3\]](https://en.wikipedia.org#cite_note-:0-3)
+
+### Cost
+
+[
+[edit](https://en.wikipedia.org/w/index.php?title=Large_language_model&action=edit§ion=8)]
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Estimated_training_cost_of_some_AI_models_-_2024_AI_index.jpg/500px-Estimated_training_cost_of_some_AI_models_-_2024_AI_index.jpg?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail)
+
+Substantial infrastructure is necessary for training the largest models. The tendency towards larger models is visible in the [list of large language models](https://en.wikipedia.org/wiki/List_of_large_language_models). For example, the training of GPT-2 (i.e. a 1.5-billion-parameter model) in 2019 cost $50,000, while training of the [PaLM](https://en.wikipedia.org/wiki/PaLM) (i.e. a 540-billion-parameter model) in 2022 cost $8 million

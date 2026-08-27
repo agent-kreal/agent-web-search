@@ -1,0 +1,121 @@
+### tables-3  len=32000  fm_end=188
+### HEAD window [0:2000] (первая треть <= 10666)
+
+# NumPy: the absolute basics for beginners[#](https://numpy.org#numpy-the-absolute-basics-for-beginners)
+
+Welcome to the absolute beginner’s guide to NumPy!
+
+NumPy (**Num**erical **Py**thon) is an open source Python library that’s
+widely used in science and engineering. The NumPy library contains
+multidimensional array data structures, such as the homogeneous, N-dimensional
+`ndarray`, and a large library of functions that operate efficiently on these
+data structures. Learn more about NumPy at [What is NumPy](https://numpy.org/whatisnumpy.html#whatisnumpy),
+and if you have comments or suggestions, please
+[reach out](https://numpy.org/community/)!
+
+## How to import NumPy[#](https://numpy.org#how-to-import-numpy)
+
+After [installing NumPy](https://numpy.org/install/), it may be imported
+into Python code like:
+
+```
+import numpy as np
+```
+This widespread convention allows access to NumPy features with a short,
+recognizable prefix (`np.`) while distinguishing NumPy features from others
+that have the same name.
+
+## Reading the example code[#](https://numpy.org#reading-the-example-code)
+
+Throughout the NumPy documentation, you will find blocks that look like:
+
+```
+>>> a = np.array([[1, 2, 3],
+...               [4, 5, 6]])
+>>> a.shape
+(2, 3)
+```
+Text preceded by `>>>` or `...` is **input**, the code that you would
+enter in a script or at a Python prompt. Everything else is **output**, the
+results of running your code. Note that `>>>` and `...` are not part of the
+code and may cause an error if entered at a Python prompt.
+
+To run the code in the examples, you can copy and paste it into a Python script or REPL, or use the experimental interactive examples in the browser provided in various locations in the documentation.
+
+## Why use NumPy?[#](https://numpy.org#why-use-numpy)
+
+Python lists are
+
+### MID window [15000:17000] (средняя треть)
+s a **Column-major language**.
+In C on the other hand, the **last** index changes
+the most rapidly. The matrix is stored by rows, making it a **Row-major
+language**. What you do for C or Fortran depends on whether it’s more important
+to preserve the indexing convention or not reorder the data.
+
+## How to convert a 1D array into a 2D array (how to add a new axis to an array)[#](https://numpy.org#how-to-convert-a-1d-array-into-a-2d-array-how-to-add-a-new-axis-to-an-array)
+
+*This section covers* `np.newaxis`, `np.expand_dims`
+
+You can use `np.newaxis` and `np.expand_dims` to increase the dimensions of
+your existing array.
+
+Using `np.newaxis` will increase the dimensions of your array by one dimension
+when used once. This means that a **1D** array will become a **2D** array, a
+**2D** array will become a **3D** array, and so on.
+
+For example, if you start with this array:
+
+```
+>>> a = np.array([1, 2, 3, 4, 5, 6])
+>>> a.shape
+(6,)
+```
+You can use `np.newaxis` to add a new axis:
+
+```
+>>> a2 = a[np.newaxis, :]
+>>> a2.shape
+(1, 6)
+```
+You can explicitly convert a 1D array to either a row vector or a column
+vector using `np.newaxis`. For example, you can convert a 1D array to a row
+vector by inserting an axis along the first dimension:
+
+```
+>>> row_vector = a[np.newaxis, :]
+>>> row_vector.shape
+(1, 6)
+```
+Or, for a column vector, you can insert an axis along the second dimension:
+
+```
+>>> col_vector = a[:, np.newaxis]
+>>> col_vector.shape
+(6, 1)
+```
+You can also expand an array by inserting a new axis at a specified position
+with `np.expand_dims`.
+
+For example, if you start with this array:
+
+```
+>>> a = np.array([1, 2, 3, 4, 5, 6])
+>>> a.shape
+(6,)
+```
+You can use `np.expand_dims` to add an axis at index position 1 with:
+
+```
+>>> b = np.expand_dims(a, axis=1)
+>>> b.shape
+(6, 1)
+```
+You can add an axis at index position 0 with:
+
+```
+>>> c = np.expand_dims(a, axis=0)
+>>> c.shape
+(1, 6)
+```
+Find more information about [newaxis here](https://numpy.org/reference/routines.indexing.

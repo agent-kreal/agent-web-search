@@ -1,0 +1,22 @@
+{"scenario":"tables","q":1,"extractor":"local-auto","structure":2,"clean":2,"content":2,"note":"df-таблицы в фенсах, заголовки целы"}
+{"scenario":"tables","q":1,"extractor":"local-http","structure":2,"clean":2,"content":2,"note":"то же, что auto"}
+{"scenario":"tables","q":1,"extractor":"local-curl","structure":2,"clean":2,"content":2,"note":"то же, медленнее tiers"}
+{"scenario":"tables","q":1,"extractor":"local-browser","structure":2,"clean":2,"content":2,"note":"идентично, самый медленный local"}
+{"scenario":"tables","q":1,"extractor":"firecrawl","structure":2,"clean":1,"content":2,"note":"код цел, версионное меню и copy-шум"}
+{"scenario":"tables","q":1,"extractor":"tavily","structure":0,"clean":1,"content":2,"note":"df-выводы слиты в однострочную кашу"}
+{"scenario":"tables","q":1,"extractor":"jina","structure":1,"clean":1,"content":2,"note":"jina-шапка, без фенсов, построчно цело"}
+{"scenario":"tables","q":1,"extractor":"parallel","structure":2,"clean":1,"content":1,"note":"код цел, эллипсисы, половина объёма"}
+{"scenario":"tables","q":2,"extractor":"local-auto","structure":1,"clean":2,"content":2,"note":"synopsis точен, но заголовки секций потеряны"}
+{"scenario":"tables","q":2,"extractor":"local-http","structure":1,"clean":2,"content":2,"note":"то же, что auto"}
+{"scenario":"tables","q":2,"extractor":"local-curl","structure":1,"clean":2,"content":2,"note":"то же, что auto"}
+{"scenario":"tables","q":2,"extractor":"local-browser","structure":1,"clean":2,"content":2,"note":"то же, что auto"}
+{"scenario":"tables","q":2,"extractor":"firecrawl","structure":1,"clean":1,"content":1,"note":"версии-меню съело голову, synopsis невиден"}
+{"scenario":"tables","q":2,"extractor":"tavily","structure":0,"clean":1,"content":2,"note":"synopsis разрушен в токены, проза цела"}
+{"scenario":"tables","q":2,"extractor":"jina","structure":1,"clean":1,"content":1,"note":"synopsis отфильтрован, дальше структурно"}
+{"scenario":"tables","q":3,"extractor":"local-auto","structure":2,"clean":2,"content":2,"note":"примеры-фенсы и заголовки целы"}
+{"scenario":"tables","q":3,"extractor":"local-http","structure":2,"clean":2,"content":2,"note":"то же, что auto"}
+{"scenario":"tables","q":3,"extractor":"local-curl","structure":2,"clean":2,"content":2,"note":"то же, что auto"}
+{"scenario":"tables","q":3,"extractor":"local-browser","structure":2,"clean":2,"content":2,"note":"то же, что auto"}
+{"scenario":"tables","q":3,"extractor":"firecrawl","structure":1,"clean":1,"content":2,"note":"экранированные переносы в коде, copy-шум"}
+{"scenario":"tables","q":3,"extractor":"tavily","structure":0,"clean":1,"content":2,"note":"все примеры слиты в одну строку"}
+{"scenario":"tables","q":3,"extractor":"jina","structure":1,"clean":1,"content":2,"note":"jina-шапка, без фенсов, но построчно"}

@@ -1,0 +1,10 @@
+{"scenario": "antibot", "q": 1, "extractor": "firecrawl", "structure": 1, "clean": 0, "content": 0, "note": "challenge-мусор, turnstile-виджет продублирован"}
+{"scenario": "antibot", "q": 1, "extractor": "tavily", "structure": 0, "clean": 0, "content": 0, "note": "пустой вывод, CF заблокировал"}
+{"scenario": "antibot", "q": 1, "extractor": "jina", "structure": 1, "clean": 1, "content": 0, "note": "challenge-мусор плюс jina-CAPTCHA-шапка"}
+{"scenario": "antibot", "q": 2, "extractor": "firecrawl", "structure": 2, "clean": 2, "content": 2, "note": "обошёл блок: герой, категории, карточки с рейтингами"}
+{"scenario": "antibot", "q": 2, "extractor": "tavily", "structure": 0, "clean": 0, "content": 0, "note": "пустой вывод при 403"}
+{"scenario": "antibot", "q": 2, "extractor": "jina", "structure": 0, "clean": 0, "content": 0, "note": "пустой вывод при 403"}
+{"scenario": "antibot", "q": 2, "extractor": "parallel", "structure": 1, "clean": 1, "content": 1, "note": "cookie-баннер и skip-ссылки; без карточек продуктов"}
+{"scenario": "antibot", "q": 3, "extractor": "firecrawl", "structure": 1, "clean": 1, "content": 2, "note": "полный контент, но пустые строки рвут структуру"}
+{"scenario": "antibot", "q": 3, "extractor": "tavily", "structure": 1, "clean": 1, "content": 2, "note": "полный контент; заголовки склеены в пункты списков"}
+{"scenario": "antibot", "q": 3, "extractor": "jina", "structure": 1, "clean": 1, "content": 2, "note": "полный контент; jina-шапка, пустые []() артефакты"}

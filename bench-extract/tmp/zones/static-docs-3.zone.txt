@@ -1,0 +1,58 @@
+### static-docs-3  len=9140  fm_end=782
+### HEAD window [0:2000] (первая треть <= 3046)
+
+### 
+[6.4.](https://www.rfc-editor.org#section-6.4) [Content](https://www.rfc-editor.org#name-content)
+        
+
+        
+   HTTP messages often transfer a complete or partial representation as the
+   message "content": a stream of octets sent after the header
+   section, as delineated by the message framing.[¶](https://www.rfc-editor.org#section-6.4-1)
+
+   This abstract definition of content reflects the data after it has been
+   extracted from the message framing. For example, an HTTP/1.1 message body
+   ([Section 6](https://www.rfc-editor.org/rfc/rfc9112#section-6) of [[HTTP/1.1](https://www.rfc-editor.org#HTTP11)]) might consist of a stream of data encoded
+   with the chunked transfer coding -- a sequence of data chunks, one
+   zero-length chunk, and a trailer section -- whereas
+   the content of that same message
+   includes only the data stream after the transfer coding has been decoded;
+   it does not include the chunk lengths, chunked framing syntax, nor the
+   trailer fields ([Section 6.5](https://www.rfc-editor.org#trailer.fields)).[¶](https://www.rfc-editor.org#section-6.4-2)
+
+#### 
+[6.4.1.](https://www.rfc-editor.org#section-6.4.1) [Content Semantics](https://www.rfc-editor.org#name-con
+
+### MID window [3570:5570] (средняя треть)
+itor.org#status.206) response to GET
+   contains either a single part of the selected representation or a
+   multipart message body containing multiple parts of that representation,
+   as described in [Section 15.3.7](https://www.rfc-editor.org#status.206).[¶](https://www.rfc-editor.org#section-6.4.1-4)
+
+   Response messages with an error status code usually contain content that
+   represents the error condition, such that the content describes the
+   error state and what steps are suggested for resolving it.[¶](https://www.rfc-editor.org#section-6.4.1-5)
+
+   Responses to the HEAD request method ([Section 9.3.2](https://www.rfc-editor.org#HEAD)) never include
+   content; the associated response header fields indicate only
+   what their values would have been if the request method had been GET
+   ([Section 9.3.1](https://www.rfc-editor.org#GET)).[¶](https://www.rfc-editor.org#section-6.4.1-6)
+
+                  [2xx (Successful)](https://www.rfc-editor.org#status.2xx) responses to a CONNECT request method
+   ([Section 9.3.6](https://www.rfc-editor.org#CONNECT)) switch the connection to tunnel mode instead of
+   having content.[¶](https://www.rfc-editor.org#section-6.4.1-7)
+
+   All [1xx (Informational)](https://www.rfc-editor.org#status.1xx), [204 (No Content)](https://www.rfc-editor.org#status.204), and
+   [304 (Not Modified)](https://www.rfc-editor.org#status.304) responses do not include content.[¶](https://www.rfc-editor.org#section-6.4.1-8)
+
+   All other responses do include content, although that content
+   might be of zero length.[¶](https://www.rfc-editor.org#section-6.4.1-9)
+
+#### 
+[6.4.2.](https://www.rfc-editor.org#section-6.4.2) [Identifying Content](https://www.rfc-editor.org#name-identifying-content)
+          
+
+   When a complete or partial representation is transferred as message
+   content, it is often desirable for the sender to supply, or the recipient
+   to determine, an identifier for a resource corresponding to that specific
+   representation. Fo

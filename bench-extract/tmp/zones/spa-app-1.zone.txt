@@ -1,0 +1,34 @@
+### spa-app-1  len=755  ALL in head, fm_end=299
+--- BODY ---
+
+You need to enable JavaScript to run this app.
+Excalidraw
+Your drawings are saved in your browser's storage.
+Browser storage can be cleared unexpectedly.
+Save your work to a file regularly to avoid losing it.
+Open
+Cmd+O
+Help
+?
+Live collaboration...
+Sign up
+Export, preferences, languages, ...
+Pick a tool & Start drawing!
+To move canvas, hold
+Scroll wheel
+or
+Space
+while dragging, or use the hand tool
+Shapes
+1
+2
+3
+4
+5
+6
+7
+8
+9
+0
+Excalidraw+
+Drawing canvas

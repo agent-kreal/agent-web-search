@@ -1,0 +1,32 @@
+{"scenario": "ru-general", "query": "телеграм бот python aiogram хостинг бесплатно варианты", "freshness": null}
+{"scenario": "ru-general", "query": "распознавание речи whisper локально русский язык настройка", "freshness": null}
+{"scenario": "ru-general", "query": "открытые данные России API транспорт расписание разработчикам", "freshness": null}
+{"scenario": "ru-general", "query": "ведение документации проекта confluence альтернативы open source селфхостинг", "freshness": null}
+{"scenario": "ru-news", "query": "GLM-5.3-Flash Z.ai coding plan release", "freshness": "week"}
+{"scenario": "ru-news", "query": "выход python 3.14 что нового changelog", "freshness": "week"}
+{"scenario": "ru-news", "query": "график ЕГЭ 2026 изменения расписание", "freshness": "month"}
+{"scenario": "ru-news", "query": "GLM 5.3 выход релиз Zhipu анонс", "freshness": "month"}
+{"scenario": "en-news", "query": "linux kernel 6.15 release notes highlights", "freshness": "week"}
+{"scenario": "en-news", "query": "whisper.cpp changelog release notes streaming mode", "freshness": "month"}
+{"scenario": "en-news", "query": "sqlite 3.50 release notes new features", "freshness": "month"}
+{"scenario": "en-news", "query": "best local LLM apps macOS Apple Silicon 2026 LM Studio Ollama MLX", "freshness": "month"}
+{"scenario": "exact-fact", "query": "Exa AI search API free tier 1000 requests per month pricing", "freshness": null}
+{"scenario": "exact-fact", "query": "r.jina.ai free rate limit without API key requests per minute", "freshness": null}
+{"scenario": "exact-fact", "query": "Yandex Cloud Vision OCR цены за страницу тарифы", "freshness": null}
+{"scenario": "exact-fact", "query": "Discogs API rate limit 60 per minute authentication", "freshness": null}
+{"scenario": "semantic", "query": "Claude Code subagents best practices 2025", "freshness": null}
+{"scenario": "semantic", "query": "Mem0 vs Letta MemGPT vs Zep agent memory framework comparison 2026", "freshness": null}
+{"scenario": "semantic", "query": "LLM prompt decomposition vs single monolithic prompt information extraction quality", "freshness": null}
+{"scenario": "semantic", "query": "music recommendation system explainable audio features github", "freshness": null}
+{"scenario": "code-docs", "query": "playwright page.goto wait_until domcontentloaded vs networkidle SPA rendering", "freshness": null}
+{"scenario": "code-docs", "query": "MarshalX yandex-music-api Python library GitHub", "freshness": null}
+{"scenario": "code-docs", "query": "ddgs python library duckduckgo_search renamed rate limit 2026", "freshness": null}
+{"scenario": "code-docs", "query": "kafka connect configuration transforms chain example documentation", "freshness": null}
+{"scenario": "local-ru", "query": "LLM API провайдеры Россия gpt-oss deepseek open-source 2026 список", "freshness": null}
+{"scenario": "local-ru", "query": "разработка телеграм бота под ключ стоимость Москва агентство", "freshness": null}
+{"scenario": "local-ru", "query": "ozon seller api лимиты запросов документация", "freshness": null}
+{"scenario": "local-ru", "query": "магистратура IT заочно стоимость вузов Москва сравнение", "freshness": null}
+{"scenario": "debug-errors", "query": "python 3.14 ssl read hangs forever socket timeout not honored", "freshness": null}
+{"scenario": "debug-errors", "query": "wireguard intermittent handshake failure nat keepalive android", "freshness": null}
+{"scenario": "debug-errors", "query": "docker desktop vpnkit high cpu macos fix", "freshness": null}
+{"scenario": "debug-errors", "query": "site:reddit.com z.ai GLM coding plan API down August", "freshness": "week"}

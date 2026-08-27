@@ -1,0 +1,108 @@
+### forum-3  len=5974  fm_end=720
+### HEAD window [0:2000] (первая треть <= 1991)
+
+            
+            
+              I’m wondering what is the best practice for spawning goroutine, whether to spawn at caller function or at callee function?
+
+Spawning at caller function makes it explicit that it is background job/goroutine. But in some scenarios we need to spawn in callee function so to have better control over the goroutine (e.g., Channel/WaitGroup).
+
+I want to know is there any guideline people follow to make this decision.
+
+Example
+
+```
+type DataCollector struct {
+  ...
+}
+func (d *DataCollector) Start() {
+// alternatively goroutine can be spawned here
+// go func() {
+//   ...
+// }
+  ...
+}
+func main() {
+  dataCollector := DataCollector{}
+  go dataCollector.Start()
+  ...
+}
+```
+
+             
+              
+                  
+                  
+                1 Like
+              
+
+            
+           
+          
+            
+              
+                [bklimczak](https://forum.golangbridge.org/u/bklimczak)
+                  
+                (Bartłomiej Klimczak)
+              
+              
+                  
+                  
+              2
+              
+             
+            
+              that’s an excellent question. I think it depends on the behaviour of `Start` function and how it will be used. There’s a general r
+
+### MID window [1987:3987] (средняя треть)
+s a general rule - don’t use channels as long as you don’t have to.
+
+I like the option described in the `main` function. If it’s only about making `Start` run concurrent, leave the decision to the caller. But…
+
+If you want to make `Start` cancellable, then you should pass the context in it and handle it there.
+
+```
+func (d *DataCollector) Start(ctx context.Context) {
+go func() { 
+  doSomething(ctx)
+  c <- struct{}
+}()
+select {
+    case <-ctx.Done(): // cancelled
+        return 
+    case <-c:
+        // everything went OK
+    }
+}
+```
+
+It depends on the logic you have in the function. It’s hard to answer **generally** the answer without the context. For example, if you want to fire collectors and not expecting them to finish shortly, just the approach in `main()`. If the `Start` has more logic and for example calls some IO’s, you should run those tasks in goroutines.
+
+             
+              
+                  
+                  
+                2 Likes
+              
+
+            
+           
+          
+            
+              
+                [reiki33](https://forum.golangbridge.org/u/reiki33)
+                  
+                (Mark Baldridge)
+              
+              
+                  
+                  
+              3
+              
+             
+            
+              Another rule of thumb is to know how a goroutine will stop, before you start it. … Which is my problem.
+
+I am building a database modeled after Pick, which supplies a programming language. Each user/session runs as a goroutine. The approach of a context would work, barring an expected long-running program that would exceed a general context expiration. Normally, you might pass through a SELECT statement to see if an administrator had sent you a termination request on your QUIT channel. But, if a program is stuck on an infinite loop (i.e. LABEL: GO TO LABEL) it would never return to a code section to perform the check.
+
+At least here there is a workaround. You can only have an infin

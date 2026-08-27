@@ -1,0 +1,23 @@
+### article-en-1  len=32000  fm_end=201
+### HEAD window [0:2000] (первая треть <= 10666)
+
+# Transformer (deep learning)
+
+[Transformer (deep learning architecture)](<https://en.wikipedia.org/w/index.php?title=Transformer_(deep_learning_architecture)&redirect=no>))
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Transformer%2C_full_architecture.png/250px-Transformer%2C_full_architecture.png?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail)
+
+| Part of [a series](https://en.wikipedia.org/wiki/Category:Machine_learning) on | 
+| [Machine learning](https://en.wikipedia.org/wiki/Machine_learning)and [data mining](https://en.wikipedia.org/wiki/Data_mining) | 
+|---|
+
+In [deep learning](https://en.wikipedia.org/wiki/Deep_learning), the **transformer** is a family of [artificial neural network](https://en.wikipedia.org/wiki/Artificial_neural_network) architectures based on the multi-head [attention](<https://en.wikipedia.org/wiki/Attention_(machine_learning)>) mechanism, in which input data such as text, images, or audio, is  converted to a sequence of numerical representations called [tokens](https://en.wikipedia.org/wiki/Large_language_model#Tokenization), and each token is converted into a vector via lookup from a [word embedding](https://en.wikipedia.org/wiki/Word_embedding) table.<sup>[\[1\]](https://en.wikipedia.org#cite_note-2017_Attention_Is_All_You_Need-1)</sup> At each layer, each [token](<https://en.wikipedia.org/wiki/Tokenization_(lexical_analysis)>) is then [contextualized](<https://en.wikipedia.org/wiki/Contextualization_(computer_science)>) within the scope of the [context window](https://en.wikipedia.org/wiki/Context_window) with other (unmasked) tokens via a parallel multi-head attention mechanism, allowing the signal for key tokens to be amplified and less important tokens to be diminished. Because self-attention a
+
+### MID window [15000:17000] (средняя треть)
+ikipedia.org#cite_note-37)</sup> Transformer architecture is now used alongside many [generative models](https://en.wikipedia.org/wiki/Generative_AI) that contribute to the ongoing [AI boom](https://en.wikipedia.org/wiki/AI_boom).
+
+The "reference implementation" of the original Transformer was written in a TensorFlow library.[\[36\]](https://en.wikipedia.org#cite_note-38)<sup>[\[37\]](https://en.wikipedia.org#cite_note-39)</sup> In language modelling, [ELMo](https://en.wikipedia.org/wiki/ELMo) (2018) was a bi-directional LSTM that produces contextualized [word embeddings](https://en.wikipedia.org/wiki/Word_embedding), improving upon the line of research from [bag of words](https://en.wikipedia.org/wiki/Bag-of-words_model) and [word2vec](https://en.wikipedia.org/wiki/Word2vec). It was followed by [BERT](<https://en.wikipedia.org/wiki/BERT_(language_model)>) (2018), an encoder-only transformer model.<sup>[\[38\]](https://en.wikipedia.org#cite_note-:03-40)</sup> In October 2019, Google started using BERT to process search queries.<sup>[\[39\]](https://en.wikipedia.org#cite_note-41)</sup> In 2020, Google Translate replaced the previous RNN-encoder–RNN-decoder model by a transformer-encoder–RNN-decoder model.[\[40\]](https://en.wikipedia.org#cite_note-gtrans-42)
+
+Starting in 2018, the OpenAI [GPT series](https://en.wikipedia.org/wiki/Generative_pre-trained_transformer) of decoder-only transformers became state of the art in [natural language generation](https://en.wikipedia.org/wiki/Natural_language_generation). At the end of 2022, [ChatGPT](https://en.wikipedia.org/wiki/ChatGPT), a chatbot based on a fine-tuned variant of GPT-3.5, became unexpectedly[\[41\]](https://en.wikipedia.org#cite_note-43)<sup>[\[42\]](https://en.wikipedia.org#cite_note-44)</sup> popular, triggering a boom around [large language models](https://en.wikipedia.org/wiki/Large_language_model).[\[43\]](https://en.wikipedia.org#cite_note-gpt12-45)[\[44\]](https://en.wikipedia.org#cite_note-ngEG3-46)
+
+Tr

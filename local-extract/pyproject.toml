@@ -1,0 +1,15 @@
+[project]
+name = "local-extract"
+version = "0.1.0"
+description = "Local fetch+extract cascade for wsearch: httpx+trafilatura -> curl_cffi -> playwright"
+requires-python = ">=3.11"
+dependencies = [
+    "httpx>=0.28",
+    "trafilatura[all]>=2.2",
+    "playwright>=1.50",
+    "curl_cffi>=0.15",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

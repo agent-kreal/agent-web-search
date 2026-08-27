@@ -1,0 +1,53 @@
+{
+  "ours-md": {
+    "n": 300,
+    "f1": 0.777,
+    "precision": 0.7646,
+    "recall": 0.8563,
+    "with_rate": 0.6063,
+    "without_rate": 0.0889,
+    "per_type": {
+      "article": 0.8716,
+      "collection": 0.5624,
+      "documentation": 0.8884,
+      "forum": 0.6941,
+      "listing": 0.5395,
+      "product": 0.5803,
+      "service": 0.7341
+    }
+  },
+  "ours-text": {
+    "n": 300,
+    "f1": 0.8316,
+    "precision": 0.8701,
+    "recall": 0.8485,
+    "with_rate": 0.7033,
+    "without_rate": 0.0817,
+    "per_type": {
+      "article": 0.9208,
+      "collection": 0.6219,
+      "documentation": 0.9496,
+      "forum": 0.7062,
+      "listing": 0.6446,
+      "product": 0.6598,
+      "service": 0.7901
+    }
+  },
+  "vanilla": {
+    "n": 300,
+    "f1": 0.8292,
+    "precision": 0.8679,
+    "recall": 0.847,
+    "with_rate": 0.7288,
+    "without_rate": 0.0779,
+    "per_type": {
+      "article": 0.9199,
+      "collection": 0.5955,
+      "documentation": 0.9611,
+      "forum": 0.7161,
+      "listing": 0.5937,
+      "product": 0.6803,
+      "service": 0.795
+    }
+  }
+}

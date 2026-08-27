@@ -1,0 +1,53 @@
+### static-docs-2  len=32000  fm_end=395
+### HEAD window [0:2000] (первая треть <= 10666)
+
+# `os` — Miscellaneous operating system interfaces[¶](https://docs.python.org#module-os)
+
+**Source code:** [Lib/os.py](https://github.com/python/cpython/tree/3.14/Lib/os.py)
+
+This module provides a portable way of using operating system dependent
+functionality.  If you just want to read or write a file see [`open()`](https://docs.python.org/functions.html#open), if
+you want to manipulate paths, see the [`os.path`](https://docs.python.org/os.path.html#module-os.path) module, and if you want to
+read all the lines in all the files on the command line see the [`fileinput`](https://docs.python.org/fileinput.html#module-fileinput)
+module.  For creating temporary files and directories see the [`tempfile`](https://docs.python.org/tempfile.html#module-tempfile)
+module, and for high-level file and directory handling see the [`shutil`](https://docs.python.org/shutil.html#module-shutil)
+module.
+
+Notes on the availability of these functions:
+
+- The design of all built-in operating system dependent modules of Python is such that as long as the same functionality is available, it uses the same interface; for example, the function `os.stat(path)` returns stat
+information about*path* in the same format (which happens to have originated
+with the POSIX interface).
+- Extensions peculiar to a particular operating system are also available through the `os` module, but using them is of course a threat to
+portability.
+- All functions accepting path or file names accept both bytes and string objects, and result in an object of the same type, if a path or file name is returned.
+- On VxWorks, os.popen, o
+
+### MID window [15000:17000] (средняя треть)
+ unchanged.
+Otherwise[`__fspath__()`](https://docs.python.org#os.PathLike.__fspath__) is called and its value is
+returned as long as it is a`str` or`bytes` object.
+In all other cases,[`TypeError`](https://docs.python.org/exceptions.html#TypeError) is raised.Added in version 3.6.
+
+- 
+*class* os.PathLike[¶](https://docs.python.org#os.PathLike)
+- An [abstract base class](https://docs.python.org/glossary.html#term-abstract-base-class) for objects representing a file system path,
+e.g.[`pathlib.PurePath`](https://docs.python.org/pathlib.html#pathlib.PurePath) .Added in version 3.6.
+
+- 
+os.getenv(*key* ,*default=None* )[¶](https://docs.python.org#os.getenv)
+- Return the value of the environment variable *key* as a string if it exists, or*default* if it doesn’t.*key* is a string. Note that
+since`getenv()` uses[`os.environ`](https://docs.python.org#os.environ) , the mapping of`getenv()` is
+similarly also captured on import, and the function may not reflect
+future environment changes.On Unix, keys and values are decoded with [`sys.getfilesystemencoding()`](https://docs.python.org/sys.html#sys.getfilesystemencoding) and`'surrogateescape'` error handler. Use[`os.getenvb()`](https://docs.python.org#os.getenvb) if you
+would like to use a different encoding.[Availability](https://docs.python.org/intro.html#availability) : Unix, Windows.
+
+- 
+os.getenvb(*key* ,*default=None* )[¶](https://docs.python.org#os.getenvb)
+- Return the value of the environment variable *key* as bytes if it exists, or*default* if it doesn’t.*key* must be bytes. Note that
+since`getenvb()` uses[`os.environb`](https://docs.python.org#os.environb) , the mapping of`getenvb()` is
+similarly also captured on import, and the function may not reflect
+future environment changes.`getenvb()` is only available if[`supports_bytes_environ`](https://docs.python.org#os.supports_bytes_environ) is`True` .[Availability](https://docs.python.org/intro.html#availability) : Unix.Added in version 3.2.
+
+- 
+os.get_exec_path(*env=None* 

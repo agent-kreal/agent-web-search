@@ -1,0 +1,41 @@
+### tables-2  len=32000  fm_end=279
+### HEAD window [0:2000] (первая треть <= 10666)
+
+SELECT, TABLE, WITH — retrieve rows from a table or view
+
+[ WITH [ RECURSIVE ] *`with_query`* [, ...] ]
+SELECT [ ALL | DISTINCT [ ON ( *`expression`* [, ...] ) ] ]
+    [ { * | *`expression`* [ [ AS ] *`output_name`* ] } [, ...] ]
+    [ FROM *`from_item`* [, ...] ]
+    [ WHERE *`condition`* ]
+    [ GROUP BY [ ALL | DISTINCT ] *`grouping_element`* [, ...] ]
+    [ HAVING *`condition`* ]
+    [ WINDOW *`window_name`* AS ( *`window_definition`* ) [, ...] ]
+    [ { UNION | INTERSECT | EXCEPT } [ ALL | DISTINCT ] *`select`* ]
+    [ ORDER BY *`expression`* [ ASC | DESC | USING *`operator`* ] [ NULLS { FIRST | LAST } ] [, ...] ]
+    [ LIMIT { *`count`* | ALL } ]
+    [ OFFSET *`start`* [ ROW | ROWS ] ]
+    [ FETCH { FIRST | NEXT } [ *`count`* ] { ROW | ROWS } { ONLY | WITH TIES } ]
+    [ FOR { UPDATE | NO KEY UPDATE | SHARE | KEY SHARE } [ OF *`from_reference`* [, ...] ] [ NOWAIT | SKIP LOCKED ] [...] ]
+where *`from_item`* can be one of:
+    [ ONLY ] *`table_name`* [ * ] [ [ AS ] *`alias`* [ ( *`column_alias`* [, ...] ) ] ]
+                [ TABLESAMPLE *`sampling_method`* ( *`argument`* [, ...] ) [ REPEATABLE ( *`seed`* ) ] ]
+    [ LATERAL ] ( *`select`* ) [ [ AS ] *`alias`* [ ( *`column_alias`* [, ...] ) ] ]
+    *`with_query_name`* [ [ AS ] *`alias`* [ ( *`column_alias`* [, ...] ) ] ]
+    [ LATERAL ] *`function_name`* ( [ *`argument`* [, ...] ] )
+                [ WITH ORDINALITY ] [ [ AS ] *`alias`* [ ( *`column_alias`* [, ...] ) ] ]
+    [ LATERAL ] *`function_name`* ( [ *`argument`* [, ...] ] ) [ AS ] *`alias`* ( *`column_definition`* [, ...] )
+    [ LATERAL ] *`function_name`* ( [ *`argument`* [, ...] ] ) AS ( *`column_definition`* [, ...] )
+    [ LATERAL ] ROWS FROM( *`function_name`* ( [ *`argum
+
+### MID window [15000:17000] (средняя треть)
+ in the database via extensions.
+
+The `BERNOULLI` and `SYSTEM` sampling methods each accept a single *`argument`* which is the fraction of the table to sample, expressed as a percentage between 0 and 100. This argument can be any `real`-valued expression. (Other sampling methods might accept more or different arguments.) These two methods each return a randomly-chosen sample of the table that will contain approximately the specified percentage of the table's rows. The `BERNOULLI` method scans the whole table and selects or ignores individual rows independently with the specified probability. The `SYSTEM` method does block-level sampling with each block having the specified chance of being selected; all rows in each selected block are returned. The `SYSTEM` method is significantly faster than the `BERNOULLI` method when small sampling percentages are specified, but it may return a less-random sample of the table as a result of clustering effects.
+
+The optional `REPEATABLE` clause specifies a *`seed`* number or expression to use for generating random numbers within the sampling method. The seed value can be any non-null floating-point value. Two queries that specify the same seed and *`argument`* values will select the same sample of the table, if the table has not been changed meanwhile. But different seed values will usually produce different samples. If `REPEATABLE` is not given then a new random sample is selected for each query, based upon a system-generated seed. Note that some add-on sampling methods do not accept `REPEATABLE`, and will always produce new samples on each use.
+
+`select`
+A sub-`SELECT` can appear in the `FROM` clause. This acts as though its output were created as a temporary table for the duration of this single `SELECT` command. Note that the sub-`SELECT` must be surrounded by parentheses, and an alias can be provided in the same way as for a table. A [`VALUES`](https://www.postgresql.org/sql-values.html) command can also be used here.
+
+`with_q

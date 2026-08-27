@@ -1,0 +1,10 @@
+{"scenario": "pdf", "q": 1, "extractor": "firecrawl", "structure": 2, "clean": 2, "content": 2, "note": "абзацы и секции читаемы, но дубли предложений"}
+{"scenario": "pdf", "q": 1, "extractor": "tavily", "structure": 1, "clean": 1, "content": 2, "note": "сплошной слитый текст, сноски влиты в абзац"}
+{"scenario": "pdf", "q": 1, "extractor": "jina", "structure": 2, "clean": 1, "content": 2, "note": "лучше всех заголовки markdown; шапка jina"}
+{"scenario": "pdf", "q": 1, "extractor": "parallel", "structure": 2, "clean": 1, "content": 1, "note": "жирные секции, но провалы с многоточиями"}
+{"scenario": "pdf", "q": 2, "extractor": "firecrawl", "structure": 1, "clean": 1, "content": 2, "note": "дубль абзаца, врезки в середину колонок"}
+{"scenario": "pdf", "q": 2, "extractor": "tavily", "structure": 1, "clean": 1, "content": 2, "note": "всё слито, переносы-дефисы сохранены"}
+{"scenario": "pdf", "q": 2, "extractor": "jina", "structure": 2, "clean": 1, "content": 2, "note": "заголовок и подписи отдельно, чисто"}
+{"scenario": "pdf", "q": 3, "extractor": "firecrawl", "structure": 1, "clean": 0, "content": 1, "note": "циклический повтор съедает таблицу FAQ"}
+{"scenario": "pdf", "q": 3, "extractor": "tavily", "structure": 1, "clean": 2, "content": 2, "note": "плоско, но весь воркфлоу присутствует"}
+{"scenario": "pdf", "q": 3, "extractor": "jina", "structure": 2, "clean": 1, "content": 2, "note": "построчно по макету, порядок шагов ясен"}

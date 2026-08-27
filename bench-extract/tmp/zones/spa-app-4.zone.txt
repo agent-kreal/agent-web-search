@@ -1,0 +1,45 @@
+### spa-app-4  len=2874  ALL in head, fm_end=289
+--- BODY ---
+
+Transform your photos with professional-grade tools in a free online photo editor that works right in your browser. No downloads, no hassle.
+
+There are no uploads. Photopea runs on your device, using your CPU and your GPU. All files open instantly, and never leave your device.
+
+Enjoy all the premium features without spending a dime.
+
+No need to install heavy software on your device. Just open your browser and start editing.
+
+Our photo editor runs on any device. The better hardware you have, the better it runs.
+
+Photopea offers a full suite of editing tools, from basic features like cropping and resizing to advanced features such as layering, masking, and blending.
+
+Photopea fully supports a popular PSD format, both opening and saving files. It is the main format of Photopea.
+
+Open and edit PNG, JPG, GIF, BMP, WEBP, SVG, PDF, AI, AVIF, DDS, HEIC, TIFF, MP4, TGA, CDR, PDN, EPS, INDD, Figma and 
+						[40 other formats](http://github.com/photopea/photopea?tab=readme-ov-file#supported-formats).
+
+Photopea opens DNG, CR2, CR3, NEF, ARW, RW2, RAF, ORF and FFF files. Set the Exposure, Color Balance, Contrast, Highlights and Shadows, etc.
+
+[Remove background with one click](http://x.com/photopeacom/status/1735723561950539852/video/1),
+						or [replace any part of an image](http://x.com/photopeacom/status/1661425407944425494/video/1)
+						with a new content through a text description.
+
+We have Layers, Masks, Layer Styles, Smart Objects, Adjustment Layers, Channels, Paths and more!
+
+Do you need Levels and Curves? A Gaussian Blur? Or advanced stuff such as Liquify or Puppet Warp? We have it all!
+
+Create and edit vector graphics directly within the editor. Perfect for designers working on logos, icons, or illustrations.
+
+Enhance your photos before sharing them on platforms like Instagram, Facebook, or Twitter. Make every post stand out with unique edits.
+
+Create stunning visuals for presentations, assignments, and more. Our free online photo editor is a great tool for educational projects.
+
+Design promotional materials, edit product photos, and create engaging content for your website or online store, all without spending on expensive software.
+
+Whether you’re a freelancer or part of a design team, Photopea’s free photo editor offers all the features you need to produce professional-quality work.
+
+				  [support@photopea.com](mailto:support@photopea.com) 
+				| [Privacy Policy](https://www.photopea.com/privacy.html)
+				| [Twitter](http://x.com/photopeacom)
+				| [Facebook](http://facebook.com/photopea/)
+				| [Reddit](http://reddit.com/r/photopea/)

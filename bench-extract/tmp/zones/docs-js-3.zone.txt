@@ -1,0 +1,80 @@
+### docs-js-3  len=32000  fm_end=249
+### HEAD window [0:2000] (первая треть <= 10666)
+
+# Running containers
+
+Docker runs processes in isolated containers. A container is a process
+which runs on a host. The host may be local or remote. When you
+execute `docker run`, the container process that runs is isolated in
+that it has its own file system, its own networking, and its own
+isolated process tree separate from the host.
+
+This page details how to use the `docker run` command to run containers.
+
+## [General form](https://docs.docker.com#general-form)
+
+A `docker run` command takes the following form:
+
+```
+$ docker run [OPTIONS] IMAGE[:TAG|@DIGEST] [COMMAND] [ARG...]
+```
+The `docker run` command must specify an [image reference](https://docs.docker.com#image-references)
+to create the container from.
+
+### [Image references](https://docs.docker.com#image-references)
+
+The image reference is the name and version of the image. You can use the image reference to create or run a container based on an image.
+
+- `docker run IMAGE[:TAG][@DIGEST]`
+- `docker create IMAGE[:TAG][@DIGEST]`
+
+An image tag is the image version, which defaults to `latest` when omitted. Use
+the tag to run a container from specific version of an image. For example, to
+run version `24.04` of the `ubuntu` image: `docker run ubuntu:24.04`.
+
+#### [Image digests](https://docs.docker.com#image-digests)
+
+Images using the v2 or later image format have a content-addressable identifier called a digest. As long as the input used to generate the image is unchanged, the digest value is predictable.
+
+The following example runs a container from the `alpine` image with the
+`sha256:9cacb71397b640eca97488cf08582ae4e4068513101088e9f96c9814bfda95e0` digest:
+
+```
+$ docker run alpine@sha256:9cacb71397b640eca97488cf08582ae4e4068513101088e9f96c9814bfda95e0 date
+```
+### [
+
+### MID window [15000:17000] (средняя треть)
+ness behavior. Accepts an integer between 0 and 100. | 
+| `--shm-size=""` | Size of `/dev/shm` . The format is`<number><unit>` .`number` must be greater than`0` . Unit is optional and can be`b` (bytes),`k` (kilobytes),`m` (megabytes), or`g` (gigabytes). If you omit the unit, the system uses bytes. If you omit the size entirely, the system uses`64m` . | 
+
+### [User memory constraints](https://docs.docker.com#user-memory-constraints)
+
+We have four ways to set user memory usage:
+
+| Option | Result | 
+|---|---|
+| **memory=inf, memory-swap=inf** (default) | There is no memory limit for the container. The container can use as much memory as needed. | 
+| **memory=L<inf, memory-swap=inf** | (specify memory and set memory-swap as `-1` ) The container is not allowed to use more than L bytes of memory, but can use as much swap as is needed (if the host supports swap memory). | 
+| **memory=L<inf, memory-swap=2*L** | (specify memory without memory-swap) The container is not allowed to use more than L bytes of memory, swap *plus* memory usage is double of that. | 
+| **memory=L<inf, memory-swap=S<inf, L<=S** | (specify both memory and memory-swap) The container is not allowed to use more than L bytes of memory, swap *plus* memory usage is limited by S. | 
+
+Examples:
+
+```
+$ docker run -it ubuntu:24.04 /bin/bash
+```
+We set nothing about memory, this means the processes in the container can use as much memory and swap memory as they need.
+
+```
+$ docker run -it -m 300M --memory-swap -1 ubuntu:24.04 /bin/bash
+```
+We set memory limit and disabled swap memory limit, this means the processes in the container can use 300M memory and as much swap memory as they need (if the host supports swap memory).
+
+```
+$ docker run -it -m 300M ubuntu:24.04 /bin/bash
+```
+We set memory limit only, this means the processes in the container can use
+300M memory and 300M swap memory, by default, the total virtual memory size
+(`--memory-swap`) will be set as double of memory, in this case, memory + swap
+would 

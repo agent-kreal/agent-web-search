@@ -1,0 +1,96 @@
+### forum-1  len=5505  fm_end=186
+### HEAD window [0:2000] (первая треть <= 1835)
+
+| ![](https://news.ycombinator.com/s.gif) [Guidelines](https://news.ycombinator.com/newsguidelines.html) \|[FAQ](https://news.ycombinator.com/newsfaq.html) \|[Lists](https://news.ycombinator.com/lists) \|[API](https://github.com/HackerNews/API) \|[Security](https://news.ycombinator.com/security.html) \|[Legal](https://www.ycombinator.com/legal/) \|[Apply to YC](https://www.ycombinator.com/apply/) \|[Contact](mailto:hn@ycombinator.com) | 
+
+|  | **[Hacker News](https://news.ycombinator.com/news)**[new](https://news.ycombinator.com/newest) \|[past](https://news.ycombinator.com/front) \|[comments](https://news.ycombinator.com/newcomments) \|[ask](https://news.ycombinator.com/ask) \|[show](https://news.ycombinator.com/show) \|[jobs](https://news.ycombinator.com/jobs) \|[submit](https://news.ycombinator.com/submit) | [login](https://news.ycombinator.com/login?goto=item%3Fid%3D8863) | 
+
+|  |  | [My YC app: Dropbox - Throw away your USB drive](http://www.getdropbox.com/u/2/screencast.html) ([getdropbox.com](https://news.ycombinator.com/from?site=getdropbox.com) ) | 
+|  |  | 104 points by [dhouston](https://news.ycombinator.com/user?id=dhouston)[on April 4, 2007](https://news.ycombinator.com/item?id=8863) \|[hide](https://news.ycombinator.com/hide?id=8863&goto=item%3Fid%3D8863) \|[past](https://hn.algolia.com/?query=My%20YC%20app%3A%20Dropbox%20-%20Throw%20away%20your%20USB%20drive&type=story&dateRange=all&sort=byDate&storyText=false&prefix&page=0) \|[favorite](https://news.ycombinator.com/fave?id=8863&auth=6a77f6cd5c4e3076c19059a37d4a4d7ba219674a) \|[71 comments](https://news.ycombinator.com/item?id=8863) | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinat
+
+### MID window [1752:3752] (средняя треть)
+ \|[71 comments](https://news.ycombinator.com/item?id=8863) | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https://news.ycombinator.com/s.gif) |  |  | 
+
+| ![](https:

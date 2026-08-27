@@ -1,0 +1,17 @@
+# secrets / runtime state — never commit
+.env
+state/
+
+# python
+__pycache__/
+*.pyc
+
+# local-extract virtualenv
+local-extract/.venv/
+
+# benchmark vendor data (downloaded by bench-extract/run_wcxb.py)
+bench-extract/wcxb/
+bench-extract/tmp-full/
+
+# os noise
+.DS_Store

@@ -1,0 +1,23 @@
+{"scenario": "spa-app", "q": 1, "extractor": "local-auto", "structure": 0, "clean": 1, "content": 2, "note": "noscript-строка и хром приложения, плоский текст"}
+{"scenario": "spa-app", "q": 1, "extractor": "local-browser", "structure": 0, "clean": 1, "content": 2, "note": "идентично auto: весь текст аппа без структуры"}
+{"scenario": "spa-app", "q": 1, "extractor": "firecrawl", "structure": 2, "clean": 2, "content": 2, "note": "h2+инлайн-код+ссылки, без мусора"}
+{"scenario": "spa-app", "q": 1, "extractor": "tavily", "structure": 2, "clean": 2, "content": 2, "note": "чисто и структурно, но обрыв после Shapes"}
+{"scenario": "spa-app", "q": 1, "extractor": "jina", "structure": 1, "clean": 1, "content": 2, "note": "jina-шапка, потеряны h1 и инлайн-код"}
+{"scenario": "spa-app", "q": 1, "extractor": "parallel", "structure": 2, "clean": 2, "content": 2, "note": "компактно, ярлыки и код сохранены"}
+{"scenario": "spa-app", "q": 2, "extractor": "local-auto", "structure": 0, "clean": 1, "content": 2, "note": "живые данные есть, числа без подписей"}
+{"scenario": "spa-app", "q": 2, "extractor": "local-browser", "structure": 0, "clean": 1, "content": 2, "note": "то же: суп чисел, switcher сетей в начале"}
+{"scenario": "spa-app", "q": 2, "extractor": "firecrawl", "structure": 1, "clean": 2, "content": 2, "note": "ссылки блоков целы, экранированные дефисы"}
+{"scenario": "spa-app", "q": 2, "extractor": "tavily", "structure": 0, "clean": 0, "content": 0, "note": "пустой вывод на CSR-дашборде"}
+{"scenario": "spa-app", "q": 2, "extractor": "jina", "structure": 1, "clean": 1, "content": 2, "note": "самый полный дашборд; пустые []() и jina-шапка"}
+{"scenario": "spa-app", "q": 3, "extractor": "local-auto", "structure": 0, "clean": 1, "content": 2, "note": "заголовки новостей есть, всё плоско, навка впереди"}
+{"scenario": "spa-app", "q": 3, "extractor": "local-browser", "structure": 0, "clean": 1, "content": 2, "note": "идентичная плоская простыня ленты"}
+{"scenario": "spa-app", "q": 3, "extractor": "firecrawl", "structure": 2, "clean": 2, "content": 2, "note": "заголовки секций, ссылки и таймстампы у новостей"}
+{"scenario": "spa-app", "q": 3, "extractor": "tavily", "structure": 2, "clean": 1, "content": 2, "note": "полная лента, но крупный меню-блок с ссылками"}
+{"scenario": "spa-app", "q": 3, "extractor": "jina", "structure": 2, "clean": 1, "content": 2, "note": "jina-шапка плюс навменю и счётчик Rambler"}
+{"scenario": "spa-app", "q": 4, "extractor": "local-auto", "structure": 1, "clean": 2, "content": 1, "note": "все секционные заголовки потеряны, обрыв на Do you need"}
+{"scenario": "spa-app", "q": 4, "extractor": "local-http", "structure": 1, "clean": 2, "content": 1, "note": "сплошные абзацы без заголовков, хвост отрезан"}
+{"scenario": "spa-app", "q": 4, "extractor": "local-curl", "structure": 1, "clean": 2, "content": 1, "note": "как http: без заголовков, обрыв середины лендинга"}
+{"scenario": "spa-app", "q": 4, "extractor": "local-browser", "structure": 1, "clean": 2, "content": 1, "note": "тот же усечённый текст без заголовков"}
+{"scenario": "spa-app", "q": 4, "extractor": "firecrawl", "structure": 2, "clean": 2, "content": 2, "note": "полная иерархия секций, чуть навки сверху"}
+{"scenario": "spa-app", "q": 4, "extractor": "tavily", "structure": 2, "clean": 2, "content": 2, "note": "все заголовки секций, только строка навки"}
+{"scenario": "spa-app", "q": 4, "extractor": "jina", "structure": 2, "clean": 1, "content": 2, "note": "структура полная, jina-шапка"}

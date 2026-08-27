@@ -1,0 +1,114 @@
+### tables-1  len=32000  fm_end=173
+### HEAD window [0:2000] (первая треть <= 10666)
+
+# 10 minutes to pandas[#](https://pandas.pydata.org#minutes-to-pandas)
+
+This is a short introduction to pandas, geared mainly for new users.
+You can see more complex recipes in the [Cookbook](https://pandas.pydata.org/cookbook.html#cookbook).
+
+Customarily, we import as follows:
+
+```
+In [1]: import numpy as np
+In [2]: import pandas as pd
+```
+## Basic data structures in pandas[#](https://pandas.pydata.org#basic-data-structures-in-pandas)
+
+pandas provides two types of classes for handling data:
+
+## Object creation[#](https://pandas.pydata.org#object-creation)
+
+See the [Intro to data structures section](https://pandas.pydata.org/dsintro.html#dsintro).
+
+Creating a [`Series`](https://pandas.pydata.org/reference/api/pandas.Series.html#pandas.Series) by passing a list of values, letting pandas create
+a default [`RangeIndex`](https://pandas.pydata.org/reference/api/pandas.RangeIndex.html#pandas.RangeIndex).
+
+```
+In [3]: s = pd.Series([1, 3, 5, np.nan, 6, 8])
+In [4]: s
+Out[4]: 
+0    1.0
+1    3.0
+2    5.0
+3    NaN
+4    6.0
+5    8.0
+dtype: float64
+```
+Creating a [`DataFrame`](https://pandas.pydata.org/reference/api/pandas.DataFrame.html#pandas.DataFrame) by passing a NumPy array with a datetime index using [`date_range()`](https://pandas.pydata.org/reference/api/pandas.date_range.html#pandas.date_range)
+and labeled columns:
+
+```
+In [5]: dates = pd.date_range("20130101", periods=6)
+In [6]: dates
+Out[6]: 
+DatetimeIndex(['2013-01-01', '2013-01-02', '2013-01-03', '2013-01-04',
+               '2013-01-05', '2013-01-06'],
+              dtype='datetime64[us]', freq='D')
+In [7]: df = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list("ABCD"))
+In [8]: df
+Out[8]: 
+                   A         B         C         D
+2013-01-01  0.469112 -0.282863 -1.509059 -1.135632
+2013-01-02  1.212112 -0.173215  0.119209 -
+
+### MID window [15000:17000] (средняя треть)
+
+2013-01-04 -0.706771 -1.039575
+2013-01-05  0.567020  0.276232
+2013-01-06  0.113648 -1.478427
+```
+For getting a value explicitly:
+
+```
+In [39]: df.iloc[1, 1]
+Out[39]: np.float64(-0.17321464905330858)
+```
+For getting fast access to a scalar (equivalent to the prior method):
+
+```
+In [40]: df.iat[1, 1]
+Out[40]: np.float64(-0.17321464905330858)
+```
+### Boolean indexing[#](https://pandas.pydata.org#boolean-indexing)
+
+Select rows where `df.A` is greater than `0`.
+
+```
+In [41]: df[df["A"] > 0]
+Out[41]: 
+                   A         B         C         D
+2013-01-01  0.469112 -0.282863 -1.509059 -1.135632
+2013-01-02  1.212112 -0.173215  0.119209 -1.044236
+2013-01-04  0.721555 -0.706771 -1.039575  0.271860
+```
+Selecting values from a [`DataFrame`](https://pandas.pydata.org/reference/api/pandas.DataFrame.html#pandas.DataFrame) where a boolean condition is met:
+
+```
+In [42]: df[df > 0]
+Out[42]: 
+                   A         B         C         D
+2013-01-01  0.469112       NaN       NaN       NaN
+2013-01-02  1.212112       NaN  0.119209       NaN
+2013-01-03       NaN       NaN       NaN  1.071804
+2013-01-04  0.721555       NaN       NaN  0.271860
+2013-01-05       NaN  0.567020  0.276232       NaN
+2013-01-06       NaN  0.113648       NaN  0.524988
+```
+Using [`isin()`](https://pandas.pydata.org/reference/api/pandas.Series.isin.html#pandas.Series.isin) method for filtering:
+
+```
+In [43]: df2 = df.copy()
+In [44]: df2["E"] = ["one", "one", "two", "three", "four", "three"]
+In [45]: df2
+Out[45]: 
+                   A         B         C         D      E
+2013-01-01  0.469112 -0.282863 -1.509059 -1.135632    one
+2013-01-02  1.212112 -0.173215  0.119209 -1.044236    one
+2013-01-03 -0.861849 -2.104569 -0.494929  1.071804    two
+2013-01-04  0.721555 -0.706771 -1.039575  0.271860  three
+2013-01-05 -0.424972  0.567020  0.276232 -1.087401   four
+2013-01-06 -0.673690  0.113648 -1.478427  0.524988  three
+In [46]: df2[df2["E"].isin(["two", "four"])]
+Out[46]: 
+                   A         B       

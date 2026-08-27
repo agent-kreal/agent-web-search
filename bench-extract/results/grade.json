@@ -1,0 +1,472 @@
+{
+  "per_ext": {
+    "local-auto": {
+      "n": 35,
+      "ok": 28,
+      "ok_pct": 0.8,
+      "empty": 0,
+      "empty_pct": 0.0,
+      "wall_med": 1.26,
+      "wall_p90": 8.82,
+      "chars_med": 11159.5,
+      "with_recall": 0.964,
+      "with_n": 28,
+      "without_rate": 0.196,
+      "without_n": 20,
+      "feats": {
+        "headers": 2.2,
+        "codeblocks": 2.5,
+        "links": 10.6,
+        "lists": 2.4
+      }
+    },
+    "local-http": {
+      "n": 35,
+      "ok": 25,
+      "ok_pct": 0.714,
+      "empty": 0,
+      "empty_pct": 0.0,
+      "wall_med": 0.85,
+      "wall_p90": 1.82,
+      "chars_med": 12961,
+      "with_recall": 0.893,
+      "with_n": 28,
+      "without_rate": 0.196,
+      "without_n": 20,
+      "feats": {
+        "headers": 2.4,
+        "codeblocks": 2.8,
+        "links": 11.9,
+        "lists": 1.2
+      }
+    },
+    "local-curl": {
+      "n": 35,
+      "ok": 25,
+      "ok_pct": 0.714,
+      "empty": 0,
+      "empty_pct": 0.0,
+      "wall_med": 0.97,
+      "wall_p90": 3.84,
+      "chars_med": 12961,
+      "with_recall": 0.893,
+      "with_n": 28,
+      "without_rate": 0.196,
+      "without_n": 20,
+      "feats": {
+        "headers": 2.4,
+        "codeblocks": 2.8,
+        "links": 11.9,
+        "lists": 1.2
+      }
+    },
+    "local-browser": {
+      "n": 35,
+      "ok": 28,
+      "ok_pct": 0.8,
+      "empty": 0,
+      "empty_pct": 0.0,
+      "wall_med": 5.52,
+      "wall_p90": 25.66,
+      "chars_med": 11159.5,
+      "with_recall": 0.929,
+      "with_n": 28,
+      "without_rate": 0.196,
+      "without_n": 20,
+      "feats": {
+        "headers": 2.1,
+        "codeblocks": 2.4,
+        "links": 10.6,
+        "lists": 2.4
+      }
+    },
+    "firecrawl": {
+      "n": 35,
+      "ok": 32,
+      "ok_pct": 0.914,
+      "empty": 1,
+      "empty_pct": 0.029,
+      "wall_med": 2.93,
+      "wall_p90": 11.47,
+      "chars_med": 25650.5,
+      "with_recall": 0.5,
+      "with_n": 28,
+      "without_rate": 0.325,
+      "without_n": 20,
+      "feats": {
+        "headers": 3.5,
+        "codeblocks": 2.1,
+        "links": 19.6,
+        "lists": 3.6
+      }
+    },
+    "tavily": {
+      "n": 35,
+      "ok": 35,
+      "ok_pct": 1.0,
+      "empty": 6,
+      "empty_pct": 0.171,
+      "wall_med": 1.04,
+      "wall_p90": 4.72,
+      "chars_med": 14464,
+      "with_recall": 0.631,
+      "with_n": 28,
+      "without_rate": 0.258,
+      "without_n": 20,
+      "feats": {
+        "headers": 2.9,
+        "codeblocks": 2.3,
+        "links": 16.2,
+        "lists": 6
+      }
+    },
+    "jina": {
+      "n": 35,
+      "ok": 34,
+      "ok_pct": 0.971,
+      "empty": 3,
+      "empty_pct": 0.086,
+      "wall_med": 3.46,
+      "wall_p90": 7.99,
+      "chars_med": 18249.5,
+      "with_recall": 0.571,
+      "with_n": 28,
+      "without_rate": 0.273,
+      "without_n": 20,
+      "feats": {
+        "headers": 2.3,
+        "codeblocks": 0.5,
+        "links": 13.8,
+        "lists": 3.4
+      }
+    },
+    "parallel": {
+      "n": 13,
+      "ok": 13,
+      "ok_pct": 1.0,
+      "empty": 0,
+      "empty_pct": 0.0,
+      "wall_med": 2.42,
+      "wall_p90": 7.43,
+      "chars_med": 3688,
+      "with_recall": 0.5,
+      "with_n": 10,
+      "without_rate": 0.125,
+      "without_n": 6,
+      "feats": {
+        "headers": 3.2,
+        "codeblocks": 2.5,
+        "links": 7.5,
+        "lists": 2.8
+      }
+    }
+  },
+  "matrix": {
+    "static-docs": {
+      "local-auto": {
+        "ok_pct": 1.0,
+        "chars_med": 20570.0
+      },
+      "local-http": {
+        "ok_pct": 1.0,
+        "chars_med": 20570.0
+      },
+      "local-curl": {
+        "ok_pct": 1.0,
+        "chars_med": 20570.0
+      },
+      "local-browser": {
+        "ok_pct": 1.0,
+        "chars_med": 20570.0
+      },
+      "firecrawl": {
+        "ok_pct": 1.0,
+        "chars_med": 32000.0
+      },
+      "tavily": {
+        "ok_pct": 1.0,
+        "chars_med": 16083.5
+      },
+      "jina": {
+        "ok_pct": 0.75,
+        "chars_med": 32000
+      },
+      "parallel": {
+        "ok_pct": 1.0,
+        "chars_med": 16352.5
+      }
+    },
+    "article-en": {
+      "local-auto": {
+        "ok_pct": 1.0,
+        "chars_med": 32000
+      },
+      "local-http": {
+        "ok_pct": 1.0,
+        "chars_med": 32000
+      },
+      "local-curl": {
+        "ok_pct": 1.0,
+        "chars_med": 32000
+      },
+      "local-browser": {
+        "ok_pct": 1.0,
+        "chars_med": 32000
+      },
+      "firecrawl": {
+        "ok_pct": 1.0,
+        "chars_med": 32000
+      },
+      "tavily": {
+        "ok_pct": 1.0,
+        "chars_med": 32000
+      },
+      "jina": {
+        "ok_pct": 1.0,
+        "chars_med": 32000
+      },
+      "parallel": {
+        "ok_pct": 1.0,
+        "chars_med": 9033.5
+      }
+    },
+    "article-ru": {
+      "local-auto": {
+        "ok_pct": 1.0,
+        "chars_med": 4035.0
+      },
+      "local-http": {
+        "ok_pct": 1.0,
+        "chars_med": 4035.0
+      },
+      "local-curl": {
+        "ok_pct": 1.0,
+        "chars_med": 4035.0
+      },
+      "local-browser": {
+        "ok_pct": 1.0,
+        "chars_med": 4588.5
+      },
+      "firecrawl": {
+        "ok_pct": 1.0,
+        "chars_med": 15157.5
+      },
+      "tavily": {
+        "ok_pct": 1.0,
+        "chars_med": 16902.5
+      },
+      "jina": {
+        "ok_pct": 1.0,
+        "chars_med": 4613.5
+      },
+      "parallel": {
+        "ok_pct": 1.0,
+        "chars_med": 3670.0
+      }
+    },
+    "spa-app": {
+      "local-auto": {
+        "ok_pct": 1.0,
+        "chars_med": 4236.0
+      },
+      "local-http": {
+        "ok_pct": 0.25,
+        "chars_med": 2874
+      },
+      "local-curl": {
+        "ok_pct": 0.25,
+        "chars_med": 2874
+      },
+      "local-browser": {
+        "ok_pct": 1.0,
+        "chars_med": 4251.5
+      },
+      "firecrawl": {
+        "ok_pct": 1.0,
+        "chars_med": 8203.0
+      },
+      "tavily": {
+        "ok_pct": 1.0,
+        "chars_med": 1854.5
+      },
+      "jina": {
+        "ok_pct": 1.0,
+        "chars_med": 9608.5
+      },
+      "parallel": {
+        "ok_pct": 1.0,
+        "chars_med": 493
+      }
+    },
+    "docs-js": {
+      "local-auto": {
+        "ok_pct": 1.0,
+        "chars_med": 12508
+      },
+      "local-http": {
+        "ok_pct": 1.0,
+        "chars_med": 12508
+      },
+      "local-curl": {
+        "ok_pct": 1.0,
+        "chars_med": 12508
+      },
+      "local-browser": {
+        "ok_pct": 1.0,
+        "chars_med": 12508
+      },
+      "firecrawl": {
+        "ok_pct": 1.0,
+        "chars_med": 14965
+      },
+      "tavily": {
+        "ok_pct": 1.0,
+        "chars_med": 14464
+      },
+      "jina": {
+        "ok_pct": 1.0,
+        "chars_med": 16737
+      },
+      "parallel": {
+        "ok_pct": 1.0,
+        "chars_med": 10522
+      }
+    },
+    "forum": {
+      "local-auto": {
+        "ok_pct": 0.75,
+        "chars_med": 5505
+      },
+      "local-http": {
+        "ok_pct": 0.75,
+        "chars_med": 5505
+      },
+      "local-curl": {
+        "ok_pct": 0.75,
+        "chars_med": 5505
+      },
+      "local-browser": {
+        "ok_pct": 0.75,
+        "chars_med": 1941
+      },
+      "firecrawl": {
+        "ok_pct": 0.25,
+        "chars_med": 32000
+      },
+      "tavily": {
+        "ok_pct": 1.0,
+        "chars_med": 8409.0
+      },
+      "jina": {
+        "ok_pct": 1.0,
+        "chars_med": 17893.5
+      },
+      "parallel": {
+        "ok_pct": 1.0,
+        "chars_med": 1762.0
+      }
+    },
+    "antibot": {
+      "local-auto": {
+        "ok_pct": 0.0,
+        "chars_med": 0
+      },
+      "local-http": {
+        "ok_pct": 0.0,
+        "chars_med": 0
+      },
+      "local-curl": {
+        "ok_pct": 0.0,
+        "chars_med": 0
+      },
+      "local-browser": {
+        "ok_pct": 0.0,
+        "chars_med": 0
+      },
+      "firecrawl": {
+        "ok_pct": 1.0,
+        "chars_med": 28971
+      },
+      "tavily": {
+        "ok_pct": 1.0,
+        "chars_med": 0
+      },
+      "jina": {
+        "ok_pct": 1.0,
+        "chars_med": 223
+      },
+      "parallel": {
+        "ok_pct": 1.0,
+        "chars_med": 3012
+      }
+    },
+    "pdf": {
+      "local-auto": {
+        "ok_pct": 0.0,
+        "chars_med": 0
+      },
+      "local-http": {
+        "ok_pct": 0.0,
+        "chars_med": 0
+      },
+      "local-curl": {
+        "ok_pct": 0.0,
+        "chars_med": 0
+      },
+      "local-browser": {
+        "ok_pct": 0.0,
+        "chars_med": 0
+      },
+      "firecrawl": {
+        "ok_pct": 1.0,
+        "chars_med": 10669
+      },
+      "tavily": {
+        "ok_pct": 1.0,
+        "chars_med": 7277
+      },
+      "jina": {
+        "ok_pct": 1.0,
+        "chars_med": 7552
+      },
+      "parallel": {
+        "ok_pct": 1.0,
+        "chars_med": 14753
+      }
+    },
+    "tables": {
+      "local-auto": {
+        "ok_pct": 1.0,
+        "chars_med": 32000
+      },
+      "local-http": {
+        "ok_pct": 1.0,
+        "chars_med": 32000
+      },
+      "local-curl": {
+        "ok_pct": 1.0,
+        "chars_med": 32000
+      },
+      "local-browser": {
+        "ok_pct": 1.0,
+        "chars_med": 32000
+      },
+      "firecrawl": {
+        "ok_pct": 1.0,
+        "chars_med": 32000
+      },
+      "tavily": {
+        "ok_pct": 1.0,
+        "chars_med": 32000
+      },
+      "jina": {
+        "ok_pct": 1.0,
+        "chars_med": 32000
+      },
+      "parallel": {
+        "ok_pct": 1.0,
+        "chars_med": 16230
+      }
+    }
+  }
+}

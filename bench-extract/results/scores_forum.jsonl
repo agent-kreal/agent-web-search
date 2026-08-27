@@ -1,0 +1,23 @@
+{"scenario":"forum","q":1,"extractor":"local-auto","structure":0,"clean":0,"content":1,"note":"нав+s.gif мусор, комментариев нет"}
+{"scenario":"forum","q":1,"extractor":"local-http","structure":0,"clean":0,"content":1,"note":"нав+s.gif мусор, комментариев нет"}
+{"scenario":"forum","q":1,"extractor":"local-curl","structure":0,"clean":0,"content":1,"note":"нав+s.gif мусор, комментариев нет"}
+{"scenario":"forum","q":1,"extractor":"local-browser","structure":0,"clean":0,"content":1,"note":"нав+s.gif мусор, комментариев нет"}
+{"scenario":"forum","q":1,"extractor":"firecrawl","structure":1,"clean":1,"content":2,"note":"построчные комментарии, но табличная каша"}
+{"scenario":"forum","q":1,"extractor":"tavily","structure":1,"clean":1,"content":2,"note":"тред полный, авторы лишь ссылками"}
+{"scenario":"forum","q":1,"extractor":"jina","structure":1,"clean":1,"content":2,"note":"тред полный, но слит в поток"}
+{"scenario":"forum","q":1,"extractor":"parallel","structure":1,"clean":1,"content":1,"note":"два комментария, внутри пропуски"}
+{"scenario":"forum","q":2,"extractor":"tavily","structure":0,"clean":0,"content":0,"note":"пустой вывод"}
+{"scenario":"forum","q":2,"extractor":"jina","structure":0,"clean":0,"content":0,"note":"пустой вывод"}
+{"scenario":"forum","q":2,"extractor":"parallel","structure":0,"clean":0,"content":0,"note":"только сайдбар и Collectives"}
+{"scenario":"forum","q":3,"extractor":"local-auto","structure":1,"clean":1,"content":2,"note":"код цел, привязка авторов мутная"}
+{"scenario":"forum","q":3,"extractor":"local-http","structure":1,"clean":1,"content":2,"note":"код цел, привязка авторов мутная"}
+{"scenario":"forum","q":3,"extractor":"local-curl","structure":1,"clean":1,"content":2,"note":"код цел, привязка авторов мутная"}
+{"scenario":"forum","q":3,"extractor":"local-browser","structure":1,"clean":2,"content":1,"note":"вопрос есть, ответы утрачены"}
+{"scenario":"forum","q":3,"extractor":"tavily","structure":1,"clean":1,"content":2,"note":"авторы потеряны, код сплющен"}
+{"scenario":"forum","q":3,"extractor":"jina","structure":2,"clean":1,"content":2,"note":"посты с автором и датой"}
+{"scenario":"forum","q":4,"extractor":"local-auto","structure":1,"clean":2,"content":1,"note":"только первый пост, ответов нет"}
+{"scenario":"forum","q":4,"extractor":"local-http","structure":1,"clean":2,"content":1,"note":"только первый пост, ответов нет"}
+{"scenario":"forum","q":4,"extractor":"local-curl","structure":1,"clean":2,"content":1,"note":"только первый пост, ответов нет"}
+{"scenario":"forum","q":4,"extractor":"local-browser","structure":1,"clean":2,"content":1,"note":"только первый пост, ответов нет"}
+{"scenario":"forum","q":4,"extractor":"tavily","structure":1,"clean":1,"content":2,"note":"весь тред, авторы только аватарами"}
+{"scenario":"forum","q":4,"extractor":"jina","structure":2,"clean":1,"content":2,"note":"полный тред с никами и датами"}

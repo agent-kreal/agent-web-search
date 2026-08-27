@@ -1,0 +1,6 @@
+### static-docs-1  len=212  ALL in head, fm_end=98
+--- BODY ---
+
+This domain is for use in documentation examples without needing permission. Avoid use in operations.
+
+Learn more

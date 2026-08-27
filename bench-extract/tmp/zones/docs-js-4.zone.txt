@@ -1,0 +1,94 @@
+### docs-js-4  len=12508  fm_end=323
+### HEAD window [0:2000] (первая треть <= 4169)
+
+`Accept: text/markdown` header. For an index of Next.js documentation, see [/docs/llms.txt](https://nextjs.org/docs/llms.txt).
+
+# Installation
+
+Create a new Next.js app and run it locally.
+
+## Quick start
+
+1. Create a new Next.js app named `my-app`
+2. `cd my-app` and start the dev server.
+3. Visit `http://localhost:3000` .
+
+```
+pnpm create next-app@latest my-app --yes
+cd my-app
+pnpm dev
+```
+- `--yes` skips prompts using saved preferences or defaults. The default setup enables TypeScript, Tailwind CSS, ESLint, App Router, and Turbopack, with import alias`@/*` , and includes`AGENTS.md` (with a`CLAUDE.md` that references it) to guide coding agents to write up-to-date Next.js code.
+
+## System requirements
+
+Before you begin, make sure your development environment meets the following requirements:
+
+- Minimum Node.js version: [20.9](https://nodejs.org/)
+- Operating systems: macOS, Windows (including WSL), and Linux.
+
+## Supported browsers
+
+Next.js supports modern browsers with zero configuration.
+
+- Chrome 111+
+- Edge 111+
+- Firefox 111+
+- Safari 16.4+
+
+Learn more about [browser support](https://nextjs.org/docs/architecture/supported-browsers), including how to configure polyfills and target specific browsers.
+
+## Create with the CLI
+
+The quickest way to create a new Next.js app is using [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app), which sets up everything automatically for you. To create a project, run:
+
+`pnpm create next-app`
+On installation, you'll see the following prompts:
+
+```
+What is your project named? my-app
+Would you like to use the recommended Next.js defaults?
+    Yes, use recommended defaults - TypeScrip
+
+### MID window [5254:7254] (средняя треть)
+ to create the root layout, Next.js will automatically create this file when running the development server with
+`next dev`.- You can optionally use a
+[`src` folder](https://nextjs.org/docs/app/api-reference/file-conventions/src-folder) in the root of your project to separate your application's code from configuration files.
+
+### Create the `public` folder (optional)
+
+Create a [`public` folder](https://nextjs.org/docs/app/api-reference/file-conventions/public-folder) at the root of your project to store static assets such as images, fonts, etc. Files inside `public` can then be referenced by your code starting from the base URL (`/`).
+
+You can then reference these assets using the root path (`/`). For example, `public/profile.png` can be referenced as `/profile.png`:
+
+```
+import Image from 'next/image'
+ 
+export default function Page() {
+  return <Image src="/profile.png" alt="Profile" width={100} height={100} />
+}
+```
+## Run the development server
+
+1. Run `npm run dev` to start the development server.
+2. Visit `http://localhost:3000` to view your application.
+3. Edit the `app/page.tsx` file and save it to see the updated result in your browser.
+
+## Set up TypeScript
+
+Minimum TypeScript version: `v5.1.0`
+
+
+Next.js comes with built-in TypeScript support. To add TypeScript to your project, rename a file to `.ts` / `.tsx` and run `next dev`. Next.js will automatically install the necessary dependencies and add a `tsconfig.json` file with the recommended config options.
+
+### IDE Plugin
+
+Next.js includes a custom TypeScript plugin and type checker, which VSCode and other code editors can use for advanced type-checking and auto-completion.
+
+You can enable the plugin in VS Code by:
+
+1. Opening the command palette (`Ctrl/⌘` +`Shift` +`P` )
+2. Searching for "TypeScript: Select TypeScript Version"
+3. Selecting "Use Workspace Version"
+
+![TypeScript Command Palette](https://nextjs.org/_next/image?url=https%3A%2F%2Fh8DxKfmAPhn8O0p3.public.blob.vercel-storage.com%2Fdocs%2Flight%2F
