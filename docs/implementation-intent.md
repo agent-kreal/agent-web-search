@@ -21,8 +21,10 @@
 ## Этап 1 — телеметрия Г: usage.jsonl + команда usage (~50 строк)
 
 - [ ] `engine/usage.py`: append-only `state/usage.jsonl`, строка на вызов:
-      `{ts, cmd, query, intent, intent_source: flag|auto|none, provider, tried[],
-        freshness, n_results, wall_sec, ok}`; ротация при >5 МБ (→ .1)
+      `{ts, cmd, query, intent, intent_source: flag|auto|none, provider,
+        tried: [{name, error, wall_sec}], freshness, n_results, wall_sec, ok}`
+      (27.08 вечером: tried обогащён причинами и ценой каждой попытки);
+      ротация при >5 МБ (→ .1)
 - [ ] хук в cli.py: search/fetch/multi/gather пишут факт (fetch: url вместо query)
 - [ ] команда `usage [--days 30] [--json]`: по интентам/провайдерам — вызовы,
       фолбэки (tried непустой), error-rate, пустые выдачи, медиана latency,

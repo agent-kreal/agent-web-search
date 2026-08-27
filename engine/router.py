@@ -4,6 +4,7 @@ real 429 into a skip for all subsequent calls until reset."""
 
 from __future__ import annotations
 
+import time
 from typing import List, Optional
 
 from . import fetchcache, quotas
@@ -88,13 +89,16 @@ def search(query: str, *, n: int = 8, freshness: Optional[str] = None,
     for p in chain:
         skip = _skip_reason(p)
         if skip:
-            tried.append({"name": p.name, "error": f"skipped: {skip}"})
+            tried.append({"name": p.name, "error": f"skipped: {skip}",
+                          "wall_sec": 0})
             continue
+        t0 = time.monotonic()
         try:
             results = p.search(query, n=n, freshness=freshness)
             return {"results": results, "provider": p.name, "tried": tried}
         except ProviderError as e:
-            tried.append({"name": p.name, "error": str(e)})
+            tried.append({"name": p.name, "error": str(e),
+                          "wall_sec": round(time.monotonic() - t0, 1)})
             last = e
             continue
     raise RuntimeError(
@@ -130,8 +134,10 @@ def fetch(url: str, *, max_chars: int = 6000,
             continue
         skip = _skip_reason(p)
         if skip:
-            tried.append({"name": p.name, "error": f"skipped: {skip}"})
+            tried.append({"name": p.name, "error": f"skipped: {skip}",
+                          "wall_sec": 0})
             continue
+        t0 = time.monotonic()
         try:
             fr = p.fetch(url, max_chars=max_chars)
             if use_cache:
@@ -140,7 +146,8 @@ def fetch(url: str, *, max_chars: int = 6000,
             fr.content = fr.content[:max_chars]
             return {"result": fr, "provider": p.name, "tried": tried}
         except ProviderError as e:
-            tried.append({"name": p.name, "error": str(e)})
+            tried.append({"name": p.name, "error": str(e),
+                          "wall_sec": round(time.monotonic() - t0, 1)})
             last = e
             continue
     raise RuntimeError(

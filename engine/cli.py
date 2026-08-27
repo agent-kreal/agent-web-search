@@ -37,7 +37,7 @@ def _log_search(query, out, t0, *, err=None, intent=None, intent_source=None,
         "cmd": "search", "query": query, "intent": intent,
         "intent_source": intent_source, "freshness": freshness,
         "provider": (out or {}).get("provider"),
-        "tried": [t["name"] for t in (out or {}).get("tried", [])],
+        "tried": (out or {}).get("tried", []),
         "n_results": len((out or {}).get("results", [])),
         "wall_sec": round(time.time() - t0, 2), "ok": err is None,
         **({"error": str(err)[:200]} if err else {}),
@@ -71,7 +71,9 @@ def cmd_search(a) -> int:
         print(l)
     if out["tried"]:
         for t in out["tried"]:
-            print(f"[skip] {t['name']}: {t['error']}", file=sys.stderr)
+            w = t.get("wall_sec")
+            ttag = f" ({w}s)" if w else ""
+            print(f"[skip] {t['name']}{ttag}: {t['error']}", file=sys.stderr)
     return 0
 
 
@@ -87,7 +89,7 @@ def cmd_fetch(a) -> int:
                    "error": str(e)[:200]})
         raise
     usage.log({"cmd": "fetch", "url": a.url, "provider": res["provider"],
-               "tried": [t["name"] for t in res.get("tried", [])],
+               "tried": res.get("tried", []),
                "cached": res.get("cached", False),
                "n_results": 1 if res["result"].content else 0,
                "wall_sec": round(time.time() - t0, 2), "ok": True})
@@ -122,7 +124,7 @@ def cmd_gather(a) -> int:
                            "content": res["result"].content,
                            "cached": res.get("cached", False)}
                 usage.log({"cmd": "fetch", "url": u, "provider": res["provider"],
-                           "tried": [t["name"] for t in res.get("tried", [])],
+                           "tried": res.get("tried", []),
                            "cached": res.get("cached", False), "n_results": 1,
                            "wall_sec": round(time.time() - starts[u], 2), "ok": True})
             except RuntimeError as e:

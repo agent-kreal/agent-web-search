@@ -2,7 +2,9 @@
 
 state/usage.jsonl — one line per search/fetch/multi/gather invocation:
   {ts, cmd, query|url, intent, intent_source (flag|auto|none),
-   provider, tried: [names that errored/were skipped before success],
+   provider, tried: [{name, error, wall_sec}] — providers that
+   errored/were skipped before success, each with the reason and its
+   cost in seconds (quota skips cost 0),
    freshness, n_results, wall_sec, ok}
 
 Monthly audit: `wsearch usage --days 30` aggregates intents, providers,
