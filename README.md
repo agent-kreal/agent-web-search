@@ -1,15 +1,16 @@
 # wsearch — quota-aware web search for AI agents
 
-One CLI call gives your agent web search and URL reading: 9 search providers
+One CLI call gives your agent web search and URL reading: 10 search providers
 with **local quota tracking** (fallback fires *before* the 429, not after),
-**intent-based routing** (docs / research / fact / news / ru / debug), and a
-**free local-first extraction cascade** that keeps ~80% of fetches off paid
-APIs. Python 3 stdlib, zero dependencies, made to be driven by
+**intent-based routing** (docs / research / fact / news / ru / debug / github),
+and a **free local-first extraction cascade** that keeps ~80% of fetches off
+paid APIs. Python 3 stdlib, zero dependencies, made to be driven by
 [Claude Code](https://claude.com/claude-code) (or any agent) via a skill.
 
 ```
 wsearch search "playwright wait_until domcontentloaded vs networkidle"   # → exa (docs intent)
 wsearch search "тарифы yandex vision OCR цена за страницу"               # → youcom (fact intent)
+wsearch search "web search agent open source"                            # → gh (github intent, free)
 wsearch fetch "https://habr.com/ru/articles/765216/"                     # → local cascade, free
 wsearch fetch "https://arxiv.org/pdf/2401.00001" --provider jina         # → PDF specialist
 ```
@@ -49,10 +50,11 @@ backed by a benchmark (see [The decision trail](#the-decision-trail)).
 | 3 | z.ai | 1000/mo | web_search_prime MCP (GLM plan) |
 | 4 | exa | ~1400/mo | semantic, best for docs/research (1.53/2 in bench) |
 | 5 | brave | 2000/mo | best RU coverage |
-| 6 | parallel-anon | keyless | anonymous Parallel MCP |
-| 7 | linkup | ~4000/mo | big bucket, weak quality — fan-out only |
-| 8 | ddg | keyless | scraping floor; anti-bot kills 30/32 under load |
-| 9 | parallel | one-off $ grant | last resort |
+| 6 | gh | free (30/min) | native GitHub repo search via the `gh` CLI; first for the github intent |
+| 7 | parallel-anon | keyless | anonymous Parallel MCP |
+| 8 | linkup | ~4000/mo | big bucket, weak quality — fan-out only |
+| 9 | ddg | keyless | scraping floor; anti-bot kills 30/32 under load |
+| 10 | parallel | one-off $ grant | last resort |
 
 Fallback is local and deterministic: `state/quotas.json` tracks resets
 (monthly/daily), 429s are parsed for reset dates, cooldowns are respected.
@@ -61,7 +63,11 @@ Intent detection reorders the chain per query (measured, see
 
 ### Fetch cascade (URL → markdown)
 
-`local` (httpx+trafilatura → curl_cffi → Playwright browser tier) →
+`gh` (github.com natively: README/blob/PR/issue/releases via the local
+`gh` CLI — private repos too, with your credentials) → `local`
+(httpx+trafilatura → curl_cffi → Playwright browser tier; JSON API responses
+are returned as pretty-printed text instead of dying in the HTML extractor;
+Russian Trusted Root CA is bundled, so *.gov.ru TLS works out of the box) →
 `firecrawl` (anti-bot) → `tavily` → `jina` (PDF!) → `parallel`. 30-min cache.
 The extraction benchmark showed local wins on articles, docs, RU media and
 tables (quality 0.71–0.76 vs 0.33–0.58 for services, median 1.3 s, free);
