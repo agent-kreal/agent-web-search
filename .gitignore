@@ -15,3 +15,4 @@ bench-extract/tmp-full/
 
 # os noise
 .DS_Store
+local-extract/certs/ca-bundle.crt

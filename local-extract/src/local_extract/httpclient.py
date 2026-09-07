@@ -4,12 +4,41 @@
 
 from __future__ import annotations
 
+import os
 import time
 from dataclasses import dataclass, field
+from pathlib import Path
 
 UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36")
 MAX_BODY = 5 * 1024 * 1024  # 5 МБ — хватает для любых статей
+
+# Корни НУЦ Минцифры: госсайты (*.digital.gov.ru и др.) отдают цепочки,
+# которых нет в certifi (Mozilla их не включает) -> CERTIFICATE_VERIFY_FAILED.
+# Бандл = certifi + оба русских серта; пересобирается сам, когда любой
+# источник обновился (mtime), запись атомарная (os.replace).
+_CERTS_DIR = Path(__file__).resolve().parent.parent.parent / "certs"
+_NUC_ROOT = _CERTS_DIR / "russian_trusted_root_ca.pem"
+_NUC_SUB = _CERTS_DIR / "russian_trusted_sub_ca.pem"
+_BUNDLE = _CERTS_DIR / "ca-bundle.crt"
+
+
+def ca_bundle() -> str:
+    """Путь к CA-бандлу для verify. Русских сертов нет — дефолтный certifi."""
+    import certifi
+
+    if not (_NUC_ROOT.exists() and _NUC_SUB.exists()):
+        return certifi.where()
+    newest_src = max(os.path.getmtime(p) for p in
+                     (certifi.where(), _NUC_ROOT, _NUC_SUB))
+    if not _BUNDLE.exists() or os.path.getmtime(_BUNDLE) < newest_src:
+        parts = []
+        for p in (certifi.where(), _NUC_ROOT, _NUC_SUB):
+            parts.append(Path(p).read_bytes().rstrip(b"\n") + b"\n")
+        tmp = _BUNDLE.with_suffix(".tmp")
+        tmp.write_bytes(b"".join(parts))
+        os.replace(tmp, _BUNDLE)
+    return str(_BUNDLE)
 
 
 class TierError(Exception):
@@ -45,6 +74,7 @@ def fetch_http(url: str, timeout: float = 10.0) -> FetchResponse:
             },
             follow_redirects=True,
             timeout=timeout,
+            verify=ca_bundle(),
         )
     except httpx.TimeoutException as e:
         raise TierError("timeout", type(e).__name__) from None
@@ -62,7 +92,7 @@ def fetch_curl(url: str, timeout: float = 15.0) -> FetchResponse:
     t0 = time.monotonic()
     try:
         r = creq.get(url, impersonate="chrome", timeout=timeout,
-                     allow_redirects=True)
+                     allow_redirects=True, verify=ca_bundle())
     except Exception as e:                    # RequestsError и все его варианты
         name = type(e).__name__
         reason = "timeout" if "timeout" in name.lower() else "network"
