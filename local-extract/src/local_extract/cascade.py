@@ -42,6 +42,13 @@ def _verdict(resp: FetchResponse) -> Tuple[str, str, str]:
     if body[:512].lstrip()[:4].lower().startswith(b"%pdf") or \
             "application/pdf" in (resp.headers or {}).get("content-type", ""):
         return ("pdf", "", "")
+    # JSON API-ответ (content-type или тело с {/[): не HTML — экстрактору
+    # нечего искать, тело само и есть контент; иначе вердикт empty ложно
+    # ронял каскад на живых API-эндпоинтах
+    ct = (resp.headers or {}).get("content-type", "")
+    if "json" in ct or body.lstrip()[:1] in (b"{", b"["):
+        text, title = exmod.extract_json(body)
+        return ("ok", title, text)
     if classify.is_block(resp.status, body):
         return ("blocked", "", "")
     md, title, tlen = exmod.extract_html(body, resp.final_url)

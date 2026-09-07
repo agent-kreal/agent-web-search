@@ -6,6 +6,7 @@ charset_normalizer), передавать httpx.Response-объект нельз
 
 from __future__ import annotations
 
+import json
 import re
 from typing import Optional, Tuple
 
@@ -42,3 +43,14 @@ def extract_html(html: bytes, url: str) -> Tuple[Optional[str], str, int]:
         return None, "", 0
     text = doc.text or ""
     return text, doc.title or "", _body_len(text)
+
+
+def extract_json(body: bytes) -> Tuple[str, str]:
+    """JSON-ответ API -> текст для выдачи: pretty-print (LLM читает структуру),
+    при кривом JSON — сырое тело как есть. Title у API нет."""
+    text = body.decode("utf-8", "replace").strip()
+    try:
+        text = json.dumps(json.loads(text), ensure_ascii=False, indent=1)
+    except ValueError:
+        pass
+    return text, ""
