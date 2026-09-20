@@ -29,6 +29,9 @@ class QuotaSpec:
     limit: Optional[int] = None        # None = unknown/unlimited (keyless)
     period: str = "none"               # none | day | month | once
     label: str = ""                    # human note for `status`
+    unit: str = "requests"             # requests | credits | usd (server-truth units)
+    price: float = 1.0                 # server units per 1 local unit
+                                      # (usd: $ per request; credits/requests: 1.0)
 
 
 @dataclass

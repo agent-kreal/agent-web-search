@@ -17,7 +17,8 @@ API = "https://api.firecrawl.dev/v1/scrape"
 
 class FirecrawlProvider(Provider):
     name = "firecrawl"
-    quota = QuotaSpec(limit=2000, period="month", label="~2000 credits/mo, reset ~23rd")
+    quota = QuotaSpec(limit=2000, period="month",
+                      label="~2000 credits/mo, reset ~23rd", unit="credits")
 
     def __init__(self):
         self.key = config.get("FIRECRAWL_API_KEY")

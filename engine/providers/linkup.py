@@ -18,7 +18,8 @@ class LinkupProvider(Provider):
     name = "linkup"
     # $20 credit topped back up monthly for eligible accounts;
     # standard searchResults = $0.005/query -> ~4000/mo, deep costs more
-    quota = QuotaSpec(limit=4000, period="month",
+    # (usd server-truth: balance endpoint; price = $ per 1 local unit)
+    quota = QuotaSpec(limit=4000, period="month", unit="usd", price=0.005,
                       label="$20/mo top-up ≈ 4000 std searches")
 
     def __init__(self):
