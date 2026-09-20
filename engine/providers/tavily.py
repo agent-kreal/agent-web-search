@@ -24,6 +24,7 @@ class TavilyProvider(Provider):
         self.api_key = config.get("TAVILY_API_KEY")
         if self.api_key:
             self.quota = QuotaSpec(limit=self.KEYED_LIMIT, period="month",
+                                   unit="credits",
                                    label="keyed 1000 credits/mo -> keyless after")
 
     def _keyed_active(self) -> bool:
@@ -74,6 +75,8 @@ class TavilyProvider(Provider):
         if not out:
             raise ProviderError("tavily returned no results", retryable=False)
         if self._keyed_active():
+            # credits: basic/fast (default depth) = 1; if a `depth: advanced`
+            # ever lands in the body above, this must become spend(..., 2)
             quotas.spend(self.name, 1, "month")
         return out[:n]
 
