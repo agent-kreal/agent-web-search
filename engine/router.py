@@ -10,6 +10,17 @@ from typing import List, Optional
 from . import fetchcache, quotas
 from .providers import FETCH_CHAIN, SEARCH_CHAIN, FetchResult, Provider, ProviderError
 
+
+class ChainError(RuntimeError):
+    """Whole chain failed. Carries `tried` ({name, error, wall_sec}) so the
+    usage log keeps every attempt's reason even on a total failure — the
+    audit (09.09) showed failed invocations logged tried=[] and hid which
+    providers actually errored vs were skipped."""
+
+    def __init__(self, msg: str, tried: list):
+        super().__init__(msg)
+        self.tried = tried
+
 # Intent -> preferred provider order (benchmark bench/REPORT.md §6.1).
 # Only reorders the chain: quota skipping and fallback-down are unchanged.
 INTENT_ORDER: dict = {
@@ -106,8 +117,9 @@ def search(query: str, *, n: int = 8, freshness: Optional[str] = None,
                           "wall_sec": round(time.monotonic() - t0, 1)})
             last = e
             continue
-    raise RuntimeError(
-        "all providers failed: " + "; ".join(f"{t['name']}: {t['error']}" for t in tried)
+    raise ChainError(
+        "all providers failed: " + "; ".join(f"{t['name']}: {t['error']}" for t in tried),
+        tried,
     ) from last
 
 
@@ -155,7 +167,8 @@ def fetch(url: str, *, max_chars: int = 6000,
                           "wall_sec": round(time.monotonic() - t0, 1)})
             last = e
             continue
-    raise RuntimeError(
+    raise ChainError(
         f"all fetch providers failed for {url}: "
-        + "; ".join(f"{t['name']}: {t['error']}" for t in tried)
+        + "; ".join(f"{t['name']}: {t['error']}" for t in tried),
+        tried,
     ) from last

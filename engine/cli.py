@@ -30,17 +30,27 @@ def _compact(results, seen_urls=None):
     return lines, seen
 
 
+def _tried(out, err) -> list:
+    """Attempts to log: from a successful result, or carried by ChainError
+    (the audit 09.09: failed invocations logged tried=[] and hid which
+    providers errored vs were skipped)."""
+    if out is not None:
+        return out.get("tried", [])
+    return getattr(err, "tried", None) or []
+
+
 def _log_search(query, out, t0, *, err=None, intent=None, intent_source=None,
-                freshness=None):
+                freshness=None, forced=None):
     """One usage.jsonl line per real search call (ok or failed)."""
     usage.log({
         "cmd": "search", "query": query, "intent": intent,
         "intent_source": intent_source, "freshness": freshness,
+        **({"forced": forced} if forced else {}),
         "provider": (out or {}).get("provider"),
-        "tried": (out or {}).get("tried", []),
+        "tried": _tried(out, err),
         "n_results": len((out or {}).get("results", [])),
         "wall_sec": round(time.time() - t0, 2), "ok": err is None,
-        **({"error": str(err)[:200]} if err else {}),
+        **({"error": str(err)[:400]} if err else {}),
     })
 
 
@@ -52,10 +62,10 @@ def cmd_search(a) -> int:
                             providers=a.provider, intent=ikey)
     except RuntimeError as e:
         _log_search(a.query, None, t0, err=e, freshness=a.freshness,
-                    intent=ikey, intent_source=isrc)
+                    intent=ikey, intent_source=isrc, forced=a.provider)
         raise
     _log_search(a.query, out, t0, freshness=a.freshness,
-                intent=ikey, intent_source=isrc)
+                intent=ikey, intent_source=isrc, forced=a.provider)
     if a.json:
         print(json.dumps({
             "intent": ikey, "intent_source": isrc,
@@ -83,10 +93,12 @@ def cmd_fetch(a) -> int:
         res = router.fetch(a.url, max_chars=a.max_chars, providers=a.provider,
                            use_cache=not a.no_cache)
     except RuntimeError as e:
-        usage.log({"cmd": "fetch", "url": a.url, "provider": None, "tried": [],
+        usage.log({"cmd": "fetch", "url": a.url, "provider": None,
+                   "tried": _tried(None, e),
+                   **({"forced": a.provider} if a.provider else {}),
                    "cached": False, "n_results": 0,
                    "wall_sec": round(time.time() - t0, 2), "ok": False,
-                   "error": str(e)[:200]})
+                   "error": str(e)[:400]})
         raise
     usage.log({"cmd": "fetch", "url": a.url, "provider": res["provider"],
                "tried": res.get("tried", []),
@@ -129,10 +141,12 @@ def cmd_gather(a) -> int:
                            "wall_sec": round(time.time() - starts[u], 2), "ok": True})
             except RuntimeError as e:
                 docs[u] = {"error": str(e)}
-                usage.log({"cmd": "fetch", "url": u, "provider": None, "tried": [],
+                usage.log({"cmd": "fetch", "url": u, "provider": None,
+                           "tried": _tried(None, e),
+                           **({"forced": a.provider} if a.provider else {}),
                            "cached": False, "n_results": 0,
                            "wall_sec": round(time.time() - starts[u], 2),
-                           "ok": False, "error": str(e)[:200]})
+                           "ok": False, "error": str(e)[:400]})
     if a.json:
         print(json.dumps(docs, ensure_ascii=False, indent=2))
         return 0
@@ -171,11 +185,11 @@ def cmd_multi(a) -> int:
                             "intent": ikey}
                 all_results.extend(out["results"])
                 _log_search(q, out, starts[q], freshness=a.freshness,
-                            intent=ikey, intent_source=isrc)
+                            intent=ikey, intent_source=isrc, forced=a.provider)
             except RuntimeError as e:
                 per_q[q] = {"error": str(e)}
                 _log_search(q, None, starts[q], err=e, freshness=a.freshness,
-                            intent=ikey, intent_source=isrc)
+                            intent=ikey, intent_source=isrc, forced=a.provider)
     # dedupe by URL preserving order
     seen, uniq = set(), []
     for r in all_results:
@@ -341,7 +355,11 @@ def main(argv=None) -> int:
     try:
         return a.fn(a)
     except RuntimeError as e:
-        print(json.dumps({"error": str(e)}, ensure_ascii=False), file=sys.stderr)
+        err = {"error": str(e)}
+        tried = getattr(e, "tried", None)
+        if tried:  # ChainError: attempts visible to the caller, no re-runs needed
+            err["tried"] = tried
+        print(json.dumps(err, ensure_ascii=False), file=sys.stderr)
         return 1
 
 
