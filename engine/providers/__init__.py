@@ -13,7 +13,7 @@ under a steady 1 rps):
   1. tavily        1000 credits/mo, resets on the 1st -> auto-drops to keyless
   2. youcom        keyless MCP, 100/day (expires DAILY — spend it)
   3. zai           GLM Coding Plan 1000/mo (subscription quota)
-  4. exa           $10/mo credit ~1400 searches (best quality: docs/semantic)
+  4. exa           free tier $10/mo ≈750 searches (best quality: docs/semantic)
   5. brave         legacy 2000/mo, best for RU queries
   6. parallel-anon anonymous MCP (keyless floor)
   7. linkup        top-up to $20/mo ~4000 searches — big tank, but weakest

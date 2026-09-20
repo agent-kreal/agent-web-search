@@ -1,5 +1,6 @@
-"""Exa — keyed search API ($10/mo credit ≈ 1400 searches, no card needed).
-Register: dashboard.exa.ai -> API Keys. Slot activates when key lands in .env."""
+"""Exa — keyed search API (free tier $10 credits/mo; search $7/1k + highlights
+$1/1k pages ≈ $0.013/request ≈ 750/mo). Register: dashboard.exa.ai -> API Keys.
+Slot activates when key lands in .env."""
 
 from __future__ import annotations
 
@@ -16,7 +17,7 @@ API = "https://api.exa.ai/search"
 
 class ExaProvider(Provider):
     name = "exa"
-    quota = QuotaSpec(limit=1400, period="month", label="$10 monthly credit ~1400/mo")
+    quota = QuotaSpec(limit=750, period="month", label="free tier $10/mo ≈750 (≈$0.013/request)")
 
     def __init__(self):
         self.key = config.get("EXA_API_KEY")
@@ -37,9 +38,15 @@ class ExaProvider(Provider):
             with urllib.request.urlopen(req, timeout=30) as resp:
                 data = json.loads(resp.read().decode())
         except urllib.error.HTTPError as e:
-            if e.code in (429, 402):
+            # 402 = баланс реально кончился → до 1-го числа; 429 = rate-limit
+            # free tier → часа хватает (эпизод 03.09: 429 заглушил exa на месяц
+            # при живом балансе $19). Коды не смешивать!
+            if e.code == 402:
                 quotas.mark_exhausted(self.name, None, "month")
-                raise ProviderError(f"exa {e.code} quota/credit", quota_exhausted=True) from None
+                raise ProviderError("exa 402 out of credit", quota_exhausted=True) from None
+            if e.code == 429:
+                quotas.mark_exhausted(self.name, None, "none")
+                raise ProviderError("exa 429 rate-limit", quota_exhausted=False) from None
             detail = e.read().decode("utf-8", "replace")[:200]
             raise ProviderError(f"exa {e.code}: {detail}", retryable=(e.code >= 500)) from None
         except urllib.error.URLError as e:
