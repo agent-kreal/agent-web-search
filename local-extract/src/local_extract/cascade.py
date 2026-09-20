@@ -15,11 +15,12 @@ JS-пустышке/тонкой экстракции]. Каждая ступе�
 
 from __future__ import annotations
 
+import re
 import time
 from typing import Optional, Tuple
 from urllib.parse import urlparse
 
-from . import classify, extract as exmod, protocol
+from . import classify, extract as exmod, protocol, tg
 from .httpclient import FetchResponse, TierError, fetch_curl, fetch_http
 
 STEP_HTTP_TIMEOUT = 10.0
@@ -49,6 +50,17 @@ def _verdict(resp: FetchResponse) -> Tuple[str, str, str]:
     if "json" in ct or body.lstrip()[:1] in (b"{", b"["):
         text, title = exmod.extract_json(body)
         return ("ok", title, text)
+    # Telegram web preview: вёрстка чата — не статья, trafilatura на ней даёт
+    # thin; свой парсер (preview — статический HTML, JS не нужен). Пустым
+    # постам дальше делать нечего — empty идёт мимо браузера в фолбэк цепочки
+    if tg.is_tg_url(resp.final_url or ""):
+        # пост-ссылка /s/<канал>/<id>: пометить целевой пост в выдаче
+        m = re.search(r"^/s/([^/]+)/(\d+)", urlparse(resp.final_url).path)
+        target = f"{m.group(1)}/{m.group(2)}" if m else ""
+        md, title, _n, _note = tg.extract(body, target_post=target)
+        if md is not None:
+            return ("ok", title, md)
+        return ("empty", "", "")
     if classify.is_block(resp.status, body):
         return ("blocked", "", "")
     md, title, tlen = exmod.extract_html(body, resp.final_url)
@@ -158,6 +170,15 @@ def run(url: str, *, tier: str = "auto", max_chars: int = 32768,
         return fail("unsupported", "scheme")
     if parsed.path.lower().endswith(".pdf"):
         return fail("unsupported", "pdf")
+    # Telegram: t.me/<канал> -> t.me/s/<канал> до всех ступеней (без /s/ —
+    # страница-приглашение без постов); инвайт-ссылкам preview не существует
+    # by design — честный фейл без похода в сеть и браузер
+    if tg.is_tg_url(url):
+        if tg.is_invite_url(url):
+            _trace_step(trace, "preflight", error="telegram invite link")
+            return fail("unsupported", "telegram invite link")
+        url = tg.normalize_url(url)
+        parsed = urlparse(url)
 
     # --- forced tier: одна ступень, её вердикт финален ---
     if tier != "auto":

@@ -4,8 +4,10 @@ real 429 into a skip for all subsequent calls until reset."""
 
 from __future__ import annotations
 
+import re
 import time
 from typing import List, Optional
+from urllib.parse import urlparse, urlunparse
 
 from . import fetchcache, quotas
 from .providers import FETCH_CHAIN, SEARCH_CHAIN, FetchResult, Provider, ProviderError
@@ -33,6 +35,40 @@ INTENT_ORDER: dict = {
     "debug":    ["tavily", "youcom", "brave"],     # exa risky: sometimes empty on error strings
     "github":   ["gh", "exa", "youcom", "tavily", "brave"],  # gh: native repo search (free)
 }
+
+
+# Telegram web preview: нормализация ДО кэша и всех провайдеров — ключ кэша
+# и нижестоящие тиры (firecrawl/jina) получают /s/-версию. Дубль логики
+# живёт в local-extract/src/local_extract/tg.py (subprocess-контракт не
+# даёт общий импорт); менять — синхронно в обоих.
+_TG_HOSTS = frozenset({"t.me", "telegram.me", "telegram.dog"})
+_TG_INVITE = re.compile(r"^/(?:\+[\w-]+|joinchat/)", re.I)
+_TG_CHANNEL = re.compile(r"^/(?!s/)([^/]+)(/.*)?$")
+
+
+def _normalize_fetch_url(url: str) -> str:
+    """t.me/<канал>[/<id>] -> t.me/s/<канал>[/<id>]; telegram.me/dog -> t.me."""
+    try:
+        parts = urlparse(url)
+    except ValueError:
+        return url
+    if parts.netloc.lower() not in _TG_HOSTS:
+        return url
+    path = parts.path or "/"
+    if not _TG_INVITE.match(path):
+        m = _TG_CHANNEL.match(path)
+        if m:
+            path = f"/s{path}"
+    return urlunparse((parts.scheme or "https", "t.me", path, "",
+                       parts.query, ""))
+
+
+def _is_tg_invite(url: str) -> bool:
+    try:
+        return bool(_TG_INVITE.match(urlparse(url).path)) \
+            and urlparse(url).netloc.lower() in _TG_HOSTS
+    except ValueError:
+        return False
 
 
 def _skip_reason(p: Provider) -> Optional[str]:
@@ -130,6 +166,15 @@ def fetch(url: str, *, max_chars: int = 6000,
     "cached": bool}. Cache hits answer before any provider is tried (even
     exhausted ones); the final max_chars truncation happens here, so the
     cache can hold the full copy (local tier always returns up to 32k)."""
+    # Telegram: нормализация до кэша (ключ) и до всех провайдеров; инвайт-
+    # ссылкам web preview не существует — сразу честный фейл, не жжём тиры
+    if _is_tg_invite(url):
+        raise ChainError(
+            f"telegram invite link (private): {url} — web preview не существует",
+            [{"name": "preflight", "error": "telegram invite link",
+              "wall_sec": 0}],
+        )
+    url = _normalize_fetch_url(url)
     if use_cache:
         hit = fetchcache.get(url)
         if hit is not None:
