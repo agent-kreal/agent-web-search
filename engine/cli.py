@@ -196,6 +196,10 @@ def cmd_multi(a) -> int:
 
 
 def cmd_status(a) -> int:
+    live = None
+    if getattr(a, "live", False):
+        from . import livecheck
+        live = livecheck.run()
     rows = []
     seen_names = set()
     for p in SEARCH_CHAIN + FETCH_CHAIN:
@@ -206,16 +210,33 @@ def cmd_status(a) -> int:
             "provider": p.name,
             "available": p.available(),
             "reason": p.available_reason or "",
-            "quota": quotas.status_line(p.name, p.quota.limit, p.quota.period, p.quota.label),
+            "quota": quotas.status_line(p.name, p.quota.limit, p.quota.period,
+                                        p.quota.label, unit=p.quota.unit,
+                                        price=p.quota.price),
             "can_fetch": p.can_fetch,
         })
     if a.json:
-        print(json.dumps(rows, ensure_ascii=False, indent=2))
+        out = rows if live is None else {"livecheck": live, "status": rows}
+        print(json.dumps(out, ensure_ascii=False, indent=2))
         return 0
     print(f"{'provider':<10} {'status':<12} quota")
     for r in rows:
         st = "ok" if r["available"] else "no key"
         print(f"{r['provider']:<10} {st:<12} {r['quota']}")
+    if live is not None:
+        print("# livecheck (server truth vs local estimate):")
+        for l in live:
+            if not l["ok"]:
+                print(f"#   {l['provider']:<10} ERROR: {l['error']}")
+                continue
+            def _v(x, unit):
+                return f"${x:.2f}" if unit == "usd" else (
+                    f"{round(x)}" if x is not None else "?")
+            drift = ("?" if l["drift"] is None
+                     else _v(l["drift"], l["unit"]))
+            print(f"#   {l['provider']:<10} server {_v(l['server_remaining'], l['unit'])}"
+                  f" | local est {_v(l['local_estimated'], l['unit'])}"
+                  f" | drift {drift}")
     return 0
 
 
@@ -296,6 +317,9 @@ def main(argv=None) -> int:
     m.set_defaults(fn=cmd_multi)
 
     st = sub.add_parser("status", help="quota ledger + provider health")
+    st.add_argument("--live", action="store_true",
+                    help="refresh server-side quotas first (free endpoints, "
+                         "firecrawl/linkup) and show counter drift")
     st.add_argument("--json", action="store_true")
     st.set_defaults(fn=cmd_status)
 

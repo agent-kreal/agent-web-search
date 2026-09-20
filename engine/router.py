@@ -30,9 +30,14 @@ def _skip_reason(p: Provider) -> Optional[str]:
     reason = quotas.is_exhausted(p.name)
     if reason:
         return reason
-    rem = quotas.remaining(p.name, p.quota.limit, p.quota.period)
+    rem = quotas.remaining(p.name, p.quota.limit, p.quota.period,
+                           price=p.quota.price)
     if rem is not None and rem <= 0:
-        return "local quota counter at 0"
+        # server snapshot (quota endpoint / rate-limit headers) beats a
+        # possibly-drifted local counter — say which one said "empty"
+        has_server = quotas.server_view(p.name, price=p.quota.price,
+                                        period=p.quota.period) is not None
+        return "quota at 0 (server)" if has_server else "quota at 0 (local counter)"
     return None
 
 
