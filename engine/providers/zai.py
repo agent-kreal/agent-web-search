@@ -50,6 +50,14 @@ class ZaiProvider(Provider):
             data = json.loads(text)
         except json.JSONDecodeError:
             raise ProviderError("zai: non-JSON response", retryable=True) from None
+        # Z.ai кладёт ответ двойной JSON-сериализацией (замечено 24.09:
+        # json.loads(text) даёт str, парсер итерировал её по символам и
+        # поднимал "returned no results" на любом запросе)
+        if isinstance(data, str):
+            try:
+                data = json.loads(data)
+            except json.JSONDecodeError:
+                raise ProviderError("zai: non-JSON response", retryable=True) from None
         items = data.get("web_search", data) if isinstance(data, dict) else data
         if isinstance(items, dict):
             items = items.get("results", [])
@@ -58,8 +66,11 @@ class ZaiProvider(Provider):
             if not isinstance(r, dict):
                 continue
             out.append(SearchResult(
-                url=r.get("url", ""), title=r.get("title", ""),
-                snippet=r.get("snippet", r.get("page_content", ""))[:500],
+                # схема ответа сменилась (24.09): url→link, snippet→content
+                url=r.get("url") or r.get("link", ""),
+                title=r.get("title", ""),
+                snippet=(r.get("snippet") or r.get("page_content")
+                         or r.get("content", ""))[:500],
                 date=r.get("publish_date"), provider=self.name,
             ))
         if not out:
