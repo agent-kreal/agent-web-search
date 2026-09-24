@@ -31,7 +31,7 @@ INTENT_ORDER: dict = {
     "fact":     ["youcom", "exa", "brave"],        # youcom hit@3 94%
     "news-ru":  ["tavily", "youcom", "brave"],     # tavily best, NEVER linkup first
     "news-en":  ["exa", "tavily", "youcom"],
-    "ru":       ["youcom", "brave", "tavily"],     # tavily pulls EN lists on RU-specific queries
+    "ru":       ["youcom", "zai", "brave", "tavily"],  # zai:RU-качество ок (бенч 24.09, 5/5), 1000/мес до этого сгорали не выработанными
     "debug":    ["tavily", "youcom", "brave"],     # exa risky: sometimes empty on error strings
     "github":   ["gh", "exa", "youcom", "tavily", "brave"],  # gh: native repo search (free)
 }
