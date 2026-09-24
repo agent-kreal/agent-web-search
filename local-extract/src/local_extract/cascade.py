@@ -50,6 +50,10 @@ def _verdict(resp: FetchResponse) -> Tuple[str, str, str]:
     if "json" in ct or body.lstrip()[:1] in (b"{", b"["):
         text, title = exmod.extract_json(body)
         return ("ok", title, text)
+    # Plain text (raw.githubusercontent и др.): тело само и есть контент,
+    # HTML-экстрактор на нём пуст и ложно ронял каскад в empty
+    if "text/plain" in ct or "text/markdown" in ct:
+        return ("ok", "", body.decode("utf-8", "replace"))
     # Telegram web preview: вёрстка чата — не статья, trafilatura на ней даёт
     # thin; свой парсер (preview — статический HTML, JS не нужен). Пустым
     # постам дальше делать нечего — empty идёт мимо браузера в фолбэк цепочки
