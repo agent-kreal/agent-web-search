@@ -243,7 +243,7 @@ def status_line(provider: str, limit: Optional[int], period: str, label: str,
     if sv is not None:
         age = _fmt_age(sv["age_sec"])
         return f"{_fmt(sv['remaining'], sv['unit'])} left (server, {age})"
-    rem = remaining(provider, limit, period)
+    rem = remaining(provider, limit, period, price=price)
     if rem is None:
         return label or "no known limit (keyless)"
     per = f" per {period}" if period in ("day", "month") else ""
