@@ -23,14 +23,15 @@ import sys
 import time
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent          # repo root
+ROOT = Path(__file__).resolve().parent.parent          # ~/Projects/web-search
 WSEARCH = ROOT / "web-search"
 DATASET = ROOT / "bench" / "dataset.jsonl"
 RAW = ROOT / "bench" / "results" / "raw.jsonl"
 
-# Renewable/keyless only. zai is quota-dead till 2026-09-18; parallel keyed
-# and youcom keyed burn one-off $ grants — excluded on purpose.
-DEFAULT_PROVIDERS = ["tavily", "youcom", "exa", "brave", "linkup",
+# Renewable/keyless only. parallel keyed and youcom keyed burn one-off $
+# grants — excluded on purpose. zai added 2026-10-19 (quota alive again,
+# wasn't benched since 24.09).
+DEFAULT_PROVIDERS = ["tavily", "youcom", "zai", "exa", "brave", "linkup",
                      "parallel-anon", "ddg"]
 
 
@@ -60,8 +61,8 @@ def done_pairs() -> set[tuple[str, str]]:
     return done
 
 
-def run_one(provider: str, row: dict) -> dict:
-    cmd = [str(WSEARCH), "search", row["query"], "-n", "5",
+def run_one(provider: str, row: dict, n: int) -> dict:
+    cmd = [str(WSEARCH), "search", row["query"], "-n", str(n),
            "--provider", provider, "--json"]
     if row.get("freshness"):
         cmd += ["--freshness", row["freshness"]]
@@ -94,11 +95,20 @@ def main() -> int:
                     help="comma-separated scenario filter")
     ap.add_argument("--sleep", type=float, default=1.0,
                     help="pause between calls, be polite")
+    ap.add_argument("-n", "--n-results", type=int, default=5,
+                    help="top-N per provider (default 5; v2 protocol uses 10)")
+    ap.add_argument("--raw", default=None,
+                    help="raw.jsonl path (default bench/results/raw.jsonl); "
+                         "done-pairs are read from the same file")
     args = ap.parse_args()
 
     providers = [p.strip() for p in args.providers.split(",") if p.strip()]
     only = set(args.scenarios.split(",")) if args.scenarios else None
     rows = load_dataset(only)
+    global RAW
+    if args.raw:
+        RAW = Path(args.raw).resolve()
+        RAW.parent.mkdir(parents=True, exist_ok=True)
     done = done_pairs()
 
     todo = [(p, r) for r in rows for p in providers if (r["query"], p) not in done]
@@ -110,7 +120,7 @@ def main() -> int:
     stats: dict[str, dict] = {}
     with RAW.open("a") as fout:
         for i, (prov, row) in enumerate(todo, 1):
-            rec = run_one(prov, row)
+            rec = run_one(prov, row, args.n_results)
             fout.write(json.dumps(rec, ensure_ascii=False) + "\n")
             fout.flush()
             st = stats.setdefault(prov, {"ok": 0, "fail": 0, "wall": []})

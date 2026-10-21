@@ -45,7 +45,7 @@ def main() -> int:
         lines = [f"# scenario: {scen}", ""]
         for qi, (query, provs) in enumerate(queries.items(), 1):
             lines.append(f"## Q{qi}: {query}")
-            for prov in ["tavily", "youcom", "exa", "brave", "linkup",
+            for prov in ["tavily", "youcom", "zai", "exa", "brave", "linkup",
                          "parallel-anon", "ddg"]:
                 d = provs.get(prov)
                 if d is None:

@@ -61,8 +61,9 @@ tavily ~30 (из 1000/мес — ок), youcom ~30 (из 100/день — ок),
 brave ~30 (из 2000 — ок), linkup ~30 (из 4000 — ок), parallel-anon/ddg — бесплатно.
 $-гранты (parallel keyed, youcom keyed) — НЕ ТРАТИМ.
 
-## Референсы
-- `searcharvester` (`github.com/vakovalskii/searcharvester`) — предшественник, self-hosted search+extract; там же SimpleQA-раннер.
+## Референсы на диске
+- в соседнем проекте автора (searcharvester, см. attribution в README) — SimpleQA-раннер.
+- `~/Projects/web-search-tool/` — eval-harness над SearXNG (июнь).
 - `docs/how-it-works.md` — архитектура и провайдеры.
 
 ## Статус

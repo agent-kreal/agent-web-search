@@ -17,7 +17,7 @@ from pathlib import Path
 
 RES = Path(__file__).resolve().parent / "results"
 
-PROVIDERS = ["tavily", "youcom", "exa", "brave", "linkup", "parallel-anon"]
+PROVIDERS = ["tavily", "youcom", "zai", "exa", "brave", "linkup", "parallel-anon"]
 
 
 def load() -> list[dict]:
@@ -32,8 +32,11 @@ def load() -> list[dict]:
 def cell(recs: list[dict]) -> str:
     if not recs:
         return "—"
-    avg = statistics.mean([s for r in recs for s in r["scores"]])
-    hits = sum(1 for r in recs if r.get("hit"))
+    scored = [r for r in recs if r["scores"]]   # dead provider -> scores: []
+    if not scored:
+        return f"dead{len(recs)}"
+    avg = statistics.mean([s for r in scored for s in r["scores"]])
+    hits = sum(1 for r in scored if r.get("hit"))
     return f"{avg:.2f}/{hits}{len(recs)}"
 
 
@@ -60,8 +63,10 @@ def main() -> int:
     print("\n## overall (avg relevance 0-2 | hit-rate | n)")
     stats = []
     for p in PROVIDERS:
-        recs = by_prov.get(p, [])
+        recs = [r for r in by_prov.get(p, []) if r["scores"]]
         if not recs:
+            if by_prov.get(p):
+                print(f"{p:<13} — недоступен (нет валидных выдач)")
             continue
         avg = statistics.mean([s for r in recs for s in r["scores"]])
         hitrate = sum(1 for r in recs if r.get("hit")) / len(recs)
@@ -77,7 +82,8 @@ def main() -> int:
     for p in PROVIDERS:
         cells = {s: statistics.mean([x for r in by_scen_prov.get((s, p), [])
                                      for x in r["scores"]])
-                 for s in scenarios if by_scen_prov.get((s, p))}
+                 for s in scenarios
+                 if any(r["scores"] for r in by_scen_prov.get((s, p), []))}
         if not cells:
             continue
         best = max(cells, key=lambda s: cells[s])

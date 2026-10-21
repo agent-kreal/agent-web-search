@@ -1,32 +1,64 @@
-{"scenario": "ru-general", "query": "телеграм бот python aiogram хостинг бесплатно варианты", "freshness": null}
-{"scenario": "ru-general", "query": "распознавание речи whisper локально русский язык настройка", "freshness": null}
-{"scenario": "ru-general", "query": "открытые данные России API транспорт расписание разработчикам", "freshness": null}
-{"scenario": "ru-general", "query": "ведение документации проекта confluence альтернативы open source селфхостинг", "freshness": null}
-{"scenario": "ru-news", "query": "GLM-5.3-Flash Z.ai coding plan release", "freshness": "week"}
-{"scenario": "ru-news", "query": "выход python 3.14 что нового changelog", "freshness": "week"}
-{"scenario": "ru-news", "query": "график ЕГЭ 2026 изменения расписание", "freshness": "month"}
-{"scenario": "ru-news", "query": "GLM 5.3 выход релиз Zhipu анонс", "freshness": "month"}
-{"scenario": "en-news", "query": "linux kernel 6.15 release notes highlights", "freshness": "week"}
-{"scenario": "en-news", "query": "whisper.cpp changelog release notes streaming mode", "freshness": "month"}
-{"scenario": "en-news", "query": "sqlite 3.50 release notes new features", "freshness": "month"}
-{"scenario": "en-news", "query": "best local LLM apps macOS Apple Silicon 2026 LM Studio Ollama MLX", "freshness": "month"}
-{"scenario": "exact-fact", "query": "Exa AI search API free tier 1000 requests per month pricing", "freshness": null}
-{"scenario": "exact-fact", "query": "r.jina.ai free rate limit without API key requests per minute", "freshness": null}
-{"scenario": "exact-fact", "query": "Yandex Cloud Vision OCR цены за страницу тарифы", "freshness": null}
-{"scenario": "exact-fact", "query": "Discogs API rate limit 60 per minute authentication", "freshness": null}
-{"scenario": "semantic", "query": "Claude Code subagents best practices 2025", "freshness": null}
-{"scenario": "semantic", "query": "Mem0 vs Letta MemGPT vs Zep agent memory framework comparison 2026", "freshness": null}
-{"scenario": "semantic", "query": "LLM prompt decomposition vs single monolithic prompt information extraction quality", "freshness": null}
-{"scenario": "semantic", "query": "music recommendation system explainable audio features github", "freshness": null}
-{"scenario": "code-docs", "query": "playwright page.goto wait_until domcontentloaded vs networkidle SPA rendering", "freshness": null}
-{"scenario": "code-docs", "query": "MarshalX yandex-music-api Python library GitHub", "freshness": null}
-{"scenario": "code-docs", "query": "ddgs python library duckduckgo_search renamed rate limit 2026", "freshness": null}
-{"scenario": "code-docs", "query": "kafka connect configuration transforms chain example documentation", "freshness": null}
-{"scenario": "local-ru", "query": "LLM API провайдеры Россия gpt-oss deepseek open-source 2026 список", "freshness": null}
-{"scenario": "local-ru", "query": "разработка телеграм бота под ключ стоимость Москва агентство", "freshness": null}
-{"scenario": "local-ru", "query": "ozon seller api лимиты запросов документация", "freshness": null}
-{"scenario": "local-ru", "query": "магистратура IT заочно стоимость вузов Москва сравнение", "freshness": null}
-{"scenario": "debug-errors", "query": "python 3.14 ssl read hangs forever socket timeout not honored", "freshness": null}
-{"scenario": "debug-errors", "query": "wireguard intermittent handshake failure nat keepalive android", "freshness": null}
-{"scenario": "debug-errors", "query": "docker desktop vpnkit high cpu macos fix", "freshness": null}
-{"scenario": "debug-errors", "query": "site:reddit.com z.ai GLM coding plan API down August", "freshness": "week"}
+{"scenario": "ru-general", "query": "резюме frontend разработчика раздел навыков формулировки примеры", "freshness": null, "steps": "multi", "origin": "orig"}
+{"scenario": "ru-general", "query": "STAR метод ответов на вопросы собеседования примеры", "freshness": null, "steps": "multi", "origin": "orig"}
+{"scenario": "ru-general", "query": "агрегатор мероприятий концертов событий API Россия разработчикам", "freshness": null, "steps": "single", "origin": "orig"}
+{"scenario": "ru-general", "query": "сравнение методологий управления проектами agile waterfall kanban отличия", "freshness": null, "steps": "multi", "origin": "orig"}
+{"scenario": "ru-news", "query": "GLM-5.3-Flash Z.ai coding plan release", "freshness": "week", "steps": "single", "origin": "orig"}
+{"scenario": "ru-news", "query": "GLM 5.3 выход релиз Zhipu анонс", "freshness": "month", "steps": "single", "origin": "orig"}
+{"scenario": "en-news", "query": "llama.cpp changelog release notes vulkan backend", "freshness": "month", "steps": "single", "origin": "orig"}
+{"scenario": "en-news", "query": "ollama 0.12 release notes changelog CLI", "freshness": "month", "steps": "single", "origin": "orig"}
+{"scenario": "en-news", "query": "best local LLM apps macOS Apple Silicon 2026 LM Studio Ollama MLX", "freshness": "month", "steps": "single", "origin": "orig"}
+{"scenario": "exact-fact", "query": "Exa AI search API free tier 1000 requests per month pricing", "freshness": null, "steps": "single", "origin": "orig"}
+{"scenario": "exact-fact", "query": "r.jina.ai free rate limit without API key requests per minute", "freshness": null, "steps": "single", "origin": "orig"}
+{"scenario": "exact-fact", "query": "Yandex Cloud Vision OCR цены за страницу тарифы", "freshness": null, "steps": "single", "origin": "orig"}
+{"scenario": "exact-fact", "query": "Discogs API rate limit 60 per minute authentication", "freshness": null, "steps": "single", "origin": "orig"}
+{"scenario": "semantic", "query": "Claude Code subagents best practices 2025", "freshness": null, "steps": "multi", "origin": "orig"}
+{"scenario": "semantic", "query": "Mem0 vs Letta MemGPT vs Zep agent memory framework comparison 2026", "freshness": null, "steps": "multi", "origin": "orig"}
+{"scenario": "semantic", "query": "LLM prompt decomposition vs single monolithic prompt information extraction quality", "freshness": null, "steps": "multi", "origin": "orig"}
+{"scenario": "semantic", "query": "music recommendation system explainable audio features github", "freshness": null, "steps": "multi", "origin": "orig"}
+{"scenario": "code-docs", "query": "playwright page.goto wait_until domcontentloaded vs networkidle SPA rendering", "freshness": null, "steps": "single", "origin": "orig"}
+{"scenario": "code-docs", "query": "MarshalX yandex-music-api Python library GitHub", "freshness": null, "steps": "single", "origin": "orig"}
+{"scenario": "code-docs", "query": "ddgs python library duckduckgo_search renamed rate limit 2026", "freshness": null, "steps": "single", "origin": "orig"}
+{"scenario": "code-docs", "query": "oracle jdbc connection pool configuration documentation", "freshness": null, "steps": "single", "origin": "orig"}
+{"scenario": "local-ru", "query": "LLM API провайдеры Россия gpt-oss deepseek open-source 2026 список", "freshness": null, "steps": "single", "origin": "orig"}
+{"scenario": "local-ru", "query": "контекстная реклама Яндекс Директ стоимость ведения агентство Москва", "freshness": null, "steps": "single", "origin": "orig"}
+{"scenario": "local-ru", "query": "парсинг яндекса мобильные прокси yandexuid куки сессия сколько запросов", "freshness": null, "steps": "single", "origin": "orig"}
+{"scenario": "debug-errors", "query": "python 3.14 ssl read hangs forever socket timeout not honored", "freshness": null, "steps": "single", "origin": "orig"}
+{"scenario": "debug-errors", "query": "nginx 1.25 upstream \"connection reset by peer\" intermittent regression", "freshness": null, "steps": "single", "origin": "orig"}
+{"scenario": "debug-errors", "query": "haproxy \"cannot allocate memory\" multiple backends fix", "freshness": null, "steps": "single", "origin": "orig"}
+{"scenario": "debug-errors", "query": "site:reddit.com z.ai GLM coding plan API down August", "freshness": "week", "steps": "single", "origin": "orig"}
+{"scenario": "ru-news", "query": "Ангара-А5 запуск 2026 результат Плесецк", "freshness": null, "steps": "single", "origin": "usage"}
+{"scenario": "ru-news", "query": "крупнейшие утечки данных 2026 итоги года", "freshness": "month", "steps": "single", "origin": "usage"}
+{"scenario": "ru-news", "query": "rbc.ru OR kommersant.ru статья искусственный интеллект", "freshness": "week", "steps": "single", "origin": "usage"}
+{"scenario": "local-ru", "query": "антивирус macOS лицензия на год купить официальный сайт", "freshness": null, "steps": "single", "origin": "usage"}
+{"scenario": "local-ru", "query": "лучший антивирус macOS 2026 сравнение независимый тест", "freshness": null, "steps": "multi", "origin": "usage"}
+{"scenario": "local-ru", "query": "где купить ирригатор для зубов интернет-магазин", "freshness": null, "steps": "single", "origin": "usage"}
+{"scenario": "local-ru", "query": "доктор Слон мультфильм где смотреть", "freshness": null, "steps": "single", "origin": "usage"}
+{"scenario": "code-docs", "query": "supabase row level security enable policy documentation", "freshness": null, "steps": "single", "origin": "usage"}
+{"scenario": "code-docs", "query": "caddyfile reverse_proxy configuration syntax example", "freshness": null, "steps": "single", "origin": "usage"}
+{"scenario": "code-docs", "query": "run Qwen3 Coder with ollama guide vram requirements", "freshness": null, "steps": "multi", "origin": "usage"}
+{"scenario": "semantic", "query": "postgres pgvector vs qdrant benchmark production", "freshness": null, "steps": "multi", "origin": "usage"}
+{"scenario": "semantic", "query": "GLM-5.3 vision image input multimodal API support", "freshness": null, "steps": "single", "origin": "usage"}
+{"scenario": "debug-errors", "query": "uv pip install SSL error corporate proxy", "freshness": null, "steps": "single", "origin": "usage"}
+{"scenario": "exact-fact", "query": "tavily search api pricing per 1000 requests", "freshness": null, "steps": "single", "origin": "usage"}
+{"scenario": "exact-fact", "query": "GLM Coding Plan available models usage quota limits", "freshness": null, "steps": "single", "origin": "usage"}
+{"scenario": "exact-fact", "query": "курс биткоина сегодня", "freshness": "day", "steps": "single", "origin": "ts"}
+{"scenario": "exact-fact", "query": "курс юаня к рублю ЦБ сегодня", "freshness": "day", "steps": "single", "origin": "ts"}
+{"scenario": "exact-fact", "query": "ChatGPT deep research limits 2026 Plus Pro how many per month", "freshness": null, "steps": "single", "origin": "ts"}
+{"scenario": "exact-fact", "query": "Perplexity deep research daily query limits Pro 2026", "freshness": null, "steps": "single", "origin": "ts"}
+{"scenario": "exact-fact", "query": "python последняя стабильная версия", "freshness": null, "steps": "single", "origin": "ts"}
+{"scenario": "ru-news", "query": "новости искусственный интеллект Россия сегодня", "freshness": "day", "steps": "single", "origin": "ts"}
+{"scenario": "ru-news", "query": "Wildberries тарифы для продавцов изменение комиссии", "freshness": "month", "steps": "single", "origin": "ts"}
+{"scenario": "en-news", "query": "SpaceX Starship последний запуск результат", "freshness": "week", "steps": "single", "origin": "ts"}
+{"scenario": "en-news", "query": "Formula 1 последняя гонка победитель", "freshness": "week", "steps": "single", "origin": "ts"}
+{"scenario": "en-news", "query": "Anthropic Claude latest model release announcement", "freshness": "week", "steps": "single", "origin": "ts"}
+{"scenario": "en-news", "query": "SQLite latest release changelog", "freshness": "month", "steps": "single", "origin": "ts"}
+{"scenario": "semantic", "query": "embedding model русский язык лучший выбор 2026", "freshness": null, "steps": "multi", "origin": "synthetic"}
+{"scenario": "semantic", "query": "qdrant hybrid search vs sparse embedding when to use", "freshness": null, "steps": "multi", "origin": "synthetic"}
+{"scenario": "ru-general", "query": "как составить техническое задание на разработку мобильного приложения примеры", "freshness": null, "steps": "multi", "origin": "synthetic"}
+{"scenario": "ru-general", "query": "метрики службы поддержки first response time расчёт нормы", "freshness": null, "steps": "multi", "origin": "synthetic"}
+{"scenario": "code-docs", "query": "httpx client timeout retries documentation", "freshness": null, "steps": "single", "origin": "synthetic"}
+{"scenario": "code-docs", "query": "redis sorted set leaderboard python example", "freshness": null, "steps": "single", "origin": "synthetic"}
+{"scenario": "debug-errors", "query": "openai api 429 rate limit retry-after python handling", "freshness": null, "steps": "single", "origin": "synthetic"}
+{"scenario": "debug-errors", "query": "docker compose service network host unreachable bridge", "freshness": null, "steps": "single", "origin": "synthetic"}
+{"scenario": "en-news", "query": "best open source projects 2026 developer tools", "freshness": "month", "steps": "multi", "origin": "synthetic"}
+{"scenario": "exact-fact", "query": "Cloudflare Workers free plan daily request limit", "freshness": null, "steps": "single", "origin": "synthetic"}
