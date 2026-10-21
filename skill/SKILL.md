@@ -1,6 +1,6 @@
 ---
 name: web-search
-description: Unified web search for the agent — CLI `wsearch` with automatic fallback across 9 providers (tavily → youcom → zai → exa → brave → parallel-anon → linkup → ddg → parallel-$) and a local quota counter (fallback BEFORE the 429). Policy: renewable monthly quotas first, then keyless/free, then the scraping floor; one-off $ grants go last. Use for ALL web search and URL reading (fetch: free local cascade → firecrawl → tavily → jina → parallel-$, 30-min cache) and fan-out research: "search the web", "look up", "research", «поищи», «найди в интернете», «загугли», "find online", "freshness", comparing sources, reading pages.
+description: Unified web search for the agent — CLI `wsearch` with automatic fallback across 10 providers (tavily → zai → exa → brave → gh → parallel-anon → linkup → ddg → youcom-$ → parallel-$), a local quota counter (fallback BEFORE the 429), response schema validation and RRF fusion for multi fan-out. Policy: renewable monthly quotas first, then keyless/free, then the scraping floor; one-off $ grants go last. Use for ALL web search and URL reading (fetch: github.com natively via gh CLI → free local cascade → firecrawl → tavily → jina → parallel-$, 30-min cache) and fan-out research: "search the web", "look up", "research", «поищи», «найди в интернете», «загугли», "find online", "freshness", comparing sources, reading pages, GitHub repo search.
 allowed-tools: Bash
 ---
 
@@ -29,17 +29,19 @@ falls through on errors. Keys live in `/path/to/agent-web-search/.env`
 ## Intent routing
 
 The router detects the query scenario and reorders providers
-(benchmark `bench/REPORT.md`: each has its own strength). Autodetect by
-keywords, or set explicitly: `--intent docs|research|fact|news|ru|debug`.
+(benchmark `bench/REPORT.md`, v2 re-baseline 10.2026: each has its own
+strength). Autodetect by keywords, or set explicitly:
+`--intent docs|research|fact|news|ru|debug|github`.
 
-| Scenario | Autodetect cues | First pick |
+| Scenario | Autodetect cues | Order |
 |---|---|---|
-| `docs` | api, github, pypi, docs, library | exa |
-| `research` | "vs", comparison, review, best practices | exa |
-| `fact` | pricing, rate limit, тариф, цена, стоимость | youcom |
-| `news` | --freshness, release, changelog, релиз, новости | tavily (RU) / exa (EN) |
-| `ru` | cyrillic without special cues | youcom |
-| `debug` | error, exception, hangs, regression, «не работает» | tavily |
+| `docs` | api, github, pypi, docs, library | exa → tavily |
+| `research` | "vs", comparison, review, best practices | exa → brave |
+| `fact` | pricing, rate limit, тариф, цена, стоимость | exa → tavily → brave |
+| `news` | --freshness, release, changelog, релиз, новости | ddg → linkup (both RU and EN; anti-bot only hits bursts, a single query is safe) |
+| `github` | github, репозиторий, repo, open source | gh → exa → tavily → brave |
+| `ru` | cyrillic without special cues | zai → brave → tavily |
+| `debug` | error, exception, hangs, regression, «не работает» | tavily → brave |
 
 - Queries with `site:` — exa and parallel-anon move to the end automatically
   (exa fails on them, parallel-anon ignores the operator).
@@ -64,21 +66,26 @@ keywords, or set explicitly: `--intent docs|research|fact|news|ru|debug`.
 ## Providers (order: renewable → keyless → floor → one-off grants)
 
 1. `tavily` — 1000 credits/mo (reset on the 1st) → keyless degrade
-2. `youcom` — free 100/**day** (burn daily — spend freely)
-3. `zai` — 1000/mo from a GLM Coding Plan
-4. `exa` — ~1400/mo ($10/mo), semantic search, best at docs/research
-5. `brave` — 2000/mo, best for RU queries
+2. `zai` — 1000/mo from a GLM Coding Plan (RU-friendly)
+3. `exa` — ~1400/mo ($10/mo), semantic search, best at docs/research (v2 leader)
+4. `brave` — 2000/mo, best for RU queries
+5. `gh` — free native GitHub repo search via the local gh CLI
 6. `parallel-anon` — anonymous Parallel, keyless
-7. `linkup` — ~4000/mo, big bucket, weak quality — mass fan-out
-8. `ddg` — scraping floor; anti-bot under load — the very last
-9. `parallel` — one-off $ grant — the last resort
+7. `linkup` — ~4000/mo, big bucket — mass fan-out, backup for news
+8. `ddg` — scraping floor; anti-bot under bursts — but first for single news queries
+9. `youcom` — keyed REST ($100 one-off grant, $5/1k; the free MCP profile was paywalled 10.2026)
+10. `parallel` — one-off $ grant — the last resort
 
-Fetch chain: `local` (free cascade httpx+trafilatura → curl_cffi → playwright,
-covers ~80% of pages; aliases for --provider: `local-http`, `local-curl`,
-`local-browser`) → `firecrawl` (~2000/mo, anti-bot) → `tavily` (extract) →
-`jina` (r.jina.ai) → `parallel` (web_fetch, $-grant — last). 30-min cache
-(`--no-cache` to bypass, `wsearch reset fetch-cache` to clean). Credits are
-spent only when local extraction is blocked (anti-bot / IP ban).
+Fetch chain: `gh` (github.com natively: README/file/PR/issue/releases, private
+repos per gh credentials) → `local` (free cascade httpx+trafilatura →
+curl_cffi → playwright, covers ~80% of pages; aliases for --provider:
+`local-http`, `local-curl`, `local-browser`) → `firecrawl` (~2000/mo,
+anti-bot) → `tavily` (extract) → `jina` (r.jina.ai) → `parallel`
+(web_fetch, $-grant — last). 30-min cache (`--no-cache` to bypass,
+`wsearch reset fetch-cache` to clean). A service-tier "success" shorter than
+200 chars is treated as a fail and the chain falls through automatically —
+only real content reaches the cache. Credits are spent only when local
+extraction is blocked (anti-bot / IP ban).
 
 ## Choosing a fetch provider (benchmark `bench-extract/REPORT.md`)
 
@@ -94,6 +101,6 @@ free, median 1.3 s). Deliberately pin a provider only for special scenarios:
 
 - Never `--provider parallel` for full text: it's a summarizer — retells with
   "…" ellipses (~3.7k chars vs 11–25k for the rest).
-- Careful with explicit `--provider tavily`: 17% of its benchmark "successes"
-  were empty (<200 chars). Treat output shorter than 200 chars as a fail and
-  call the next provider.
+- A pinned provider's result under 200 chars still falls through to the next
+  tier automatically (the 17% empty "successes" of tavily-extract motivated
+  the length check) — no manual retry needed.

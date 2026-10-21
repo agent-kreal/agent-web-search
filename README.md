@@ -1,9 +1,11 @@
 # web-search — единый веб-поиск для AI-агента
 
 CLI-файл `web-search` (алиас `wsearch` в `~/.local/bin/` — симлинк, зовётся из
-любой папки): один вызов для агента, под капотом — 9 провайдеров в цепочке
-фолбэка и локальный счётчик квот, который скипает исчерпанного провайдера
-**до** 429, а не после. Python3 stdlib, **ноль зависимостей и venv** — «установка»
+любой папки): один вызов для агента, под капотом — 10 провайдеров в цепочке
+фолбэка, локальный счётчик квот, который скипает исчерпанного провайдера
+**до** 429, а не после, schema-валидация выдачи (молчаливая смена формата
+ответа = фолбэк, а не пустые сниппеты) и RRF-слияние multi-фан-аута.
+Python3 stdlib, **ноль зависимостей и venv** — «установка»
 закончена, пока папка на месте. Скилл для Claude Code: `~/.claude/skills/web-search/`.
 
 ## Предыстория (зачем этот тул)
@@ -20,35 +22,37 @@ CLI-файл `web-search` (алиас `wsearch` в `~/.local/bin/` — симл�
 
 ## Провайдеры и политика роутинга
 
-Политика (владелец, пересмотрена 27.08 после сверки тарифов с доками):
+Политика (владелец, пересмотрена 27.08, уточнена 20.10 после закрытия
+youcom-free):
 **сначала вырабатываем возобновляемые месячные квоты (остаток сгорает на
 ресете — «use it or lose it»), затем keyless/free-режимы тех же сервисов,
 затем бесплатное скрейпинг-дно; разовые $-гранты (не пополняются) — самый
-последний рубеж.** Сверка тарифов 27.08: tavily 1000/мес (ресет 1-го числа),
-youcom 100/**день** (сгорают ежедневно — потому второй в цепочке), zai 1000/мес
-из подписки, exa $10/мес, brave легаси 2000/мес (новым планам дают $5-кредит/мес),
-linkup top-up **до** $20/мес (не накапливается), firecrawl 1000–2000/мес.
-Разовые гранты: parallel $18.46 (signup; есть и $5/мес recurring, но баланс
-в основном разовый — потому весь keyed-слот в конец), youcom keyed $100
-(НЗ, закомментирован в .env). Dual-mode провайдер tavily не выпадает из
-цепочки при исчерпании keyed-режима — дегрейдится на keyless в том же слоте.
+последний рубеж.** Сверка тарифов: tavily 1000/мес (ресет 1-го числа),
+zai 1000/мес из подписки, exa $10/мес, brave легаси 2000/мес (новым планам
+дают $5-кредит/мес), linkup top-up **до** $20/мес (не накапливается),
+firecrawl 1000–2000/мес. Разовые гранты: parallel $18.46 (signup; есть и
+$5/мес recurring, но баланс в основном разовый — потому весь keyed-слот в
+конец), youcom keyed $100 ($5/1k ≈ 20k вызовов; free-MCP-профиль закрыт
+пейволлом 402 в 10.2026 — потому в $-хвосте). Dual-mode провайдер tavily не
+выпадает из цепочки при исчерпании keyed-режима — дегрейдится на keyless
+в том же слоте.
 
 ### Search-цепочка
 
 | # | name | квота | режим | заметки |
 |---|---|---|---|---|
 | 1 | tavily | 1000 кредитов/мес (ресет 1-го) → keyless | keyed→keyless | REST `api.tavily.com/search`; keyless-режим — заголовок `X-Tavily-Access-Mode: keyless`; при 429 в keyed — ретрай keyless в том же вызове |
-| 2 | youcom | 100/**день** (сгорают ежедневно) | free | MCP `api.you.com/mcp?profile=free`, тул `you-search`, без ключей; keyed-ключ ($100 разовый кредит) лежит в .env закомментированным — НЗ |
-| 3 | zai | 1000/мес (GLM Coding Plan) | keyed | MCP `api.z.ai/api/mcp/web_search_prime/mcp`; тулза `web_search_prime`; 429 содержит «reset at …» — парсится и запоминается (сейчас: исчерпан до 2026-09-18) |
-| 4 | exa | $10/мес ≈ 1400 поисков | keyed | REST `api.exa.ai/search`; search $7/1k, +$1/результат сверх 10; `contents.highlights: true` (токен-эффективно, рекомендация Exa для агентов); ключ в UUID-формате с дефисами |
-| 5 | brave | 2000/мес (легаси-план; новым — $5-кредит/мес) | keyed | REST `api.search.brave.com`; лучший RU-поклон; ключ также читается из `~/.claude/.brave_api_key` |
-| 6 | gh | free (gh CLI, 30 req/min search) | free | `gh api search/repositories` — нативный поиск репо (★/язык/обновление); первым при intent=github (слова «github/репозиторий/repo/open source»); RU-запросы GitHub-поиск не матчит — фолбэк вниз штатный |
-| 7 | parallel-anon | безлимит keyless | free | анонимный слот того же Parallel MCP («пониженные» лимиты, generous for hobby) |
-| 8 | linkup | top-up до $20/мес ≈ 4000 std | keyed | REST `api.linkup.so/v1/search`; **API дрейфнул**: `q` + `outputType: searchResults\|sourcedAnswer\|structured` (НЕ `query`/`sourcedResults`); deep ≈ 2× цены; при исчерпании 429; понижен 27.08 по бенчу (качество 1.11/2) — большой «бак» для массового fan-out |
-| 9 | ddg | безлимит keyless | скрейпинг | POST `html.duckduckgo.com/html/`, браузерный UA, полл 1.5 c; 202 = антибот-челлендж; **30/32 вызовов под серией убиты антиботом (бенч 27.08)** — самый-самый последний |
+| 2 | zai | 1000/мес (GLM Coding Plan) | keyed | MCP `api.z.ai/api/mcp/web_search_prime/mcp`; тулза `web_search_prime`; 429 содержит «reset at …» — парсится и запоминается; остаток — server-truth через livecheck (ресет ~18-го) |
+| 3 | exa | $10/мес ≈ 1400 поисков | keyed | REST `api.exa.ai/search`; search $7/1k, +$1/результат сверх 10; `contents.highlights: true` (токен-эффективно, рекомендация Exa для агентов); ключ в UUID-формате с дефисами; лидер v2-бенча (docs/research/fact) |
+| 4 | brave | 2000/мес (легаси-план; новым — $5-кредит/мес) | keyed | REST `api.search.brave.com`; лучший RU-поклон; ключ также читается из `~/.claude/.brave_api_key` |
+| 5 | gh | free (gh CLI, 30 req/min search) | free | `gh api search/repositories` — нативный поиск репо (★/язык/обновление); первым при intent=github (слова «github/репозиторий/repo/open source»); RU-запросы GitHub-поиск не матчит — фолбэк вниз штатный |
+| 6 | parallel-anon | безлимит keyless | free | анонимный слот того же Parallel MCP («пониженные» лимиты, generous for hobby) |
+| 7 | linkup | top-up до $20/мес ≈ 4000 std | keyed | REST `api.linkup.so/v1/search`; **API дрейфнул**: `q` + `outputType: searchResults\|sourcedAnswer\|structured` (НЕ `query`/`sourcedResults`); deep ≈ 2× цены; при исчерпании 429; большой «бак» для массового fan-out, лучший дублёр ddg на news-интентах (v2-бенч) |
+| 8 | ddg | безлимит keyless | скрейпинг | POST `html.duckduckgo.com/html/`, браузерный UA, полл 1.5 c; 202 = антибот-челлендж; под СЕРИЯМИ запросов антибот банит (бенчи 27.08/10.2026) — но одиночный запрос не серия: **первый на news-интентах** (v2 re-baseline: R 0.27–0.38, доминирует с отрывом) |
+| 9 | youcom | **$100 разовый грант** ($5/1k ≈ 20k) | keyed | free-MCP-профиль `profile=free` закрыт пейволлом (402, 10.2026) — ветка осталась в коде как keyless-дно; рабочий режим: REST `ydc-index.io/v1/search`, `X-API-Key` (`YDC_API_KEY`/`YOUCOM_API_KEY`); freshness-параметр; топ-качество v1-бенча, но грант разовый — $-хвост |
 | 10 | parallel | **$18.46 разовый грант** (+$5/мес recurring) | keyed | MCP `search.parallel.ai/mcp`, Bearer; `web_search` (args: `objective` + **`search_queries` массив!**) + `web_fetch` (до 20 URL/вызов); грант не пополняется — **последний рубеж** |
 
-**Итого возобновляемых: ~12 400 поиск/мес + безлимитное keyless-дно; в резерве — разовые гранты (parallel $18.46, youcom keyed $100). Ноль карт.**
+**Итого возобновляемых: ~11 400 поиск/мес + безлимитное keyless-дно; в резерве — разовые гранты (youcom keyed $100, parallel $18.46). Ноль карт.**
 
 ### Fetch-цепочка (URL → markdown)
 
@@ -67,25 +71,43 @@ linkup top-up **до** $20/мес (не накапливается), firecrawl 1
 тир всегда тянет до 32k символов, усечение `--max-chars` — на выдаче (кэш
 переиспользуется при разных лимитах).
 
+**Контроль качества выдачи (10.2026, фазы 1–2/5 бенч-цикла):**
+
+- **Длина-проверка ДО кэша**: сервисный «успех» короче 200 символов — это
+  антибот-заглушка или пустая wiki-TOC, а не контент (tavily-extract давал 17%
+  таких «успехов»). Короткий результат = фолбэк вниз по цепочке; в кэш ложится
+  только настоящий контент.
+- **Smart-резка** (`engine/truncate.py`): усечение по границам
+  предложения/абзаца/code-fence/JSON-строки (backoff-окно 15%, авто-закрытие
+  ```-fence), а не тупо `content[:6000]` посреди токена — mid-token хвосты
+  63% → 14% выдач, потеря длины 0.25%, recall не просел (замеры на
+  замороженных копиях, `bench-extract/`).
+- **Санитайзер + префильтр** (`engine/sanitize.py`, `engine/prefilter.py`):
+  из fetched-контента вырезаются якорные TOC-раны (≥3 вхождения), хлебные
+  крошки, cookie/©/share/subscribe-строки — мусор не занимает контекст LLM;
+  непроизводительный контент оборачивается маркерами untrusted-текста.
+
 Serper (2500 разово) рассматривался как НЗ — **выброшен 27.08** по решению
 владельца (бюджета и без него хватает).
 
-## Intent-роутинг (27.08, по бенчмарку `bench/REPORT.md`)
+## Intent-роутинг (обновлён 20.10 по re-baseline v2, `bench/REPORT.md`)
 
 Роутер детектит сценарий запроса и переупорядочивает цепочку — «кто лучший
 в этом сценарии, тот и первый». Квотная политика не меняется: исчерпанные
 скипаются как обычно, фолбэк вниз работает, интент лишь выбирает порядок
-среди доступных.
+среди доступных. youcom исключён из подъёмов 20.10 (keyed REST — $-хвост);
+его прошлая сила (fact 94% hit@3) перераспределена: fact→exa (лидер v2),
+ru→zai.
 
 | intent | автодетект (ключевые слова) | порядок |
 |---|---|---|
-| `docs` | api, github, pypi, документация, library | exa → youcom → tavily |
-| `research` | «vs», сравнение, обзор, best practices | exa → youcom → brave |
-| `fact` | pricing, rate limit, тариф, цена, стоимость | youcom → exa → brave |
-| `news` | --freshness, release, changelog, релиз | RU: tavily → youcom → brave; EN: exa → tavily → youcom |
-| `github` | github, репозиторий, repo, open source — ищем ПРОЕКТ | gh → exa → youcom → tavily → brave |
-| `ru` | кириллица без спец-признаков | youcom → brave → tavily |
-| `debug` | error, exception, hangs, regression | tavily → youcom → brave |
+| `docs` | api, github, pypi, документация, library | exa → tavily |
+| `research` | «vs», сравнение, обзор, best practices | exa → brave |
+| `fact` | pricing, rate limit, тариф, цена, стоимость | exa → tavily → brave |
+| `news` | --freshness, release, changelog, релиз | RU и EN: ddg → linkup (v2 re-baseline: ddg доминирует, R 0.27–0.38; антибот бьёт только серии, одиночный запрос — нет) |
+| `github` | github, репозиторий, repo, open source — ищем ПРОЕКТ | gh → exa → tavily → brave |
+| `ru` | кириллица без спец-признаков | zai → brave → tavily |
+| `debug` | error, exception, hangs, regression | tavily → brave |
 
 Явно: `--intent docs|research|fact|news|ru|debug|github`. Запросы с `site:`
 дополнительно скидывают exa (на них пустеет) и parallel-anon (игнорирует
@@ -109,14 +131,24 @@ Serper (2500 разово) рассматривался как НЗ — **выб
 
 ```bash
 wsearch search "query" [-n 8] [--freshness day|week|month] [--provider X] [--intent docs] [--json]
-wsearch multi  --queries "q1|q2|q3"        # параллельный fan-out + dedupe по URL
+wsearch multi  --queries "q1|q2|q3"        # fan-out + RRF-слияние + dedupe по URL
 wsearch fetch  "https://..." [--max-chars 6000] [--provider local-browser] [--no-cache]
-wsearch gather --urls "u1,u2,u3"           # параллельное чтение (4 потока)
+wsearch gather --urls "u1,u2,u3"           # параллельное чтение (4 потока, 6000 симв./URL)
 wsearch status [--live]                    # остатки квот; --live: сверка с API провайдеров
 wsearch usage [--days 30]                  # аудит использования (интенты, фолбэки, повторы)
 wsearch chain                              # активная цепочка (0 запросов)
 wsearch reset [provider|fetch-cache]       # сброс счётчиков / чистка кэша
 ```
+
+**Multi (фан-аут, 10.2026):** переформулировки запроса разносятся по провайдерам
+цепочки (по кругу), выдачи сливаются **RRF** (reciprocal-rank fusion, k=60) —
+precision/recall URL-пула против union-эталона 0.57/0.40 → 0.65/0.43
+(бенчмарк v2). Если RRF-топ пуст по запросу — **fail-backfill**: доборный круг
+из 2 переформулировок (не «по непокрытым термам» — такой вариант опробован
+и отвергнут: точность доборных URL 15%). **Schema-валидация**: выдача
+провайдера проверяется на структуру (url/title/snippet непусты, сниппет
+≥50 симв.); провайдер, сменивший формат ответа молча (youcom так отдал месяцы
+пустых сниппетов), фолбэкается каскадом с пометкой в телеметрии.
 
 Выход: компактный текст (заголовок/URL/сниппет — экономит контекст) или `--json`.
 Ошибки — JSON в stderr, exit 1. `--provider` — забронировать конкретного
@@ -138,9 +170,12 @@ wsearch reset [provider|fetch-cache]       # сброс счётчиков / ч�
 
 Источники серверной истины: **firecrawl** `GET /v2/team/credit-usage`,
 **linkup** `GET /v1/credits/balance` (обе — `wsearch status --live`, бесплатные);
-**brave** — заголовки `X-RateLimit-*` каждого ответа, пассивно. exa: team-API
+**brave** — заголовки `X-RateLimit-*` каждого ответа, пассивно; **zai** — MCP
+`quota`-тул того же эндпоинта (ресет ~18-го), **youcom** — `GET api.you.com/v1/billing/account_balance`
+(центы; эндпоинт за Cloudflare банит TLS-фингерпринт urllib — livecheck
+падает на системный curl). exa: team-API
 требует service-ключ (404 на free tier) — локальный счётчик с sanity-cap 750.
-tavily/zai/youcom — API остатков нет, локальный счётчик + их 429.
+tavily — API остатков нет, локальный счётчик + их 429.
 
 Правила `quotas.remaining()`: свежий снапшот (≤6 ч) → серверный остаток минус
 расход с момента сверки (интерполяция через `baseline_used`); снапшот ≤7 дней —
@@ -158,8 +193,9 @@ tavily/zai/youcom — API остатков нет, локальный счётч
 будущем или остаток ≤ 0 (`quota at 0 (server|local counter)`). Реальный
 429 → `mark_exhausted` (zai — с распарсенной датой сброса из тела ошибки).
 
-Тесты: `python3 -m unittest discover tests` (17 шт. — ledger v2 + парсер
-brave-заголовков; реальный `state/` не трогается).
+Тесты: `python3 -m unittest discover tests` (117 шт., 14 файлов — ledger v2,
+schema-валидация, RRF-слияние, backfill, smart-резка, санитайзер, youcom
+keyed REST, livecheck; реальный `state/` не трогается).
 
 ## Layout
 
@@ -167,21 +203,28 @@ brave-заголовков; реальный `state/` не трогается).
 wsearch                # executable stub (sys.path + engine.cli)
 engine/                # stdlib-only, ноль зависимостей
   cli.py               # argparse, вывод, multi/gather (ThreadPoolExecutor)
-  router.py            # цепочка, скип по квоте, фолбэк по ошибкам, кэш
+  router.py            # цепочка, скип по квоте, фолбэк по ошибкам, кэш, intent-порядки
   quotas.py            # ledger v2: server-truth + local counter, remaining/status_line
-  livecheck.py         # серверная сверка квот (firecrawl/linkup) + лог дрейфа
+  livecheck.py         # серверная сверка квот (firecrawl/linkup/zai/youcom) + лог дрейфа
   fetchcache.py        # кэш fetch-результатов (TTL 30 мин, state/fetch_cache.json)
+  merge.py             # RRF-слияние multi-фан-аута (k=60)
+  backfill.py          # adaptive fail-backfill (только фейл-триггер)
+  truncate.py          # smart-резка: границы предложения/абзаца/fence/JSON-строки
+  prefilter.py         # strip_junk: TOC-раны, крошки, cookie/©-строки
+  sanitize.py          # санитайзер fetched-контента + untrusted-обёртка
   mcpclient.py         # минимальный MCP Streamable-HTTP клиент (JSON-RPC)
   config.py            # .env + discovery ключей
   providers/           # по файлу на провайдера + __init__ с цепочками
-    base.py            # SearchResult/FetchResult/Provider/QuotaSpec
+    base.py            # SearchResult/FetchResult/Provider/QuotaSpec + schema-валидация
     local.py           # обёртка subprocess -> local-extract (первый в fetch)
 local-extract/         # uv-проект локального каскада (hatchling, src-layout)
   src/local_extract/   # cascade/classify/extract/httpclient/browser/protocol
   .venv/               # gitignored; setup: uv sync && uv run playwright install chromium
+bench/                 # бенчмарк v2: датасет 64, union-pool+RRF, бинарный судья T/S/A
+bench-extract/         # бенчмарк fetch-экстракторов (35 URL, 3-осевой judge)
 state/quotas.json      # счётчики (gitignored)
 state/fetch_cache.json # кэш fetch (gitignored)
-tests/                 # unittest: ledger v2 + brave-заголовки
+tests/                 # unittest: 117 тестов, 14 файлов
 .env                   # ключи (chmod 600, gitignored)
 ```
 
@@ -189,9 +232,9 @@ tests/                 # unittest: ledger v2 + brave-заголовки
 
 `.env` рядом с `wsearch`: `TAVILY_API_KEY`, `PARALLEL_API_KEY`, `EXA_API_KEY`,
 `LINKUP_API_KEY`, `FIRECRAWL_API_KEY`, `BRAVE_API_KEY`, `ZAI_TOKEN`,
-`YOUCOM_API_KEY` (закомментирован, НЗ). Fallback-источники: brave-ключ —
-`~/.claude/.brave_api_key`, zai — `mcpServers` из `~/.claude.json` (пока
-MCP-конфиг жив).
+`YDC_API_KEY`/`YOUCOM_API_KEY` (keyed REST, $-хвост цепочки). Fallback-источники:
+brave-ключ — `~/.claude/.brave_api_key`, zai — `mcpServers` из `~/.claude.json`
+(пока MCP-конфиг жив).
 
 Гочча .env: **inline-комментарии** в строке значения отрезаются только после
 пробел+`#` (чинено 27.08: ключ exa уезжал в заголовок с хвостом `# free …` → 401).
@@ -241,6 +284,14 @@ MCP-конфиг жив).
   (алиас `wsearch` в `~/.local/bin`). Git-история с этого дня.
 - **2026-09-18** — ожидаемый ресет zai-квоты (поднимется сам, ничего не делать;
   потом прогнать `bench/run_bench.py --providers zai` и вписать в матрицу).
+- **2026-10-19…20** — бенчмарк-цикл улучшений (по мотивам инженерных статей
+  Perplexity): замороженный baseline → фазы с бенчем до/после каждой:
+  smart-резка + санитайзер fetch-выдачи (фазы 1–2); бенчмарк v2 — union-pool,
+  RRF-агрегация, бинарный судья T/S/A, датасет 32→64 (фаза 3); RRF-слияние
+  multi + schema-валидация выдачи + fail-backfill, youcom free-MCP закрыт
+  пейволлом → keyed REST в $-хвост, server-truth livecheck zai/youcom (фаза 4);
+  длина-проверка fetch до кэша, gather 6000, news-интенты → ddg/linkup по
+  re-baseline v2 (фаза 5). Итог движка: ~1900 строк, 117 тестов.
 
 ## Связанное
 
