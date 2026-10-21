@@ -2,41 +2,41 @@
   "per_ext": {
     "local-auto": {
       "n": 35,
-      "ok": 28,
-      "ok_pct": 0.8,
-      "empty": 0,
-      "empty_pct": 0.0,
-      "wall_med": 1.26,
-      "wall_p90": 8.82,
-      "chars_med": 11159.5,
-      "with_recall": 0.964,
+      "ok": 25,
+      "ok_pct": 0.714,
+      "empty": 2,
+      "empty_pct": 0.057,
+      "wall_med": 1.36,
+      "wall_p90": 3.13,
+      "chars_med": 12958,
+      "with_recall": 0.798,
       "with_n": 28,
-      "without_rate": 0.196,
+      "without_rate": 0.146,
       "without_n": 20,
       "feats": {
-        "headers": 2.2,
-        "codeblocks": 2.5,
-        "links": 10.6,
-        "lists": 2.4
+        "headers": 2.4,
+        "codeblocks": 2.6,
+        "links": 9.6,
+        "lists": 1.2
       }
     },
     "local-http": {
       "n": 35,
       "ok": 25,
       "ok_pct": 0.714,
-      "empty": 0,
-      "empty_pct": 0.0,
-      "wall_med": 0.85,
-      "wall_p90": 1.82,
-      "chars_med": 12961,
-      "with_recall": 0.893,
+      "empty": 2,
+      "empty_pct": 0.057,
+      "wall_med": 0.99,
+      "wall_p90": 1.95,
+      "chars_med": 12958,
+      "with_recall": 0.798,
       "with_n": 28,
-      "without_rate": 0.196,
+      "without_rate": 0.146,
       "without_n": 20,
       "feats": {
         "headers": 2.4,
-        "codeblocks": 2.8,
-        "links": 11.9,
+        "codeblocks": 2.6,
+        "links": 9.6,
         "lists": 1.2
       }
     },
@@ -44,140 +44,122 @@
       "n": 35,
       "ok": 25,
       "ok_pct": 0.714,
-      "empty": 0,
-      "empty_pct": 0.0,
-      "wall_med": 0.97,
-      "wall_p90": 3.84,
-      "chars_med": 12961,
-      "with_recall": 0.893,
+      "empty": 1,
+      "empty_pct": 0.029,
+      "wall_med": 1.0,
+      "wall_p90": 2.64,
+      "chars_med": 12958,
+      "with_recall": 0.833,
       "with_n": 28,
-      "without_rate": 0.196,
+      "without_rate": 0.146,
       "without_n": 20,
       "feats": {
         "headers": 2.4,
-        "codeblocks": 2.8,
-        "links": 11.9,
+        "codeblocks": 2.6,
+        "links": 9.6,
         "lists": 1.2
       }
     },
     "local-browser": {
       "n": 35,
-      "ok": 28,
-      "ok_pct": 0.8,
+      "ok": 0,
+      "ok_pct": 0.0,
       "empty": 0,
       "empty_pct": 0.0,
-      "wall_med": 5.52,
-      "wall_p90": 25.66,
-      "chars_med": 11159.5,
-      "with_recall": 0.929,
+      "wall_med": 0.54,
+      "wall_p90": 0.57,
+      "chars_med": 0,
+      "with_recall": 0.0,
       "with_n": 28,
-      "without_rate": 0.196,
-      "without_n": 20,
-      "feats": {
-        "headers": 2.1,
-        "codeblocks": 2.4,
-        "links": 10.6,
-        "lists": 2.4
-      }
+      "without_rate": 0.0,
+      "without_n": 20
     },
     "firecrawl": {
       "n": 35,
-      "ok": 32,
-      "ok_pct": 0.914,
-      "empty": 1,
-      "empty_pct": 0.029,
-      "wall_med": 2.93,
-      "wall_p90": 11.47,
-      "chars_med": 25650.5,
-      "with_recall": 0.5,
+      "ok": 34,
+      "ok_pct": 0.971,
+      "empty": 0,
+      "empty_pct": 0.0,
+      "wall_med": 2.15,
+      "wall_p90": 6.28,
+      "chars_med": 19308.0,
+      "with_recall": 0.518,
       "with_n": 28,
       "without_rate": 0.325,
       "without_n": 20,
       "feats": {
-        "headers": 3.5,
-        "codeblocks": 2.1,
-        "links": 19.6,
-        "lists": 3.6
+        "headers": 3.6,
+        "codeblocks": 2.4,
+        "links": 18.3,
+        "lists": 1.7
       }
     },
     "tavily": {
       "n": 35,
       "ok": 35,
       "ok_pct": 1.0,
-      "empty": 6,
-      "empty_pct": 0.171,
-      "wall_med": 1.04,
-      "wall_p90": 4.72,
-      "chars_med": 14464,
-      "with_recall": 0.631,
+      "empty": 8,
+      "empty_pct": 0.229,
+      "wall_med": 1.43,
+      "wall_p90": 3.94,
+      "chars_med": 9335,
+      "with_recall": 0.601,
       "with_n": 28,
-      "without_rate": 0.258,
+      "without_rate": 0.247,
       "without_n": 20,
       "feats": {
-        "headers": 2.9,
+        "headers": 3.0,
         "codeblocks": 2.3,
-        "links": 16.2,
-        "lists": 6
+        "links": 13.8,
+        "lists": 4.4
       }
     },
     "jina": {
       "n": 35,
-      "ok": 34,
-      "ok_pct": 0.971,
-      "empty": 3,
-      "empty_pct": 0.086,
-      "wall_med": 3.46,
-      "wall_p90": 7.99,
-      "chars_med": 18249.5,
-      "with_recall": 0.571,
+      "ok": 0,
+      "ok_pct": 0.0,
+      "empty": 0,
+      "empty_pct": 0.0,
+      "wall_med": 0.31,
+      "wall_p90": 5.21,
+      "chars_med": 0,
+      "with_recall": 0.0,
       "with_n": 28,
-      "without_rate": 0.273,
-      "without_n": 20,
-      "feats": {
-        "headers": 2.3,
-        "codeblocks": 0.5,
-        "links": 13.8,
-        "lists": 3.4
-      }
+      "without_rate": 0.0,
+      "without_n": 20
     },
     "parallel": {
       "n": 13,
-      "ok": 13,
-      "ok_pct": 1.0,
+      "ok": 0,
+      "ok_pct": 0.0,
       "empty": 0,
       "empty_pct": 0.0,
-      "wall_med": 2.42,
-      "wall_p90": 7.43,
-      "chars_med": 3688,
-      "with_recall": 0.5,
+      "wall_med": 5.22,
+      "wall_p90": 5.26,
+      "chars_med": 0,
+      "with_recall": 0.0,
       "with_n": 10,
-      "without_rate": 0.125,
-      "without_n": 6,
-      "feats": {
-        "headers": 3.2,
-        "codeblocks": 2.5,
-        "links": 7.5,
-        "lists": 2.8
-      }
+      "without_rate": 0.0,
+      "without_n": 6
     }
   },
   "matrix": {
     "static-docs": {
       "local-auto": {
-        "ok_pct": 1.0,
-        "chars_med": 20570.0
+        "ok_pct": 0.75,
+        "chars_med": 32000
       },
       "local-http": {
-        "ok_pct": 1.0,
-        "chars_med": 20570.0
+        "ok_pct": 0.75,
+        "chars_med": 32000
       },
       "local-curl": {
-        "ok_pct": 1.0,
-        "chars_med": 20570.0
+        "ok_pct": 0.75,
+        "chars_med": 32000
       },
       "local-browser": {
-        "ok_pct": 1.0,
-        "chars_med": 20570.0
+        "ok_pct": 0.0,
+        "chars_med": 0
       },
       "firecrawl": {
         "ok_pct": 1.0,
@@ -185,15 +167,15 @@
       },
       "tavily": {
         "ok_pct": 1.0,
-        "chars_med": 16083.5
+        "chars_med": 16479.0
       },
       "jina": {
-        "ok_pct": 0.75,
-        "chars_med": 32000
+        "ok_pct": 0.0,
+        "chars_med": 0
       },
       "parallel": {
-        "ok_pct": 1.0,
-        "chars_med": 16352.5
+        "ok_pct": 0.0,
+        "chars_med": 0
       }
     },
     "article-en": {
@@ -210,8 +192,8 @@
         "chars_med": 32000
       },
       "local-browser": {
-        "ok_pct": 1.0,
-        "chars_med": 32000
+        "ok_pct": 0.0,
+        "chars_med": 0
       },
       "firecrawl": {
         "ok_pct": 1.0,
@@ -222,52 +204,52 @@
         "chars_med": 32000
       },
       "jina": {
-        "ok_pct": 1.0,
-        "chars_med": 32000
+        "ok_pct": 0.0,
+        "chars_med": 0
       },
       "parallel": {
-        "ok_pct": 1.0,
-        "chars_med": 9033.5
+        "ok_pct": 0.0,
+        "chars_med": 0
       }
     },
     "article-ru": {
       "local-auto": {
         "ok_pct": 1.0,
-        "chars_med": 4035.0
+        "chars_med": 4026.0
       },
       "local-http": {
         "ok_pct": 1.0,
-        "chars_med": 4035.0
+        "chars_med": 4026.0
       },
       "local-curl": {
         "ok_pct": 1.0,
-        "chars_med": 4035.0
+        "chars_med": 4026.0
       },
       "local-browser": {
-        "ok_pct": 1.0,
-        "chars_med": 4588.5
+        "ok_pct": 0.0,
+        "chars_med": 0
       },
       "firecrawl": {
         "ok_pct": 1.0,
-        "chars_med": 15157.5
+        "chars_med": 18480.0
       },
       "tavily": {
         "ok_pct": 1.0,
-        "chars_med": 16902.5
+        "chars_med": 4360.5
       },
       "jina": {
-        "ok_pct": 1.0,
-        "chars_med": 4613.5
+        "ok_pct": 0.0,
+        "chars_med": 0
       },
       "parallel": {
-        "ok_pct": 1.0,
-        "chars_med": 3670.0
+        "ok_pct": 0.0,
+        "chars_med": 0
       }
     },
     "spa-app": {
       "local-auto": {
-        "ok_pct": 1.0,
-        "chars_med": 4236.0
+        "ok_pct": 0.25,
+        "chars_med": 2874
       },
       "local-http": {
         "ok_pct": 0.25,
@@ -278,126 +260,126 @@
         "chars_med": 2874
       },
       "local-browser": {
-        "ok_pct": 1.0,
-        "chars_med": 4251.5
+        "ok_pct": 0.0,
+        "chars_med": 0
       },
       "firecrawl": {
         "ok_pct": 1.0,
-        "chars_med": 8203.0
+        "chars_med": 8378.5
       },
       "tavily": {
         "ok_pct": 1.0,
         "chars_med": 1854.5
       },
       "jina": {
-        "ok_pct": 1.0,
-        "chars_med": 9608.5
+        "ok_pct": 0.0,
+        "chars_med": 0
       },
       "parallel": {
-        "ok_pct": 1.0,
-        "chars_med": 493
+        "ok_pct": 0.0,
+        "chars_med": 0
       }
     },
     "docs-js": {
       "local-auto": {
         "ok_pct": 1.0,
-        "chars_med": 12508
+        "chars_med": 10184
       },
       "local-http": {
         "ok_pct": 1.0,
-        "chars_med": 12508
+        "chars_med": 10184
       },
       "local-curl": {
         "ok_pct": 1.0,
-        "chars_med": 12508
+        "chars_med": 10184
       },
       "local-browser": {
-        "ok_pct": 1.0,
-        "chars_med": 12508
+        "ok_pct": 0.0,
+        "chars_med": 0
       },
       "firecrawl": {
         "ok_pct": 1.0,
-        "chars_med": 14965
+        "chars_med": 14566
       },
       "tavily": {
         "ok_pct": 1.0,
-        "chars_med": 14464
+        "chars_med": 13916
       },
       "jina": {
-        "ok_pct": 1.0,
-        "chars_med": 16737
+        "ok_pct": 0.0,
+        "chars_med": 0
       },
       "parallel": {
-        "ok_pct": 1.0,
-        "chars_med": 10522
+        "ok_pct": 0.0,
+        "chars_med": 0
       }
     },
     "forum": {
       "local-auto": {
         "ok_pct": 0.75,
-        "chars_med": 5505
+        "chars_med": 945
       },
       "local-http": {
         "ok_pct": 0.75,
-        "chars_med": 5505
+        "chars_med": 945
       },
       "local-curl": {
         "ok_pct": 0.75,
-        "chars_med": 5505
+        "chars_med": 3869
       },
       "local-browser": {
-        "ok_pct": 0.75,
-        "chars_med": 1941
+        "ok_pct": 0.0,
+        "chars_med": 0
       },
       "firecrawl": {
-        "ok_pct": 0.25,
-        "chars_med": 32000
+        "ok_pct": 1.0,
+        "chars_med": 32000.0
       },
       "tavily": {
         "ok_pct": 1.0,
         "chars_med": 8409.0
       },
       "jina": {
-        "ok_pct": 1.0,
-        "chars_med": 17893.5
+        "ok_pct": 0.0,
+        "chars_med": 0
       },
       "parallel": {
-        "ok_pct": 1.0,
-        "chars_med": 1762.0
+        "ok_pct": 0.0,
+        "chars_med": 0
       }
     },
     "antibot": {
       "local-auto": {
-        "ok_pct": 0.0,
-        "chars_med": 0
+        "ok_pct": 0.333,
+        "chars_med": 48
       },
       "local-http": {
-        "ok_pct": 0.0,
-        "chars_med": 0
+        "ok_pct": 0.333,
+        "chars_med": 48
       },
       "local-curl": {
-        "ok_pct": 0.0,
-        "chars_med": 0
+        "ok_pct": 0.333,
+        "chars_med": 48
       },
       "local-browser": {
         "ok_pct": 0.0,
         "chars_med": 0
       },
       "firecrawl": {
-        "ok_pct": 1.0,
-        "chars_med": 28971
+        "ok_pct": 0.667,
+        "chars_med": 4758.0
       },
       "tavily": {
         "ok_pct": 1.0,
         "chars_med": 0
       },
       "jina": {
-        "ok_pct": 1.0,
-        "chars_med": 223
+        "ok_pct": 0.0,
+        "chars_med": 0
       },
       "parallel": {
-        "ok_pct": 1.0,
-        "chars_med": 3012
+        "ok_pct": 0.0,
+        "chars_med": 0
       }
     },
     "pdf": {
@@ -426,12 +408,12 @@
         "chars_med": 7277
       },
       "jina": {
-        "ok_pct": 1.0,
-        "chars_med": 7552
+        "ok_pct": 0.0,
+        "chars_med": 0
       },
       "parallel": {
-        "ok_pct": 1.0,
-        "chars_med": 14753
+        "ok_pct": 0.0,
+        "chars_med": 0
       }
     },
     "tables": {
@@ -448,8 +430,8 @@
         "chars_med": 32000
       },
       "local-browser": {
-        "ok_pct": 1.0,
-        "chars_med": 32000
+        "ok_pct": 0.0,
+        "chars_med": 0
       },
       "firecrawl": {
         "ok_pct": 1.0,
@@ -460,12 +442,12 @@
         "chars_med": 32000
       },
       "jina": {
-        "ok_pct": 1.0,
-        "chars_med": 32000
+        "ok_pct": 0.0,
+        "chars_med": 0
       },
       "parallel": {
-        "ok_pct": 1.0,
-        "chars_med": 16230
+        "ok_pct": 0.0,
+        "chars_med": 0
       }
     }
   }

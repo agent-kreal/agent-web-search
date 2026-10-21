@@ -26,7 +26,7 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent        # repo root
+ROOT = Path(__file__).resolve().parent.parent        # ~/Projects/web-search
 WCXB = ROOT / "bench-extract" / "wcxb"
 sys.path.insert(0, str(WCXB))
 sys.path.insert(0, str(ROOT / "local-extract" / "src"))

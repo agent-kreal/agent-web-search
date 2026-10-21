@@ -1,37 +1,20 @@
-{"scenario": "article-en", "q": 1, "extractor": "local-auto", "structure": 1, "clean": 2, "content": 2, "note": "тело полное, но заголовки секций потеряны"}
-{"scenario": "article-en", "q": 1, "extractor": "local-http", "structure": 1, "clean": 2, "content": 2, "note": "то же"}
-{"scenario": "article-en", "q": 1, "extractor": "local-curl", "structure": 1, "clean": 2, "content": 2, "note": "то же"}
-{"scenario": "article-en", "q": 1, "extractor": "local-browser", "structure": 1, "clean": 2, "content": 2, "note": "то же"}
-{"scenario": "article-en", "q": 1, "extractor": "firecrawl", "structure": 1, "clean": 1, "content": 1, "note": "шаблоны-предупреждения вместо начала статьи"}
-{"scenario": "article-en", "q": 1, "extractor": "tavily", "structure": 2, "clean": 0, "content": 0, "note": "оглавление и сайдбар вместо тела"}
-{"scenario": "article-en", "q": 1, "extractor": "jina", "structure": 1, "clean": 1, "content": 2, "note": "шапка; тело полное и чистое"}
-{"scenario": "article-en", "q": 1, "extractor": "parallel", "structure": 2, "clean": 1, "content": 1, "note": "заголовки и формулы есть, куски пропущены"}
-{"scenario": "article-en", "q": 2, "extractor": "local-auto", "structure": 2, "clean": 2, "content": 2, "note": "заголовки секций и таблицы сохранены"}
-{"scenario": "article-en", "q": 2, "extractor": "local-http", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
-{"scenario": "article-en", "q": 2, "extractor": "local-curl", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
-{"scenario": "article-en", "q": 2, "extractor": "local-browser", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
-{"scenario": "article-en", "q": 2, "extractor": "firecrawl", "structure": 1, "clean": 1, "content": 2, "note": "таблица токенизации сохранена, заголовков нет"}
-{"scenario": "article-en", "q": 2, "extractor": "tavily", "structure": 2, "clean": 0, "content": 0, "note": "снова оглавление и навменю вместо статьи"}
-{"scenario": "article-en", "q": 2, "extractor": "jina", "structure": 1, "clean": 1, "content": 2, "note": "шапка; таблица токенизации слиплась в строку"}
-{"scenario": "article-en", "q": 3, "extractor": "local-auto", "structure": 1, "clean": 2, "content": 2, "note": "абзацы эссе слиплись в сплошной текст"}
-{"scenario": "article-en", "q": 3, "extractor": "local-http", "structure": 1, "clean": 2, "content": 2, "note": "то же"}
-{"scenario": "article-en", "q": 3, "extractor": "local-curl", "structure": 1, "clean": 2, "content": 2, "note": "то же"}
-{"scenario": "article-en", "q": 3, "extractor": "local-browser", "structure": 1, "clean": 2, "content": 2, "note": "то же"}
-{"scenario": "article-en", "q": 3, "extractor": "firecrawl", "structure": 1, "clean": 1, "content": 2, "note": "табличная обёртка, переносы рвут фразы"}
-{"scenario": "article-en", "q": 3, "extractor": "tavily", "structure": 1, "clean": 2, "content": 2, "note": "эссе внутри псевдо-таблицы со случайными пайпами"}
-{"scenario": "article-en", "q": 3, "extractor": "jina", "structure": 2, "clean": 1, "content": 2, "note": "шапка; лучшая разбивка на абзацы"}
-{"scenario": "article-en", "q": 4, "extractor": "local-auto", "structure": 2, "clean": 2, "content": 2, "note": "метаданные и разделы лонгрида без мусора"}
-{"scenario": "article-en", "q": 4, "extractor": "local-http", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
-{"scenario": "article-en", "q": 4, "extractor": "local-curl", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
-{"scenario": "article-en", "q": 4, "extractor": "local-browser", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
-{"scenario": "article-en", "q": 4, "extractor": "firecrawl", "structure": 2, "clean": 1, "content": 2, "note": "skip-ссылки и дубль плашки о возрасте"}
-{"scenario": "article-en", "q": 4, "extractor": "tavily", "structure": 2, "clean": 1, "content": 2, "note": "промо подписки и signin в начале"}
-{"scenario": "article-en", "q": 4, "extractor": "jina", "structure": 2, "clean": 1, "content": 2, "note": "шапка; дальше чистые абзацы лонгрида"}
-{"scenario": "article-en", "q": 4, "extractor": "parallel", "structure": 1, "clean": 0, "content": 0, "note": "почти пусто: заголовок и навблок"}
-{"scenario": "article-en", "q": 5, "extractor": "local-auto", "structure": 2, "clean": 1, "content": 2, "note": "пункты листинга целиком; хвосты newsletter-промо"}
-{"scenario": "article-en", "q": 5, "extractor": "local-http", "structure": 2, "clean": 1, "content": 2, "note": "то же"}
-{"scenario": "article-en", "q": 5, "extractor": "local-curl", "structure": 2, "clean": 1, "content": 2, "note": "то же"}
-{"scenario": "article-en", "q": 5, "extractor": "local-browser", "structure": 2, "clean": 1, "content": 2, "note": "то же"}
-{"scenario": "article-en", "q": 5, "extractor": "firecrawl", "structure": 2, "clean": 1, "content": 2, "note": "уровни заголовков скачут, пунктов больше"}
-{"scenario": "article-en", "q": 5, "extractor": "tavily", "structure": 2, "clean": 1, "content": 2, "note": "промо-ссылки сверху, листинг полный"}
-{"scenario": "article-en", "q": 5, "extractor": "jina", "structure": 1, "clean": 1, "content": 1, "note": "донат-баннер и модалка, хвост обрезан"}
+{"q": 1, "extractor": "local-auto", "structure": 1, "clean": 2, "content": 2, "note": "frontmatter+h1, секционные заголовки не размечены (hdr 1); формулы статьи вне видимой выборки"}
+{"q": 1, "extractor": "local-curl", "structure": 1, "clean": 2, "content": 2, "note": "идентично local-auto: чистый текст без секционных заголовков"}
+{"q": 1, "extractor": "firecrawl", "structure": 0, "clean": 0, "content": 1, "note": "шапка = баннер Wiki Loves Monuments + maintenance-шаблоны, hdr 0, таблицы развалены"}
+{"q": 1, "extractor": "tavily", "structure": 1, "clean": 1, "content": 1, "note": "TOC списком хорош, но лого/поиск в шапке и хвост категорий; тела статьи в сниппетах мало (wr=0)"}
+{"q": 2, "extractor": "local-auto", "structure": 1, "clean": 1, "content": 2, "note": "h1+иерархия секций видна, но [edit]-ссылки у каждого заголовка; текст полный"}
+{"q": 2, "extractor": "local-curl", "structure": 1, "clean": 1, "content": 2, "note": "идентично local-auto"}
+{"q": 2, "extractor": "firecrawl", "structure": 1, "clean": 1, "content": 2, "note": "шапка: Jump to content + redirect-плашка; заголовков нет (hdr 1), но текст статьи полный"}
+{"q": 2, "extractor": "tavily", "structure": 1, "clean": 1, "content": 1, "note": "полный вложенный TOC, но лого/поиск + хвост с категориями; тела в сниппетах нет (wr=0)"}
+{"q": 3, "extractor": "local-auto", "structure": 1, "clean": 2, "content": 2, "note": "эссе слиплось в одну строку таблицы-обёртки (абзацы потеряны), но текст цел (wr=wo=1.0)"}
+{"q": 3, "extractor": "local-curl", "structure": 1, "clean": 2, "content": 2, "note": "идентично local-auto"}
+{"q": 3, "extractor": "firecrawl", "structure": 1, "clean": 1, "content": 2, "note": "текст в таблице с <br>-переносами (сохранена оригинальная вёрстка), шапка с gif-иконками"}
+{"q": 3, "extractor": "tavily", "structure": 1, "clean": 2, "content": 2, "note": "абзацы разделены, нет навигации; текст в таблице-обёртке"}
+{"q": 4, "extractor": "local-auto", "structure": 1, "clean": 2, "content": 2, "note": "богатый frontmatter, секции ##; интерактивные элементы лонгрида потеряны, текст цельный"}
+{"q": 4, "extractor": "local-curl", "structure": 1, "clean": 2, "content": 2, "note": "идентично local-auto"}
+{"q": 4, "extractor": "firecrawl", "structure": 1, "clean": 1, "content": 2, "note": "skip-links + дважды плашка age, потом h1 и полный текст с секциями"}
+{"q": 4, "extractor": "tavily", "structure": 0, "clean": 0, "content": 0, "note": "пустой вывод (0 chars)"}
+{"q": 5, "extractor": "local-auto", "structure": 2, "clean": 1, "content": 2, "note": "пункты-заголовки h2 с аннотациями, title в frontmatter; newsletter-промо в середине"}
+{"q": 5, "extractor": "local-curl", "structure": 2, "clean": 1, "content": 2, "note": "идентично local-auto"}
+{"q": 5, "extractor": "firecrawl", "structure": 2, "clean": 1, "content": 2, "note": "h1+интро+пункты; skip-links, дубли капшонов и age-плашки"}
+{"q": 5, "extractor": "tavily", "structure": 2, "clean": 1, "content": 2, "note": "структура полная, но шапка с навигацией/подписками и newsletter-промо внутри"}

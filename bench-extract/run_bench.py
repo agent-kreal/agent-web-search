@@ -23,7 +23,7 @@ import subprocess
 import time
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent          # repo root
+ROOT = Path(__file__).resolve().parent.parent          # ~/Projects/web-search
 BENCH = ROOT / "bench-extract"
 CLI = str(ROOT / "web-search")                          # wsearch -> web-search (соседний чат)
 VENV_PY = str(ROOT / "local-extract" / ".venv" / "bin" / "python")

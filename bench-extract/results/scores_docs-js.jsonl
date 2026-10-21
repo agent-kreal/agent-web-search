@@ -1,36 +1,20 @@
-{"scenario": "docs-js", "q": 1, "extractor": "local-auto", "structure": 1, "clean": 2, "content": 2, "note": "ограды целы, но песочница-код без ```"}
-{"scenario": "docs-js", "q": 1, "extractor": "local-http", "structure": 1, "clean": 2, "content": 2, "note": "то же"}
-{"scenario": "docs-js", "q": 1, "extractor": "local-curl", "structure": 1, "clean": 2, "content": 2, "note": "то же"}
-{"scenario": "docs-js", "q": 1, "extractor": "local-browser", "structure": 1, "clean": 2, "content": 2, "note": "то же"}
-{"scenario": "docs-js", "q": 1, "extractor": "firecrawl", "structure": 1, "clean": 1, "content": 2, "note": "sandpack-каша построчно, UI-обвес редактора"}
-{"scenario": "docs-js", "q": 1, "extractor": "tavily", "structure": 1, "clean": 2, "content": 2, "note": "угловые скобки съедены, код задвоен"}
-{"scenario": "docs-js", "q": 1, "extractor": "jina", "structure": 1, "clean": 1, "content": 2, "note": "код схлопнут в inline-бэктики; шапка jina"}
-{"scenario": "docs-js", "q": 2, "extractor": "local-auto", "structure": 1, "clean": 2, "content": 1, "note": "команды слиплись, заголовков нет, обрыв"}
-{"scenario": "docs-js", "q": 2, "extractor": "local-http", "structure": 1, "clean": 2, "content": 1, "note": "то же"}
-{"scenario": "docs-js", "q": 2, "extractor": "local-curl", "structure": 1, "clean": 2, "content": 1, "note": "то же"}
-{"scenario": "docs-js", "q": 2, "extractor": "local-browser", "structure": 1, "clean": 2, "content": 1, "note": "то же"}
-{"scenario": "docs-js", "q": 2, "extractor": "firecrawl", "structure": 2, "clean": 1, "content": 1, "note": "шаги и ограды целы; шапка сайта сверху"}
-{"scenario": "docs-js", "q": 2, "extractor": "tavily", "structure": 1, "clean": 1, "content": 1, "note": "каждая команда продублирована; обрыв шаге 03"}
-{"scenario": "docs-js", "q": 2, "extractor": "jina", "structure": 1, "clean": 1, "content": 1, "note": "без оград, команды слиплись; шапка jina"}
-{"scenario": "docs-js", "q": 3, "extractor": "local-auto", "structure": 2, "clean": 2, "content": 2, "note": "глубоко: таблицы флагов и ограды целы"}
-{"scenario": "docs-js", "q": 3, "extractor": "local-http", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
-{"scenario": "docs-js", "q": 3, "extractor": "local-curl", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
-{"scenario": "docs-js", "q": 3, "extractor": "local-browser", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
-{"scenario": "docs-js", "q": 3, "extractor": "firecrawl", "structure": 2, "clean": 0, "content": 2, "note": "чат Gordon дважды и меню перед статьёй"}
-{"scenario": "docs-js", "q": 3, "extractor": "tavily", "structure": 1, "clean": 1, "content": 2, "note": "примеры терминала утроены в оградах"}
-{"scenario": "docs-js", "q": 3, "extractor": "jina", "structure": 1, "clean": 1, "content": 2, "note": "все примеры команд выпали; шапка jina"}
-{"scenario": "docs-js", "q": 4, "extractor": "local-auto", "structure": 2, "clean": 2, "content": 2, "note": "ограды и списки целы, мелкие артефакты"}
-{"scenario": "docs-js", "q": 4, "extractor": "local-http", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
-{"scenario": "docs-js", "q": 4, "extractor": "local-curl", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
-{"scenario": "docs-js", "q": 4, "extractor": "local-browser", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
-{"scenario": "docs-js", "q": 4, "extractor": "firecrawl", "structure": 2, "clean": 1, "content": 2, "note": "метки файлов и ограды целы; шапка Menu"}
-{"scenario": "docs-js", "q": 4, "extractor": "tavily", "structure": 1, "clean": 2, "content": 2, "note": "код в оградах задвоен и разъехался"}
-{"scenario": "docs-js", "q": 4, "extractor": "jina", "structure": 0, "clean": 0, "content": 0, "note": "баннеры и сайдбар вместо статьи"}
-{"scenario": "docs-js", "q": 4, "extractor": "parallel", "structure": 2, "clean": 2, "content": 1, "note": "ограды по пакетам отлично; «...» пропуски"}
-{"scenario": "docs-js", "q": 5, "extractor": "local-auto", "structure": 2, "clean": 2, "content": 2, "note": "ограды и оба варианта API, чисто"}
-{"scenario": "docs-js", "q": 5, "extractor": "local-http", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
-{"scenario": "docs-js", "q": 5, "extractor": "local-curl", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
-{"scenario": "docs-js", "q": 5, "extractor": "local-browser", "structure": 2, "clean": 2, "content": 2, "note": "то же"}
-{"scenario": "docs-js", "q": 5, "extractor": "firecrawl", "structure": 2, "clean": 2, "content": 2, "note": "полный intro, якорный шум в заголовках"}
-{"scenario": "docs-js", "q": 5, "extractor": "tavily", "structure": 1, "clean": 1, "content": 2, "note": "код позадваивался посимвольно; шапка-спонсоры"}
-{"scenario": "docs-js", "q": 5, "extractor": "jina", "structure": 2, "clean": 1, "content": 2, "note": "огромные ограды целы; шапка jina"}
+{"q": 1, "extractor": "local-auto", "structure": 2, "clean": 2, "content": 2, "note": "идеал: иерархия заголовков, код-блоки в ``` целые, списки, ноль навигации"}
+{"q": 1, "extractor": "local-curl", "structure": 2, "clean": 2, "content": 2, "note": "идентично local-auto"}
+{"q": 1, "extractor": "firecrawl", "structure": 1, "clean": 1, "content": 2, "note": "заголовки с анкорами-мусором [Link for...], код раздут пустыми строками x2, UI-кнопки песочницы (Fork/Download)"}
+{"q": 1, "extractor": "tavily", "structure": 1, "clean": 2, "content": 1, "note": "код повреждён: HTML-теги съедены (<button>...button>), инлайн-код потерян, один блок склеен в кашу"}
+{"q": 2, "extractor": "local-auto", "structure": 1, "clean": 2, "content": 2, "note": "ушёл по редиректу на /using-vite; h1 потерян, команды слиплись в одну строку (npm create...cd my-project)"}
+{"q": 2, "extractor": "local-curl", "structure": 1, "clean": 2, "content": 2, "note": "идентично local-auto: код-блоки слипшиеся, заголовков нет"}
+{"q": 2, "extractor": "firecrawl", "structure": 2, "clean": 1, "content": 2, "note": "полная иерархия h1-h4, шаги 01-03, код-блоки раздельные; верхнее меню + ⌘K"}
+{"q": 2, "extractor": "tavily", "structure": 1, "clean": 1, "content": 2, "note": "структура полная, но код-блоки задвоены (каждая строка дублируется)"}
+{"q": 3, "extractor": "local-auto", "structure": 2, "clean": 2, "content": 2, "note": "иерархия h1-h4, таблицы опций сохранены, код-блоки целые, без чата Gordon"}
+{"q": 3, "extractor": "local-curl", "structure": 2, "clean": 2, "content": 2, "note": "идентично local-auto"}
+{"q": 3, "extractor": "firecrawl", "structure": 1, "clean": 0, "content": 1, "note": "шапка — простыня чата Gordon AI x2, Table of contents пуст, код-блоки почти исчезли (code 2 vs 10)"}
+{"q": 3, "extractor": "tavily", "structure": 1, "clean": 1, "content": 1, "note": "Gordon-блок компактнее в шапке; код-блоки задвоены с мусором ($[][][]), таблицы опций не видны (wr=0.333)"}
+{"q": 4, "extractor": "local-auto", "structure": 1, "clean": 2, "content": 1, "note": "заголовки/списки ок, но ВСЕ код-блоки потеряны (code 0): «To create a project, run:» и пусто — команды установки выпали"}
+{"q": 4, "extractor": "local-curl", "structure": 1, "clean": 2, "content": 1, "note": "идентично local-auto: команды установки отсутствуют"}
+{"q": 4, "extractor": "firecrawl", "structure": 2, "clean": 1, "content": 2, "note": "полная структура с код-блоками и табами (таб-бар слипся pnpmnpmyarnbun); Copy page/Ask AI в шапке"}
+{"q": 4, "extractor": "tavily", "structure": 1, "clean": 2, "content": 2, "note": "почти чисто (skip-link + LLM-note), но код-блоки задвоены"}
+{"q": 5, "extractor": "local-auto", "structure": 2, "clean": 1, "content": 2, "note": "иерархия и код-блоки js/template раздельные; промо-баннер VueMastery в тексте"}
+{"q": 5, "extractor": "local-curl", "structure": 2, "clean": 1, "content": 2, "note": "идентично local-auto"}
+{"q": 5, "extractor": "firecrawl", "structure": 2, "clean": 1, "content": 2, "note": "полный текст + обе версии кода (Options/Composition API) — даже полнее local; skip-link + VueMastery баннер"}
+{"q": 5, "extractor": "tavily", "structure": 1, "clean": 1, "content": 2, "note": "шапка: соцсети x2, Sponsors, Appearance; код склеен из дублей, но текст полный"}

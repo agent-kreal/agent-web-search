@@ -1,30 +1,16 @@
-{"scenario": "article-ru", "q": 1, "extractor": "local-auto", "structure": 2, "clean": 2, "content": 2, "note": "чистая статья плюс метаданные"}
-{"scenario": "article-ru", "q": 1, "extractor": "local-http", "structure": 2, "clean": 2, "content": 2, "note": "идентично local-auto, чисто и полно"}
-{"scenario": "article-ru", "q": 1, "extractor": "local-curl", "structure": 2, "clean": 2, "content": 2, "note": "идентично local-auto"}
-{"scenario": "article-ru", "q": 1, "extractor": "local-browser", "structure": 2, "clean": 2, "content": 2, "note": "идентично local-auto, но 25с"}
-{"scenario": "article-ru", "q": 1, "extractor": "firecrawl", "structure": 2, "clean": 1, "content": 2, "note": "хабы-шапка, теги, реклама в хвосте"}
-{"scenario": "article-ru", "q": 1, "extractor": "tavily", "structure": 1, "clean": 1, "content": 2, "note": "рекламные пиксели и блок рекомендаций"}
-{"scenario": "article-ru", "q": 1, "extractor": "jina", "structure": 1, "clean": 1, "content": 2, "note": "шапка jina, теги списком, без заголовка"}
-{"scenario": "article-ru", "q": 1, "extractor": "parallel", "structure": 1, "clean": 0, "content": 2, "note": "нав-меню, подписки, хабы слиты"}
-{"scenario": "article-ru", "q": 2, "extractor": "local-auto", "structure": 1, "clean": 2, "content": 2, "note": "формулы и таблицы потеряны, текст чистый"}
-{"scenario": "article-ru", "q": 2, "extractor": "local-http", "structure": 1, "clean": 2, "content": 2, "note": "идентично local-auto"}
-{"scenario": "article-ru", "q": 2, "extractor": "local-curl", "structure": 1, "clean": 2, "content": 2, "note": "идентично local-auto"}
-{"scenario": "article-ru", "q": 2, "extractor": "local-browser", "structure": 1, "clean": 2, "content": 2, "note": "файл как auto плюс ссылки править код"}
-{"scenario": "article-ru", "q": 2, "extractor": "firecrawl", "structure": 1, "clean": 0, "content": 1, "note": "обвязка вики, проценты ссылок, wr=0"}
-{"scenario": "article-ru", "q": 2, "extractor": "tavily", "structure": 1, "clean": 0, "content": 1, "note": "меню, интервики, содержание вместо статьи"}
-{"scenario": "article-ru", "q": 2, "extractor": "jina", "structure": 1, "clean": 1, "content": 1, "note": "формулы картинками-alt, заголовков нет"}
-{"scenario": "article-ru", "q": 3, "extractor": "local-auto", "structure": 1, "clean": 2, "content": 2, "note": "категории плоскими строками, иначе чисто"}
-{"scenario": "article-ru", "q": 3, "extractor": "local-http", "structure": 1, "clean": 2, "content": 2, "note": "идентично local-auto"}
-{"scenario": "article-ru", "q": 3, "extractor": "local-curl", "structure": 1, "clean": 2, "content": 2, "note": "идентично local-auto"}
-{"scenario": "article-ru", "q": 3, "extractor": "local-browser", "structure": 1, "clean": 2, "content": 2, "note": "полнее прочих local, нет строки Продуктивность"}
-{"scenario": "article-ru", "q": 3, "extractor": "firecrawl", "structure": 1, "clean": 1, "content": 1, "note": "тело есть, но лента чужих новостей"}
-{"scenario": "article-ru", "q": 3, "extractor": "tavily", "structure": 1, "clean": 1, "content": 1, "note": "трекинг-пиксели и промо приложений"}
-{"scenario": "article-ru", "q": 3, "extractor": "jina", "structure": 1, "clean": 1, "content": 2, "note": "чистое тело после шапки jina"}
-{"scenario": "article-ru", "q": 3, "extractor": "parallel", "structure": 0, "clean": 0, "content": 1, "note": "абзацы слились в кашу, навигация, пропуски"}
-{"scenario": "article-ru", "q": 4, "extractor": "local-auto", "structure": 2, "clean": 2, "content": 2, "note": "лид, фото с подписью, цитата целиком"}
-{"scenario": "article-ru", "q": 4, "extractor": "local-http", "structure": 2, "clean": 2, "content": 2, "note": "идентично local-auto"}
-{"scenario": "article-ru", "q": 4, "extractor": "local-curl", "structure": 2, "clean": 2, "content": 2, "note": "идентично local-auto"}
-{"scenario": "article-ru", "q": 4, "extractor": "local-browser", "structure": 1, "clean": 1, "content": 2, "note": "виджеты Входит в сюжеты, без заголовков"}
-{"scenario": "article-ru", "q": 4, "extractor": "firecrawl", "structure": 0, "clean": 0, "content": 0, "note": "только главное меню и новостная лента"}
-{"scenario": "article-ru", "q": 4, "extractor": "tavily", "structure": 0, "clean": 0, "content": 0, "note": "меню и промо-блоки вместо статьи"}
-{"scenario": "article-ru", "q": 4, "extractor": "jina", "structure": 0, "clean": 0, "content": 0, "note": "пустой вывод 171 символ"}
+{"q": 1, "extractor": "local-auto", "structure": 2, "clean": 2, "content": 2, "note": "новость целиком, frontmatter с тегами, ноль мусора; комментариев нет, но главный контент — текст"}
+{"q": 1, "extractor": "local-curl", "structure": 2, "clean": 2, "content": 2, "note": "идентично local-auto"}
+{"q": 1, "extractor": "firecrawl", "structure": 1, "clean": 0, "content": 2, "note": "JS-заглушка «обновите страницу» + трекинг-пиксели в шапке, хвост — лента чужих новостей с метаданными; 13.5s"}
+{"q": 1, "extractor": "tavily", "structure": 2, "clean": 1, "content": 2, "note": "полный текст с h1, только 3 трекинг-пикселя в шапке"}
+{"q": 2, "extractor": "local-auto", "structure": 1, "clean": 2, "content": 1, "note": "формула позиционного кодирования выпала (пустое место + «где, , соответствуют» без переменных), заголовков мало (hdr 2), пустой ### в конце"}
+{"q": 2, "extractor": "local-curl", "structure": 1, "clean": 2, "content": 1, "note": "идентично local-auto: формула потеряна"}
+{"q": 2, "extractor": "firecrawl", "structure": 1, "clean": 1, "content": 1, "note": "disambiguation-плашка, заголовков нет (hdr 1), сниппеты не совпали (wr=0), в середине — примечания/литература"}
+{"q": 2, "extractor": "tavily", "structure": 1, "clean": 1, "content": 1, "note": "TOC сохранён, но лого/поиск + интервики-список в шапке съедают объём; формулы не видны (wr=0.333)"}
+{"q": 3, "extractor": "local-auto", "structure": 1, "clean": 2, "content": 2, "note": "полный текст статьи, но подзаголовки («Что внутри», «10 из 50») без разметки — просто строки"}
+{"q": 3, "extractor": "local-curl", "structure": 1, "clean": 2, "content": 2, "note": "идентично local-auto"}
+{"q": 3, "extractor": "firecrawl", "structure": 1, "clean": 0, "content": 2, "note": "шапка с подписками/аватарами, в середине — лента чужих постов vc.ru (Тайпспейс, визовый центр); текст статьи цел"}
+{"q": 3, "extractor": "tavily", "structure": 1, "clean": 1, "content": 1, "note": "14 аватарок + QR-код в шапке; текст обрезан на середине («Кодинг и сайты» и дальше нет)"}
+{"q": 4, "extractor": "local-auto", "structure": 2, "clean": 2, "content": 2, "note": "h1+лид+полный текст, frontmatter; ноль мусора"}
+{"q": 4, "extractor": "local-curl", "structure": 2, "clean": 2, "content": 2, "note": "идентично local-auto"}
+{"q": 4, "extractor": "firecrawl", "structure": 1, "clean": 1, "content": 2, "note": "заголовок h1 потерян (начинается с лида), вставки «Входит в сюжеты» + related-новость x2; текст полный"}
+{"q": 4, "extractor": "tavily", "structure": 0, "clean": 0, "content": 0, "note": "пустой вывод (0 chars)"}
