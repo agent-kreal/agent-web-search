@@ -65,6 +65,10 @@ class TavilyProvider(Provider):
             raise ProviderError(f"tavily {e.code}: {detail}", retryable=(e.code >= 500)) from None
         except urllib.error.URLError as e:
             raise ProviderError(f"tavily network: {e.reason}") from None
+        except TimeoutError as e:
+            # socket read timeout не является URLError (3.10+) — каскад
+            # должен фолбэкать, а не ронять CLI traceback'ом (re-baseline 19.10)
+            raise ProviderError(f"tavily network: {e}", retryable=True) from None
         out = []
         for r in data.get("results", []):
             out.append(SearchResult(
@@ -93,6 +97,9 @@ class TavilyProvider(Provider):
                 data = json.loads(resp.read().decode())
         except (urllib.error.HTTPError, urllib.error.URLError) as e:
             raise ProviderError(f"tavily extract: {e}") from None
+        except TimeoutError as e:
+            # socket read timeout не является URLError (3.10+) — фолбэк вниз
+            raise ProviderError(f"tavily extract: {e}", retryable=True) from None
         res = (data.get("results") or [{}])[0]
         return FetchResult(url=url, title=res.get("title", ""),
                            content=res.get("raw_content", "")[:max_chars], provider=self.name)

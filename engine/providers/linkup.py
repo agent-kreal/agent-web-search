@@ -45,6 +45,11 @@ class LinkupProvider(Provider):
             raise ProviderError(f"linkup {e.code}: {detail}", retryable=(e.code >= 500)) from None
         except urllib.error.URLError as e:
             raise ProviderError(f"linkup network: {e.reason}") from None
+        except TimeoutError as e:
+            # socket read timeout не является URLError (3.10+ отдельно) —
+            # без этого CLI падал traceback'ом (17× в re-baseline 19.10,
+            # медленная нода); каскад должен фолбэкать, а не ронять вызов
+            raise ProviderError(f"linkup network: {e}", retryable=True) from None
         out = []
         for r in data.get("results", []):
             out.append(SearchResult(

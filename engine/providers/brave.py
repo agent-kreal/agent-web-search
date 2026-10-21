@@ -47,6 +47,10 @@ class BraveProvider(Provider):
             raise ProviderError(f"brave {e.code}: {detail}", retryable=(e.code >= 500)) from None
         except urllib.error.URLError as e:
             raise ProviderError(f"brave network: {e.reason}") from None
+        except TimeoutError as e:
+            # socket read timeout не является URLError (3.10+) — каскад
+            # должен фолбэкать, а не ронять CLI traceback'ом (re-baseline 19.10)
+            raise ProviderError(f"brave network: {e}", retryable=True) from None
         out = []
         for r in (data.get("web") or {}).get("results", []):
             out.append(SearchResult(

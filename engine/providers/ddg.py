@@ -61,6 +61,10 @@ class DdgProvider(Provider):
             raise ProviderError(f"ddg {e.code} (challenge?)", retryable=(e.code >= 500)) from None
         except urllib.error.URLError as e:
             raise ProviderError(f"ddg network: {e.reason}") from None
+        except TimeoutError as e:
+            # socket read timeout не является URLError (3.10+) — каскад
+            # должен фолбэкать, а не ронять CLI traceback'ом (re-baseline 19.10)
+            raise ProviderError(f"ddg network: {e}", retryable=True) from None
         links = _HREF_RE.findall(page)
         snips = [_clean(s) for s in _SNIP_RE.findall(page)]
         if not links:

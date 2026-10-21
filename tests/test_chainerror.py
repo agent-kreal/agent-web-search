@@ -24,7 +24,10 @@ class FakeProvider(Provider):
     def search(self, query, *, n=8, freshness=None):
         if self.name == "failer":
             raise ProviderError("fake boom", retryable=False)
-        return [SearchResult(url="https://x", title="t", provider=self.name)]
+        return [SearchResult(url="https://x", title="t",
+                             snippet="сниппет достаточной длины, чтобы запись "
+                                     "прошла schema-валидацию фазы 4.3",
+                             provider=self.name)]
 
 
 class ChainErrorTest(unittest.TestCase):

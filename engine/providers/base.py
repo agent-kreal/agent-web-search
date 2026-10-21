@@ -4,6 +4,13 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import List, Optional
+from urllib.parse import urlparse
+
+# Schema-валидация (фаза 4.3, 19.10): минимальная осмысленная длина сниппета.
+# 50, не 200 из плана: zai стабильно отдаёт 61–192 (content_size=medium — его
+# формат, не деградация), ddg 57% <200 — порог 200 браковал бы здоровые
+# выдачи. Ловим пустышки ("...", "N/A") и сломанный формат ответа.
+MIN_SNIPPET = 50
 
 
 @dataclass
@@ -40,6 +47,32 @@ class FetchResult:
     title: str = ""
     content: str = ""                   # markdown
     provider: str = ""
+
+
+def reject_reason(r: "SearchResult") -> Optional[str]:
+    """Причина schema-брака записи выдачи или None (фаза 4.3).
+
+    Провайдеры периодически меняют схему ответа молча (zai 24.09:
+    url→link/snippet→content; youcom 19.10: snippets→description — записи
+    месяцами ходили с пустыми сниппетами). Брак: без url / без текста
+    вовсе / title есть, а сниппета нет / сниппет-пустышка. Полностью
+    забракованная выдача фолбэкает каскадом вниз (router.search)."""
+    url = (r.url or "").strip()
+    try:
+        ok_url = bool(urlparse(url).netloc)
+    except ValueError:
+        ok_url = False
+    if not ok_url:
+        return "no_url"
+    title = (r.title or "").strip()
+    snip = (r.snippet or "").strip()
+    if not title and not snip:
+        return "no_text"
+    if not snip:
+        return "no_snippet"       # tavily-урок: «успех» без контента
+    if len(snip) < MIN_SNIPPET:
+        return "short_snip"
+    return None
 
 
 class ProviderError(RuntimeError):

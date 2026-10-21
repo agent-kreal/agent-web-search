@@ -47,6 +47,10 @@ class FirecrawlProvider(Provider):
             raise ProviderError(f"firecrawl {e.code}: {detail}", retryable=(e.code >= 500)) from None
         except urllib.error.URLError as e:
             raise ProviderError(f"firecrawl network: {e.reason}") from None
+        except TimeoutError as e:
+            # socket read timeout не является URLError (3.10+) — каскад
+            # должен фолбэкать, а не ронять CLI traceback'ом (re-baseline 19.10)
+            raise ProviderError(f"firecrawl network: {e}", retryable=True) from None
         d = (data.get("data") or {})
         md = d.get("markdown") or ""
         quotas.spend(self.name, 1, "month")

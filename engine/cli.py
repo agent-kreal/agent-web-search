@@ -9,11 +9,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-from . import fetchcache, intent as intent_mod, quotas, router, usage
+from . import backfill as backfill_mod
+from . import fetchcache, intent as intent_mod, merge, quotas, router, usage
 from .providers import FETCH_CHAIN, SEARCH_CHAIN
 
 
@@ -49,6 +51,10 @@ def _log_search(query, out, t0, *, err=None, intent=None, intent_source=None,
         "provider": (out or {}).get("provider"),
         "tried": _tried(out, err),
         "n_results": len((out or {}).get("results", [])),
+        # фаза 4.3: сколько записей сняла schema-валидация (поле только
+        # когда брак был — компактный лог)
+        **({"n_rejected": out["rejected"]}
+           if out and out.get("rejected") else {}),
         "wall_sec": round(time.time() - t0, 2), "ok": err is None,
         **({"error": str(err)[:400]} if err else {}),
     })
@@ -87,11 +93,28 @@ def cmd_search(a) -> int:
     return 0
 
 
+def _warn_injections(url: str, findings: list) -> None:
+    """BrowseSafe-фаза 2: предупреждение в stderr — найденные в fetched-контенте
+    инъекции (удалённые и флагнутые) не должны проходить молча."""
+    if not findings:
+        return
+    kinds: dict[str, int] = {}
+    for f in findings:
+        k = f"{f['action']}:{f['kind']}"
+        kinds[k] = kinds.get(k, 0) + 1
+    detail = ", ".join(f"{k}×{v}" for k, v in sorted(kinds.items()))
+    print(f"⚠ injection flags [{url}]: {detail}", file=sys.stderr)
+    for f in findings[:3]:
+        print(f"  · {f['action']:6} {f['kind']}: {f['evidence'][:100]!r}",
+              file=sys.stderr)
+
+
 def cmd_fetch(a) -> int:
     t0 = time.time()
+    raw_cut = a.raw_cut or os.environ.get("WS_RAW_CUT") == "1"
     try:
         res = router.fetch(a.url, max_chars=a.max_chars, providers=a.provider,
-                           use_cache=not a.no_cache)
+                           use_cache=not a.no_cache, raw_cut=raw_cut)
     except RuntimeError as e:
         usage.log({"cmd": "fetch", "url": a.url, "provider": None,
                    "tried": _tried(None, e),
@@ -105,6 +128,7 @@ def cmd_fetch(a) -> int:
                "cached": res.get("cached", False),
                "n_results": 1 if res["result"].content else 0,
                "wall_sec": round(time.time() - t0, 2), "ok": True})
+    _warn_injections(a.url, res.get("sanitize") or [])
     fr = res["result"]
     cached = res.get("cached", False)
     if a.json:
@@ -124,9 +148,10 @@ def cmd_gather(a) -> int:
     urls = [u.strip() for u in a.urls.split(",") if u.strip()]
     docs = {}
     starts = {u: time.time() for u in urls}
+    raw_cut = a.raw_cut or os.environ.get("WS_RAW_CUT") == "1"
     with ThreadPoolExecutor(max_workers=min(4, len(urls))) as ex:
         futs = {ex.submit(router.fetch, u, max_chars=a.max_chars,
-                          use_cache=not a.no_cache): u for u in urls}
+                          use_cache=not a.no_cache, raw_cut=raw_cut): u for u in urls}
         for fut in as_completed(futs):
             u = futs[fut]
             try:
@@ -135,6 +160,7 @@ def cmd_gather(a) -> int:
                            "title": res["result"].title,
                            "content": res["result"].content,
                            "cached": res.get("cached", False)}
+                _warn_injections(u, res.get("sanitize") or [])
                 usage.log({"cmd": "fetch", "url": u, "provider": res["provider"],
                            "tried": res.get("tried", []),
                            "cached": res.get("cached", False), "n_results": 1,
@@ -164,48 +190,96 @@ def cmd_gather(a) -> int:
 
 def cmd_multi(a) -> int:
     queries = [q.strip() for q in a.queries.split("|") if q.strip()]
-    all_results: list = []
     per_q = {}
-    starts = {q: time.time() for q in queries}
+    bf_info: dict = {"triggered": False}
+    starts: dict[str, float] = {q: time.time() for q in queries}
     resolved = {q: intent_mod.resolve(q, a.freshness, a.intent) for q in queries}
 
     def _one(q):
-        ikey, _, _ = resolved[q]
+        ikey, _, _ = resolved.get(q) or intent_mod.resolve(q, a.freshness, a.intent)
         return router.search(q, n=a.n, freshness=a.freshness,
                              providers=a.provider, intent=ikey)
 
-    with ThreadPoolExecutor(max_workers=min(4, len(queries))) as ex:
-        futs = {ex.submit(_one, q): q for q in queries}
-        for fut in as_completed(futs):
-            q = futs[fut]
-            ikey, isrc, _ = resolved[q]
-            try:
-                out = fut.result()
-                per_q[q] = {"provider": out["provider"], "count": len(out["results"]),
-                            "intent": ikey}
-                all_results.extend(out["results"])
-                _log_search(q, out, starts[q], freshness=a.freshness,
-                            intent=ikey, intent_source=isrc, forced=a.provider)
-            except RuntimeError as e:
-                per_q[q] = {"error": str(e)}
-                _log_search(q, None, starts[q], err=e, freshness=a.freshness,
-                            intent=ikey, intent_source=isrc, forced=a.provider)
-    # dedupe by URL preserving order
-    seen, uniq = set(), []
-    for r in all_results:
-        if r.url not in seen:
-            seen.add(r.url)
-            uniq.append(r)
+    # выдача каждого запроса (каскад = 1 провайдер) отдельным списком —
+    # фаза 4.1: ранг результата = RRF по спискам, а не порядок потоков
+    lists: dict[str, list] = {q: [] for q in queries}
+
+    def _fanout(qs: list[str]) -> None:
+        with ThreadPoolExecutor(max_workers=min(4, len(qs))) as ex:
+            futs = {ex.submit(_one, q): q for q in qs}
+            for fut in as_completed(futs):
+                q = futs[fut]
+                ikey, isrc, _ = resolved.get(q) or intent_mod.resolve(
+                    q, a.freshness, a.intent)
+                try:
+                    out = fut.result()
+                    per_q[q] = {"provider": out["provider"], "count": len(out["results"]),
+                                "intent": ikey}
+                    lists[q] = out["results"]
+                    _log_search(q, out, starts[q], freshness=a.freshness,
+                                intent=ikey, intent_source=isrc, forced=a.provider)
+                except RuntimeError as e:
+                    per_q[q] = {"error": str(e)}
+                    _log_search(q, None, starts[q], err=e, freshness=a.freshness,
+                                intent=ikey, intent_source=isrc, forced=a.provider)
+
+    _fanout(queries)
+
+    def _rrf(all_queries: list[str]) -> list[dict]:
+        merged = merge.rrf_merge(
+            [[r.to_dict() for r in lists.get(q, [])] for q in all_queries],
+            source_names=all_queries)
+        return [m.to_dict() for m in merged]
+
+    if a.no_rrf:
+        # эскейп к поведению до 4.1: конкатенация в порядке запросов + dedupe
+        # (детерминированная версия старого)
+        seen, uniq = set(), []
+        for q in queries:
+            for r in lists.get(q, []):
+                if r.url not in seen:
+                    seen.add(r.url)
+                    uniq.append(r.to_dict())
+        merged_dicts = uniq
+        n_uniq = len(merged_dicts)
+    else:
+        merged_dicts = _rrf(queries)
+        n_uniq = len(merged_dicts)
+
+    # фаза 4.2: adaptive backfill — только фейл-триггер (по итогу ревью
+    # 19.10: покрытие/домены срезаны по данным probe — шумовой X портил топ);
+    # доборный круг из 2 переформулировок по терму фейл-запроса
+    if not a.no_rrf and not a.no_backfill:
+        failed = [q for q in queries if "error" in per_q.get(q, {})]
+        trig, reason = backfill_mod.should_backfill(failed)
+        if trig:
+            ikey0 = resolved[queries[0]][0]
+            bf_queries = backfill_mod.backfill_queries(failed, ikey0)
+            bf_info = {"triggered": True, "reason": reason, "queries": bf_queries}
+            for q in bf_queries:
+                starts[q] = time.time()
+                resolved[q] = intent_mod.resolve(q, a.freshness, a.intent)
+            _fanout(bf_queries)
+            merged_dicts = _rrf(queries + bf_queries)
+            n_uniq = len(merged_dicts)
+
     if a.json:
-        print(json.dumps({"queries": per_q, "results": [r.to_dict() for r in uniq]},
+        print(json.dumps({"queries": per_q, "backfill": bf_info,
+                          "results": merged_dicts},
                          ensure_ascii=False, indent=2))
         return 0
-    print(f"# multi-search ({len(queries)} queries, {len(uniq)} unique)")
+    mode = "concat+dedupe (--no-rrf)" if a.no_rrf else "RRF"
+    print(f"# multi-search ({len(queries)} queries, {n_uniq} unique, {mode})")
     for q, info in per_q.items():
         print(f"#   {q!r}: {info}")
-    lines, _ = _compact(uniq)
-    for l in lines:
-        print(l)
+    if bf_info["triggered"]:
+        print(f"# backfill: {bf_info['reason']} → {bf_info['queries']}")
+    for d in merged_dicts:
+        head = d["title"] or d["url"]
+        meta = f" [{d['date']}]" if d.get("date") else ""
+        via = f" [{d['provider']}]" if d.get("provider") else ""
+        print(f"{head}{meta}{via}\n  {d['url']}" +
+              (f"\n  {d['snippet'][:300]}" if d.get("snippet") else ""))
     return 0
 
 
@@ -256,7 +330,10 @@ def cmd_status(a) -> int:
 
 def cmd_chain(a) -> int:
     """Show the effective chain without querying anything (quota-free)."""
-    out = router.search("", dry_chain=True, providers=a.provider)
+    # --intent: показать порядок для сценария (пустой запрос → «news»
+    # резолвится в news-en, кириллицы нет)
+    intent = intent_mod.resolve("", forced=a.intent)[0] if a.intent else None
+    out = router.search("", dry_chain=True, providers=a.provider, intent=intent)
     if a.json:
         print(json.dumps(out["chain"], ensure_ascii=False, indent=2))
         return 0
@@ -304,6 +381,9 @@ def main(argv=None) -> int:
     f = sub.add_parser("fetch", help="single URL -> markdown (local cascade first)")
     f.add_argument("url")
     f.add_argument("--max-chars", type=int, default=6000)
+    f.add_argument("--raw-cut", action="store_true",
+                   help="blind [:max-chars] cut (pre-19.10 behavior); "
+                        "default cuts on sentence/paragraph boundaries")
     f.add_argument("--provider", action="append",
                    help="force provider(s): firecrawl, jina, local, "
                         "local-http/local-curl/local-browser (cascade step)")
@@ -314,12 +394,16 @@ def main(argv=None) -> int:
 
     g = sub.add_parser("gather", help="multiple URLs -> markdown (parallel)")
     g.add_argument("--urls", required=True, help="comma-separated")
-    g.add_argument("--max-chars", type=int, default=4000)
+    # фаза 5.3: frontier фазы 1 — 4000 на грани (−15% recall против 6000),
+    # плато 6–12k; выравниваем с fetch-дефолтом
+    g.add_argument("--max-chars", type=int, default=6000)
+    g.add_argument("--raw-cut", action="store_true",
+                   help="blind [:max-chars] cut (pre-19.10 behavior)")
     g.add_argument("--no-cache", action="store_true")
     g.add_argument("--json", action="store_true")
     g.set_defaults(fn=cmd_gather)
 
-    m = sub.add_parser("multi", help="fan-out queries (parallel) + dedupe")
+    m = sub.add_parser("multi", help="fan-out queries (parallel) + RRF merge")
     m.add_argument("--queries", required=True, help="queries separated by |")
     m.add_argument("-n", type=int, default=8)
     m.add_argument("--freshness", choices=["day", "week", "month"], default=None)
@@ -327,6 +411,10 @@ def main(argv=None) -> int:
                    help="pin provider(s) for all queries (repeatable)")
     m.add_argument("--intent", choices=["docs", "research", "fact", "news", "ru", "debug", "github"],
                    help="routing intent for ALL queries (default: autodetect per query)")
+    m.add_argument("--no-rrf", action="store_true",
+                   help="pre-4.1 merge: concat in query order + URL dedupe")
+    m.add_argument("--no-backfill", action="store_true",
+                   help="disable the adaptive backfill round (4.2)")
     m.add_argument("--json", action="store_true")
     m.set_defaults(fn=cmd_multi)
 
@@ -338,6 +426,7 @@ def main(argv=None) -> int:
     st.set_defaults(fn=cmd_status)
 
     ch = sub.add_parser("chain", help="show effective chain (no requests)")
+    ch.add_argument("--intent", choices=["docs", "research", "fact", "news", "ru", "debug", "github"])
     ch.add_argument("--provider", action="append")
     ch.add_argument("--json", action="store_true")
     ch.set_defaults(fn=cmd_chain)

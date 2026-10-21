@@ -28,6 +28,10 @@ class JinaProvider(Provider):
             raise ProviderError(f"jina {e.code}", retryable=(e.code == 429 or e.code >= 500)) from None
         except urllib.error.URLError as e:
             raise ProviderError(f"jina network: {e.reason}") from None
+        except TimeoutError as e:
+            # socket read timeout не является URLError (3.10+) — каскад
+            # должен фолбэкать, а не ронять CLI traceback'ом (re-baseline 19.10)
+            raise ProviderError(f"jina network: {e}", retryable=True) from None
         # "Title: ...\n\nURL Source: ...\n\nMarkdown Content:\n..."
         title = ""
         if text.startswith("Title: "):

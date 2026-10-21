@@ -9,16 +9,19 @@ them for emergencies).
 Search chain (renewable -> keyless -> floor -> grants; revised 27.08 after
 the benchmark, bench/REPORT.md §6.3 — linkup demoted for quality, ddg demoted
 to the very last non-$ slot because its anti-bot kills bursts: 30/32 failed
-under a steady 1 rps):
+under a steady 1 rps; revised 20.10 — youcom's free MCP paywalled 402/x402,
+keyed REST is a one-off $100 grant, demoted to the $ tail):
   1. tavily        1000 credits/mo, resets on the 1st -> auto-drops to keyless
-  2. youcom        keyless MCP, 100/day (expires DAILY — spend it)
-  3. zai           GLM Coding Plan 1000/mo (subscription quota)
-  4. exa           free tier $10/mo ≈750 searches (best quality: docs/semantic)
-  5. brave         legacy 2000/mo, best for RU queries
-  6. parallel-anon anonymous MCP (keyless floor)
-  7. linkup        top-up to $20/mo ~4000 searches — big tank, but weakest
+  2. zai           GLM Coding Plan 1000/mo (subscription quota)
+  3. exa           free tier $10/mo ≈750 searches (best quality: docs/semantic)
+  4. brave         legacy 2000/mo, best for RU queries
+  5. parallel-anon anonymous MCP (keyless floor)
+  6. linkup        top-up to $20/mo ~4000 searches — big tank, but weakest
                   relevance (1.11/2 in bench); keep for bulk fan-out
-  8. ddg           scraping floor — anti-bot under bursts, VERY last before $
+  7. ddg           scraping floor — anti-bot under bursts, VERY last before $
+  8. youcom        keyed REST $5/1k, one-off $100 grant (20.10) — top quality,
+                  but $ never refills: above parallel only because its tank
+                  is 5x bigger
   9. parallel      keyed: one-off $ grant — last resort only
 
 Fetch chain (URL -> markdown): local cascade (httpx+trafilatura -> curl_cffi
@@ -52,14 +55,14 @@ __all__ = [
 
 SEARCH_CHAIN: List[Provider] = [
     TavilyProvider(),               # 1000/mo reset on the 1st -> keyless
-    YoucomProvider(),               # 100/day, expires daily
-    ZaiProvider(),                  # 1000/mo GLM plan (exhausted till 2026-09-18)
+    ZaiProvider(),                  # 1000/mo GLM plan (server truth via livecheck)
     ExaProvider(),                  # $10/mo ~1400, best quality (docs/semantic)
     BraveProvider(),                # legacy 2000/mo, RU-friendly
     GhProvider(),                   # free via gh CLI (repo search; intent=github)
     ParallelProvider(keyed=False),  # anonymous keyless floor
     LinkupProvider(),               # big tank, weak relevance — bulk fan-out
     DdgProvider(),                  # anti-bot under bursts — VERY last before $
+    YoucomProvider(),               # keyed REST $5/1k, one-off $100 grant (20.10)
     ParallelProvider(keyed=True),   # one-off $ grant — last resort
 ]
 

@@ -4,13 +4,47 @@ real 429 into a skip for all subsequent calls until reset."""
 
 from __future__ import annotations
 
+import os
 import re
 import time
 from typing import List, Optional
 from urllib.parse import urlparse, urlunparse
 
 from . import fetchcache, quotas
+from .prefilter import strip_junk
 from .providers import FETCH_CHAIN, SEARCH_CHAIN, FetchResult, Provider, ProviderError
+from .providers.base import reject_reason
+from .providers.local import CONTENT_CAP as FETCH_FULL_CAP
+from .sanitize import sanitize, untrusted_wrap
+from .truncate import smart_truncate
+
+# Фаза 2 (19.10): fetched-контент = untrusted. WS_SANITIZE=0 выключает
+# фильтры и обёртку целиком (emergency escape).
+SANITIZE_OFF = os.environ.get("WS_SANITIZE", "1") == "0"
+
+# Фаза 5.1 (bench-extract): сервисные экстракторы возвращают ok=true с
+# пустотой — tavily 17% «успехов» <200 симв. (wiki-TOC/антибот), jina —
+# challenge-страницы. Такой «успех» = фейл → фолбэк вниз. gh/local exempt:
+# нативные тиры fail loudly (empty% 0 на бенче), их короткий вывод —
+# реальный короткий контент, а не битая экстракция.
+SERVICE_FETCH_TIERS = frozenset({"firecrawl", "tavily", "jina", "parallel"})
+MIN_FETCH_CHARS = 200
+
+
+def _issue_content(content: str, max_chars: int, raw_cut: bool,
+                   url: str = "") -> tuple[str, list[dict]]:
+    """Финальная подготовка fetch-контента к выдаче.
+
+    raw_cut — только старый тупой рез (фаза 0), без санитизации/обёртки.
+    Дефолт (фазы 1–2): sanitize (BrowseSafe-паттерны) → untrusted-обёртка →
+    prefilter мусора → smart-резка. Возвращает (content, sanitize_findings)
+    — findings пустые, если санитайзер выключен."""
+    if raw_cut:
+        return content[:max_chars], []
+    cleaned, findings = (content, []) if SANITIZE_OFF else sanitize(content)
+    wrapped = cleaned if SANITIZE_OFF else untrusted_wrap(url, cleaned)
+    body = smart_truncate(strip_junk(wrapped)[0], max_chars)
+    return body, findings
 
 
 class ChainError(RuntimeError):
@@ -25,15 +59,28 @@ class ChainError(RuntimeError):
 
 # Intent -> preferred provider order (benchmark bench/REPORT.md §6.1).
 # Only reorders the chain: quota skipping and fallback-down are unchanged.
+# youcom исключён из подъёмов 20.10: free MCP paywalled, keyed REST — one-off
+# $-грант в хвосте цепочки; поднимем интентом снова, если кредиты станут
+# возобновляемыми. Его прошлая сила (fact 94% hit@3, RU-топ) распределена:
+# fact→exa (лидер v2-бенча), ru→zai.
 INTENT_ORDER: dict = {
-    "docs":     ["exa", "youcom", "tavily"],       # exa: only one that returns official docs
-    "research": ["exa", "youcom", "brave"],
-    "fact":     ["youcom", "exa", "brave"],        # youcom hit@3 94%
-    "news-ru":  ["tavily", "youcom", "brave"],     # tavily best, NEVER linkup first
-    "news-en":  ["exa", "tavily", "youcom"],
-    "ru":       ["youcom", "zai", "brave", "tavily"],  # zai:RU-качество ок (бенч 24.09, 5/5), 1000/мес до этого сгорали не выработанными
-    "debug":    ["tavily", "youcom", "brave"],     # exa risky: sometimes empty on error strings
-    "github":   ["gh", "exa", "youcom", "tavily", "brave"],  # gh: native repo search (free)
+    "docs":     ["exa", "tavily"],                 # exa: only one that returns official docs
+    "research": ["exa", "brave"],
+    "fact":     ["exa", "tavily", "brave"],        # exa — лидер v2 (0.789 quality)
+    # v2 re-baseline 20.10 (n_q=7), по итогу ревью: ddg R 0.269 / P 0.820 /
+    # Q 0.824 — лучший (n=5: антибот резал серию бенча, одиночные запросы не
+    # серия), linkup Q 0.809 — второй. Прошлый лидер v1 tavily — 7-й из 9
+    # (Q 0.580: устаревшие страницы, EN-статьи на RU-вопрос), brave 0.586.
+    "news-ru":  ["ddg", "linkup"],
+    # v2 re-baseline 20.10 (n_q=8): ddg R 0.376 / Q 0.782 — доминирует с отрывом
+    # (2-й linkup R 0.174), linkup Q 0.680 — второй; exa первым проваливался
+    # (R 0.132 — худший), zai Q 0.481 — замыкающий. ddg в дефолтной цепочке
+    # последний из-за антибота под СЕРИЯМИ — одиночный news-запрос не серия;
+    # если антибот всё же бьёт — мгновенный фолбэк на linkup.
+    "news-en":  ["ddg", "linkup"],
+    "ru":       ["zai", "brave", "tavily"],        # zai:RU-качество ок (бенч 24.09, 5/5)
+    "debug":    ["tavily", "brave"],               # exa risky: sometimes empty on error strings
+    "github":   ["gh", "exa", "tavily", "brave"],  # gh: native repo search (free)
 }
 
 
@@ -131,7 +178,9 @@ def search(query: str, *, n: int = 8, freshness: Optional[str] = None,
            providers: Optional[List[str]] = None,
            intent: Optional[str] = None,
            dry_chain: bool = False) -> dict:
-    """Returns {"results": [...], "provider": name, "tried": [{name, error}]}"""
+    """Returns {"results": [...], "provider": name, "tried": [{name, error}],
+    "rejected": n} — rejected = сколько записей сняла schema-валидация
+    (фаза 4.3); полностью забракованная выдача = фолбэк вниз по цепочке."""
     chain = _chain(providers, _effective_chain(query, intent))
     tried = []
     if dry_chain:
@@ -147,7 +196,17 @@ def search(query: str, *, n: int = 8, freshness: Optional[str] = None,
         t0 = time.monotonic()
         try:
             results = p.search(query, n=n, freshness=freshness)
-            return {"results": results, "provider": p.name, "tried": tried}
+            # фаза 4.3: schema-валидация до merge (брак не доезжает ни до
+            # выдачи, ни до multi-слияния); вся выдача забракована = симптом
+            # сломанного формата ответа → каскад идёт ниже
+            keep = [r for r in results if reject_reason(r) is None]
+            n_rej = len(results) - len(keep)
+            if not keep:
+                raise ProviderError(
+                    f"all {n_rej} results rejected by schema check",
+                    retryable=True)
+            return {"results": keep, "provider": p.name, "tried": tried,
+                    "rejected": n_rej}
         except ProviderError as e:
             tried.append({"name": p.name, "error": str(e),
                           "wall_sec": round(time.monotonic() - t0, 1)})
@@ -161,11 +220,19 @@ def search(query: str, *, n: int = 8, freshness: Optional[str] = None,
 
 def fetch(url: str, *, max_chars: int = 6000,
           providers: Optional[List[str]] = None,
-          use_cache: bool = True) -> dict:
+          use_cache: bool = True,
+          raw_cut: bool = False) -> dict:
     """Returns {"result": FetchResult, "provider": name, "tried": [...],
     "cached": bool}. Cache hits answer before any provider is tried (even
     exhausted ones); the final max_chars truncation happens here, so the
-    cache can hold the full copy (local tier always returns up to 32k)."""
+    cache can hold the full copy (local tier always returns up to 32k).
+
+    Smart cut (default since 19.10, фаза 1 плана improvement-plan-2026-10-19):
+    providers are asked for the full copy (FETCH_FULL_CAP), the cache stores
+    it, and the issued content is cut to max_chars on a sentence/paragraph/
+    fence boundary (engine/truncate.py) instead of a blind [:max_chars].
+    raw_cut=True (флаг --raw-cut / env WS_RAW_CUT=1) keeps the old blind
+    cut everywhere."""
     # Telegram: нормализация до кэша (ключ) и до всех провайдеров; инвайт-
     # ссылкам web preview не существует — сразу честный фейл, не жжём тиры
     if _is_tg_invite(url):
@@ -178,11 +245,15 @@ def fetch(url: str, *, max_chars: int = 6000,
     if use_cache:
         hit = fetchcache.get(url)
         if hit is not None:
+            cached_content = hit.get("content") or ""
+            issue, findings = _issue_content(cached_content, max_chars, raw_cut,
+                                             url=hit.get("url") or url)
             fr = FetchResult(url=hit.get("url") or url,
                              title=hit.get("title", ""),
-                             content=(hit.get("content") or "")[:max_chars],
+                             content=issue,
                              provider=hit.get("provider", "cache"))
-            return {"result": fr, "provider": fr.provider, "cached": True, "tried": []}
+            return {"result": fr, "provider": fr.provider, "cached": True,
+                    "tried": [], "sanitize": findings}
     chain = _chain(providers, FETCH_CHAIN)
     tried = []
     last = None
@@ -201,12 +272,26 @@ def fetch(url: str, *, max_chars: int = 6000,
             continue
         t0 = time.monotonic()
         try:
-            fr = p.fetch(url, max_chars=max_chars)
+            # smart-режим просит полную копию (кэш хранит её целиком); финальная
+            # резка — на выдаче. raw_cut — старое поведение: режет и провайдер.
+            cap = max_chars if raw_cut else FETCH_FULL_CAP
+            fr = p.fetch(url, max_chars=cap)
+            # фаза 5.1: пустой «успех» сервисного тира = фейл → ниже по цепочке.
+            # Порог зажат запрошенным cap (raw-cut с крошечным max_chars не
+            # должен ложно фейлить честный короткий ответ). Проверка — ДО
+            # fetchcache.put: пустоту нельзя кэшировать (TTL 30 мин отравления).
+            n_chars = len(fr.content.strip())
+            if p.name in SERVICE_FETCH_TIERS and n_chars < min(MIN_FETCH_CHARS, cap):
+                raise ProviderError(
+                    f"ok but empty extraction: {n_chars} chars "
+                    f"< {min(MIN_FETCH_CHARS, cap)}", retryable=False)
             if use_cache:
                 fetchcache.put(url, provider=fr.provider or p.name,
                                title=fr.title, content=fr.content)
-            fr.content = fr.content[:max_chars]
-            return {"result": fr, "provider": p.name, "tried": tried}
+            issue, findings = _issue_content(fr.content, max_chars, raw_cut, url=url)
+            fr.content = issue
+            return {"result": fr, "provider": p.name, "tried": tried,
+                    "sanitize": findings}
         except ProviderError as e:
             tried.append({"name": p.name, "error": str(e),
                           "wall_sec": round(time.monotonic() - t0, 1)})
